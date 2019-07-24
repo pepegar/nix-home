@@ -115,13 +115,6 @@
 (use-package diminish
   :pin melpa-stable)
 
-(use-package doom-modeline
-   :hook   (after-init . doom-modeline-mode)
-   :custom
-   (doom-modeline-buffer-file-name-style 'relative-to-project)
-   (doom-modeline-height 15)
-   (doom-modeline-major-mode-color-icon t))
-
 (use-package flycheck
   :pin melpa-stable
   :commands global-flycheck-mode)
@@ -154,28 +147,11 @@
   :bind (("C-s" . swiper)
          ("M-l" . swiper-avy)))
 
-(use-package ivy-posframe
-  :after ivy
-  :config
-  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-  (setq ivy-posframe-parameters '((left-fringe . 15)
-                                  (right-fringe . 15)
-                                  (top-fringe . 15)
-                                  (bottom-fringe . 15)))
-  (ivy-posframe-mode 1))
-
-(use-package ace-window
-  :bind (("M-o" . ace-window)))
-
-(use-package posframe)
-
 (use-package hydra
   :bind (("C-x t" . toggle/body)
 	 ("C-x j" . gotoline/body)
 	 ("C-x c" . orghydra/body)
 	 ("C-x p" . dotfiles/body))
-  :custom
-  (hydra-hint-display-type 'posframe)
   :config
   (defhydra toggle (:color blue)
     "toggle"
@@ -198,11 +174,9 @@
 
   (defhydra dotfiles (:color black)
     "dotfiles"
-    ("c" (find-file "~/.emacs.d/config.org") "config.org")
+    ("i" (find-file "~/.config/nixpkgs/cfg/emacs/init.el") "init.el")
     ("C" (find-file "/su::/etc/nixos/configuration.nix") "configuration.nix")
     ("h" (find-file "~/.config/nixpkgs/home.nix") "home.nix")
-    ("z" (find-file "~/.zshrc") "zshrc")
-    ("g" (find-file "~/.emacs.d/gnus.org") "gnus")
     ("q" nil "cancel"))
 
   (defhydra gotoline

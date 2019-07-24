@@ -18,7 +18,6 @@
       epkgs.forge
       epkgs.projectile
       epkgs.diminish
-      epkgs.doom-modeline
       epkgs.flycheck
       epkgs.ivy
       epkgs.flx
@@ -26,7 +25,6 @@
       epkgs.counsel-projectile
       epkgs.swiper
       epkgs.ace-window
-      epkgs.posframe
       epkgs.hydra
       epkgs.restclient
       epkgs.org
