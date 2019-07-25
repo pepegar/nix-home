@@ -3,6 +3,6 @@
 {
   services.gnome-keyring = {
     enable = true;
-    components = ["ssh"];
+    components = ["pkcs11" "secrets" "ssh"];
   };
 }
