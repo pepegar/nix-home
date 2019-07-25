@@ -4,6 +4,8 @@
 (setq gc-cons-threshold 400000000)
 (setq inhibit-startup-message t)
 (setq initial-scratch-message "")
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
 
 ;;; Set up package
 (require 'package)
@@ -25,8 +27,6 @@
 ;; From use-package README
 (eval-when-compile
   (require 'use-package))
-
-(setq gc-cons-threshold 800000)
 
 (setq user-full-name "Pepe García"
       user-mail-address "jl.garhdez@gmail.com")
@@ -128,13 +128,25 @@
   :pin melpa-stable
   :commands global-flycheck-mode)
 
+(use-package posframe)
+
 (use-package ivy
   :diminish ivy-mode
   :bind (("C-x C-b" . ivy-switch-buffer))
+  :custom
+    (hydra-hint-display-type 'posframe)
   :config
   (setq ivy-use-virtual-buffers t
         ivy-count-format "%d/%d "
         ivy-re-builders-alist '((swiper . ivy--regex-plus))))
+
+(use-package ivy-posframe
+  ;; :after ivy
+  :defer t
+  :config
+  ;; (setq ivy-display-function #'ivy-posframe-display)
+  (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left)
+  (ivy-posframe-enable))
 
 (use-package flx)
 
