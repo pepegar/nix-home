@@ -10,6 +10,7 @@
     ../cfg/git.nix
     ../cfg/ssh.nix
     ../cfg/xresources.nix
+    ../cfg/sbt
 
     ../services/dunst.nix
     ../services/email.nix
@@ -29,6 +30,9 @@
     pkgs.nix-prefetch-scripts
     pkgs.openvpn
     pkgs.dunst
+    pkgs.sbt
+    pkgs.python
+    pkgs.emacs    
     pkgs.metals-emacs
   ];
 
