@@ -213,6 +213,15 @@
     ("p" (lambda () (interactive) (forward-line -1))  "up")
     ("g" goto-line "goto-line")))
 
+(use-package hydra-posframe
+  :load-path "~/.emacs.d/lisp/hydra-posframe.el"
+  :hook (after-init . hydra-posframe-enable))
+
+(use-package major-mode-hydra
+  :ensure t
+  :bind
+  ("M-SPC" . major-mode-hydra))
+
 (use-package restclient
   :mode (("\\.http\\'" . restclient-mode)))
 
