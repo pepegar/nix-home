@@ -3,14 +3,14 @@
 {
   imports = [
     ../cfg/emacs
-    ../cfg/email.nix
-    ../cfg/dunst.nix
+    ../services/email.nix
+    ../services/dunst.nix
     ../cfg/xmonad
-    ../cfg/fzf.nix    
+    ../cfg/fzf
     ../cfg/git.nix
     ../cfg/ssh.nix
     ../cfg/xresources.nix
-    ../cfg/gnome-keyring.nix
+    ../services/gnome-keyring.nix
     ../cfg/zsh.nix
   ];
   # Let Home Manager install and manage itself.
