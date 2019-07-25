@@ -4,6 +4,8 @@
   imports = [
     ../cfg/emacs
     ../cfg/email.nix
+    ../cfg/dunst.nix
+    ../cfg/xmonad
     ../cfg/fzf.nix    
     ../cfg/git.nix
     ../cfg/ssh.nix
@@ -22,6 +24,7 @@
     pkgs.jdk8
     pkgs.nix-prefetch-scripts
     pkgs.openvpn
+    pkgs.dunst
   ];
 
   services.gpg-agent = {
@@ -29,4 +32,6 @@
     enableSshSupport = true;
     defaultCacheTtl = 1800;
   };
+
+
 }
