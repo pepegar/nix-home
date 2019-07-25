@@ -14,6 +14,7 @@
     ../services/dunst.nix
     ../services/email.nix
     ../services/gnome-keyring.nix
+    ../services/gpg-agent.nix
   ];
   
   # Let Home Manager install and manage itself.
@@ -29,12 +30,5 @@
     pkgs.openvpn
     pkgs.dunst
   ];
-
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    defaultCacheTtl = 1800;
-  };
-
 
 }
