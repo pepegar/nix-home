@@ -29,6 +29,7 @@
     pkgs.nix-prefetch-scripts
     pkgs.openvpn
     pkgs.dunst
+    pkgs.metals-emacs
   ];
 
 }
