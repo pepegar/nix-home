@@ -2,14 +2,14 @@
 
 {
   imports = [
-    cfg/emacs
-    cfg/email.nix
-    cfg/fzf.nix    
-    cfg/git.nix
-    cfg/ssh.nix
-    cfg/xresources.nix
-    cfg/gnome-keyring.nix
-    cfg/zsh.nix
+    ../cfg/emacs
+    ../cfg/email.nix
+    ../cfg/fzf.nix    
+    ../cfg/git.nix
+    ../cfg/ssh.nix
+    ../cfg/xresources.nix
+    ../cfg/gnome-keyring.nix
+    ../cfg/zsh.nix
   ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
