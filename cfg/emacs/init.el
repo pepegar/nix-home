@@ -40,8 +40,10 @@
 
 (setq backup-directory-alist `(("." . "~/.backups")))
 
-(when (version<= "26.0.50" emacs-version )
-  (global-display-line-numbers-mode))
+
+(unless (version< emacs-version "26.1")
+  (use-package display-line-numbers
+    :hook ((prog-mode text-mode) . display-line-numbers-mode)))
 
 (require 'package)
 
