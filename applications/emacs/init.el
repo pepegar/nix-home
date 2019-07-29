@@ -97,6 +97,8 @@
 (use-package company
   :bind (("M-n" . company-complete)))
 
+(use-package notmuch)
+
 (use-package paredit
   :config
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
@@ -123,10 +125,6 @@
 
 (use-package diminish
   :pin melpa-stable)
-
-(use-package flycheck
-  :pin melpa-stable
-  :commands global-flycheck-mode)
 
 (use-package posframe)
 
@@ -195,7 +193,7 @@
 
   (defhydra dotfiles (:color black)
     "dotfiles"
-    ("i" (find-file "~/.config/nixpkgs/cfg/emacs/init.el") "init.el")
+    ("i" (find-file "~/.config/nixpkgs/applications/emacs/init.el") "init.el")
     ("C" (find-file "/su::/etc/nixos/configuration.nix") "configuration.nix")
     ("h" (find-file "~/.config/nixpkgs/home.nix") "home.nix")
     ("q" nil "cancel"))
@@ -391,6 +389,11 @@
 (use-package kosmos-theme)
 (use-package nord-theme)
 
+(use-package haskell-mode
+  :mode "\\.hs$"
+  :config
+  (load "haskell-mode-autoloads" nil t))
+
 ;; Enable scala-mode and sbt-mode
 (use-package scala-mode
   :mode "\\.s\\(cala\\|bt\\)$")
@@ -420,9 +423,6 @@
 (use-package company-lsp
   :config
   (push 'company-lsp company-backends))
-
-(use-package haskell-mode
-  :mode "\\.hs\\'")
 
 (use-package idris-mode)
 

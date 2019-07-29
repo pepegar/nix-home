@@ -162,14 +162,16 @@ myKeyBindings =
     , ((myModMask, xK_a), sendMessage MirrorShrink)
     , ((myModMask, xK_z), sendMessage MirrorExpand)
     , ((myModMask, xK_Escape), spawn "~/bin/layout-switch.sh")
-    , ((myModMask, xK_p), spawn runRofi)
+    , ((myModMask, xK_p), spawn rofiApps)
+    , ((myModMask, xK_o), spawn rofiExecute)    
     , ((myModMask, xK_u), focusUrgent)
     , ((0, 0x1008FF12), spawn "amixer -q set Master toggle")
     , ((0, 0x1008FF11), spawn "amixer -q set Master 10%-")
     , ((0, 0x1008FF13), spawn "amixer -q set Master 10%+")
   ]
   where
-    runRofi = "rofi -show drun -no-sort -show-icons"
+    rofiApps = "rofi -show drun -no-sort -show-icons"
+    rofiExecute = "rofi -show run -no-sort"
 
 myManagementHooks :: [ManageHook]
 myManagementHooks = [

@@ -34,6 +34,8 @@
     pkgs.python
     pkgs.emacs    
     pkgs.metals-emacs
+    pkgs.libreoffice
+    pkgs.stack    
   ];
 
 }
