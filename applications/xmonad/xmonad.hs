@@ -69,7 +69,7 @@ myTerminal           = "urxvt"        -- which terminal software to use
 
 myWorkspaces =
   [
-    "Dev", "Web", "Music", "Docs", "5", "6", "7", "8", "9"
+    "Dev", "Web", "Chat", "Music", "Docs", "5", "6", "7", "8", "9"
   ]
 
 startupWorkspace = "1:Dev"  -- which workspace do you want to be on after launch?
