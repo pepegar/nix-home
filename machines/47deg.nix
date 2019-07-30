@@ -17,7 +17,7 @@
     ../services/gnome-keyring.nix
     ../services/gpg-agent.nix
   ];
-  
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -32,10 +32,10 @@
     pkgs.dunst
     pkgs.sbt
     pkgs.python
-    pkgs.emacs    
+    pkgs.emacs
     pkgs.metals-emacs
     pkgs.libreoffice
-    pkgs.stack    
+    pkgs.stack
   ];
 
 }
