@@ -2,10 +2,9 @@
 
 {
   imports = [
-    ../applications/emacs
     ../applications/fzf
     ../applications/xmonad
-    ../applications/zsh.nix
+    ../applications/zsh
 
     ../cfg/git.nix
     ../cfg/ssh.nix
