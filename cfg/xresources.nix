@@ -16,8 +16,8 @@
     "URxvt.visualBell" = "false";
     "URxvt.iso14755" = "false";
     "URxvt.iso14755_52" =          "false";
-    "URxvt.font" = "xft:PragmataPro Mono Liga:size=12,xft:Symbola,xft:EmojiOne Color,xft:Noto Color Emoji";
-    "URxvt*boldFont" = "xft:PragmataPro Mono Liga:size=12,xft:Symbola,xft:EmojiOne Color,xft:Noto Color Emoji";
+    "URxvt.font" = "xft:PragmataPro Mono:size=12,xft:Symbola,xft:EmojiOne Color,xft:Noto Color Emoji";
+    "URxvt*boldFont" = "xft:PragmataPro Mono:size=12,xft:Symbola,xft:EmojiOne Color,xft:Noto Color Emoji";
     "URxvt.allow_bold" =           "true";
     "URxvt*boldMode" = "true";
     "URxvt*letterSpace" = "1";
