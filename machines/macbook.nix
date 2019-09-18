@@ -2,14 +2,14 @@
 
 {
   imports = [
-    ../cfg/emacs
-    ../cfg/email.nix
-    ../cfg/fzf.nix    
+    ../applications/fzf
+    ../applications/zsh
+
     ../cfg/git.nix
     ../cfg/ssh.nix
-    ../cfg/xresources.nix
-    ../cfg/zsh.nix
+    ../cfg/sbt
   ];
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -21,5 +21,19 @@
     pkgs.jdk8
     pkgs.nix-prefetch-scripts
     pkgs.openvpn
+    pkgs.sbt
+    pkgs.python
+    pkgs.emacs
+    pkgs.metals-emacs
+    pkgs.stack
   ];
+
+  programs.zsh.initExtra = ''
+  source ~/.nix-profile/etc/profile.d/nix.sh
+  '';
+
+  programs.zsh.sessionVariables = {
+    NIX_PATH = "$HOME/.nix-defexpr/channels\${NIX_PATH:+:}$NIX_PATH";
+  };
+
 }

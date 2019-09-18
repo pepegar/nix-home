@@ -9,7 +9,7 @@
       size = "32x32";
     };
     settings = {
-        global = {
+      global = {
         font = "PragmataPro, Noto Color Emoji 8";
         markup = "yes";
         plain_text = "no";
@@ -42,32 +42,32 @@
         icon_folders = "${pkgs.gnome3.adwaita-icon-theme}/48x48/emblems/:${pkgs.gnome3.adwaita-icon-theme}/48x48/mimetypes/:${pkgs.gnome3.adwaita-icon-theme}/48x48/status/:${pkgs.gnome3.adwaita-icon-theme}/48x48/devices/:${pkgs.gnome3.adwaita-icon-theme}/48x48/apps/";
         frame_width = 3;
         frame_color = "#000000"    ;
-    };
-    
-    shortcuts = {
+      };
+
+      shortcuts = {
         close = "ctrl+space";
         close_all = "ctrl+shift+space";
         history = "ctrl+grave";
         context = "ctrl+shift+period";
-    };
+      };
 
-    urgency_low = {
+      urgency_low = {
         background = "#5c6370";
         foreground = "#000000";
         timeout = 10;
-    };
-    
-    urgency_normal = {
+      };
+
+      urgency_normal = {
         background = "#56b6c2";
         foreground = "#ffffff";
         timeout = 10;
-    };
-    
-    urgency_critical = {
+      };
+
+      urgency_critical = {
         background = "#f44747";
         foreground = "#000000";
         timeout = 0;
-    };
+      };
 
     };
   };

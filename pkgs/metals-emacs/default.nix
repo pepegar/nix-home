@@ -21,7 +21,4 @@ stdenv.mkDerivation {
       mkdir -p $out/bin
       mv ${baseName} $out/bin
     '';
-    outputHashMode = "recursive";
-    outputHashAlgo = "sha256";
-    outputHash = "0d9xpsn284hdkn5dzird5d7d4ripxy9ywlxlpdkfsz68i2ld23jf";
 }
