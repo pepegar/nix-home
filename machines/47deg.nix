@@ -12,9 +12,7 @@
     ../cfg/sbt
 
     ../services/dunst.nix
-    ../services/email.nix
     ../services/gnome-keyring.nix
-    ../services/gpg-agent.nix
     ../services/blueman.nix
   ];
 
