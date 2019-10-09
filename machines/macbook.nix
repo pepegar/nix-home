@@ -22,9 +22,7 @@
     pkgs.nix-prefetch-scripts
     pkgs.openvpn
     pkgs.sbt
-    pkgs.python
     pkgs.emacs
-    pkgs.metals-emacs
     pkgs.stack
   ];
 
