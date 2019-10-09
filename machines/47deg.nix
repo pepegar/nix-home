@@ -16,6 +16,10 @@
     ../services/blueman.nix
   ];
 
+  nixpkgs.overlays = [
+    import ./overlays/rescuetime.nix,
+  ];
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -29,9 +33,7 @@
     pkgs.openvpn
     pkgs.dunst
     pkgs.sbt
-    pkgs.python
     pkgs.emacs
-    pkgs.metals-emacs
     pkgs.libreoffice
     pkgs.stack
   ];
