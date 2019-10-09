@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+xembedsniproxy &
+status-notifier-watcher &
+GDK_DPI_SCALE=0.8 taffybar &
+nm-applet --sm-disable --indicator &
+xscreensaver -no-splash &
+./fehbg &
+volumeicon &
+rescuetime &

@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 {
+  home.file.".xprofile".source = ./xresources/xprofile;
   xresources = {
     properties = {
       "URxvt.modifier" = "mod1";
