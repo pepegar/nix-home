@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
-{
+with pkgs;
+
+
+let
+  rescuetime-overlay = import ../overlays/rescuetime.nix;
+in rec {
   imports = [
     ../applications/fzf
     ../applications/xmonad
@@ -17,7 +22,7 @@
   ];
 
   nixpkgs.overlays = [
-    import ./overlays/rescuetime.nix
+    rescuetime-overlay
   ];
 
   # Let Home Manager install and manage itself.
@@ -37,5 +42,4 @@
     pkgs.libreoffice
     pkgs.stack
   ];
-
 }
