@@ -17,7 +17,7 @@
   ];
 
   nixpkgs.overlays = [
-    import ./overlays/rescuetime.nix,
+    import ./overlays/rescuetime.nix
   ];
 
   # Let Home Manager install and manage itself.

@@ -2,7 +2,7 @@
 
 let
   baseName = "metals-emacs";
-  version = "0.7.0";
+  version = "0.7.6";
 in
 stdenv.mkDerivation {
     name = "${baseName}-${version}";
