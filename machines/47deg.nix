@@ -10,6 +10,7 @@ in rec {
     ../applications/fzf
     ../applications/xmonad
     ../applications/zsh
+    ../applications/neovim
 
     ../cfg/git.nix
     ../cfg/ssh.nix
@@ -40,6 +41,7 @@ in rec {
     pkgs.sbt
     pkgs.emacs
     pkgs.libreoffice
+    /**pkgs.neovim */
     pkgs.stack
   ];
 }
