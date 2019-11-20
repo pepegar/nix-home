@@ -11,6 +11,7 @@ in rec {
     ../applications/xmonad
     ../applications/zsh
     ../applications/neovim
+    ../applications/tmux
 
     ../cfg/git.nix
     ../cfg/ssh.nix
