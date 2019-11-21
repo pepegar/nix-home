@@ -20,6 +20,7 @@
       vim-airline
       haskell-vim
       vim-sensible
+      vim-easy-align
       vim-javascript
       nerdtree
       nerdcommenter
@@ -68,6 +69,17 @@
       set signcolumn=yes
       
       map <C-n> :NERDTreeToggle<CR>
+
+
+
+      inoremap " ""<left>
+      inoremap \' \'\'<left>
+      inoremap ` ``<left>
+      inoremap ( ()<left>
+      inoremap [ []<left>
+      inoremap { {}<left>
+      inoremap {<CR> {<CR>}<ESC>O
+      inoremap {;<CR> {<CR>};<ESC>O
       " }}}
       " ctrlp {{{
       let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
@@ -94,6 +106,9 @@
       " }}}
       " Git {{{
       nnoremap <leader>gs :Gstatus<cr>
+      " }}}
+      " Markdown {{{
+      au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
       " }}}
       " coc.nvim {{{
 
