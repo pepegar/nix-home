@@ -4,6 +4,9 @@
   imports = [
     ../applications/fzf
     ../applications/zsh
+    ../applications/neovim
+    ../applications/emacs
+    #../applications/tmux
 
     ../cfg/git.nix
     ../cfg/ssh.nix
@@ -22,8 +25,8 @@
     pkgs.nix-prefetch-scripts
     pkgs.openvpn
     pkgs.sbt
-    pkgs.emacs
     pkgs.stack
+    pkgs.ag
   ];
 
   programs.zsh.initExtra = ''
