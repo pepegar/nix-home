@@ -15,6 +15,10 @@
 
     defaultKeymap = "emacs";
 
+    initExtra = ''
+    export PATH=/Users/pepe/anaconda3/bin:$PATH
+    '';
+
     oh-my-zsh = {
       enable = true;
       plugins = ["git"];
