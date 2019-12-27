@@ -19,13 +19,9 @@ self: super: {
     in
       with super; stdenv.mkDerivation {
         name = "${baseName}-${version}";
-
         buildInputs = [jdk makeWrapper deps];
-
         doCheck = true;
-
         phases = ["installPhase"];
-
         installPhase = ''
         makeWrapper ${jre}/bin/java $out/bin/${baseName} \
             --add-flags "-Xss4m -Xms100m -Dmetals.client=emacs -cp $CLASSPATH scala.meta.metals.Main"
@@ -50,13 +46,9 @@ self: super: {
   in
     with super; stdenv.mkDerivation {
       name = "${baseName}-${version}";
-
       buildInputs = [jdk makeWrapper deps];
-
       doCheck = true;
-
       phases = ["installPhase"];
-
       installPhase = ''
       makeWrapper ${jre}/bin/java $out/bin/${baseName} \
         --add-flags "-Xss4m -Xms100m -Dmetals.client=coc.nvim -cp $CLASSPATH scala.meta.metals.Main"
