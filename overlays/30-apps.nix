@@ -86,4 +86,16 @@ self: super:
     description = "iTerm2 is a replacement for Terminal and the successor to iTerm";
     homepage = https://www.iterm2.com;
   };
+
+  Tunnelblick = self.installApplication rec {
+    name = "Tunnelblick";
+    version = "3.8.1";
+    sourceRoot = "Tunnelblick.app";
+    src = super.fetchurl {
+      url = https://tunnelblick.net/release/Tunnelblick_3.8.1_build_5400.dmg;
+      sha256 = "a619a1c01a33a8618fc2489a43241e95c828dcdb7f7c56cfc883dcbb22644693";
+    };
+    description = "free software for OpenVPN on macOS";
+    homepage = https://tunnelblick.net;
+  };
 }

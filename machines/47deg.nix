@@ -31,7 +31,6 @@ in rec {
   programs.home-manager.enable = true;
 
   home.packages = [
-    pkgs.gitAndTools.gitFull
     pkgs.gnupg
     pkgs.pass
     pkgs.htop

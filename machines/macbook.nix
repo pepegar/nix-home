@@ -44,6 +44,7 @@
     # Docker
     Dash
     iTerm2
+    Tunnelblick
   ];
 
 
