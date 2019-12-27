@@ -35,6 +35,8 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 
+(setenv "LC_ALL" "en_US.UTF-8")
+
 ;; MELPA repos for packages.
 (setq package-archives
       '(("gnu"          . "http://elpa.gnu.org/packages/")
@@ -97,7 +99,7 @@
   (delete-selection-mode t)
   (global-auto-revert-mode t)
   (custom-file null-device "Do not store customizations")
-  ; Smooth scrolling
+                                        ; Smooth scrolling
   (redisplay-dont-pause t)
   (scroll-margin 5)
   (scroll-step 1)
@@ -245,9 +247,9 @@
   :diminish ivy-mode
   :bind (("C-x C-b" . ivy-switch-buffer))
   :config
-      (setq ivy-use-virtual-buffers t
-            ivy-count-format "%d/%d "
-            ivy-re-builders-alist '((swiper . ivy--regex-plus))))
+  (setq ivy-use-virtual-buffers t
+        ivy-count-format "%d/%d "
+        ivy-re-builders-alist '((swiper . ivy--regex-plus))))
 
 (use-package flx)
 
@@ -255,7 +257,7 @@
   :bind (("M-x"     . counsel-M-x)
          ([f9]      . counsel-load-theme))
   :config
-    (setq ivy-initial-inputs-alist nil))
+  (setq ivy-initial-inputs-alist nil))
 
 (use-package counsel-projectile
   :bind (("C-c a g" . counsel-ag)
@@ -317,3 +319,23 @@
                ("Annotations"
                 "      " "      " "     " "     " "        " "    " "      " "      "
                 "      " "     " "    " "     " "     " "     "))))
+
+(use-package exec-path-from-shell
+  :ensure t
+  :if (memq window-system '(mac ns x))
+  :config
+  (setq exec-path-from-shell-variables '("PATH" "GOPATH" "LC_COLLATE" "LC_MESSAGES" "LC_MONETARY" "LC_NUMERIC" "LC_TIME"))
+  (exec-path-from-shell-initialize))
+
+(use-package expand-region
+  :ensure t
+  :bind (("C-@" . er/expand-region)))
+
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
+
+(use-package forge
+  :straight t)

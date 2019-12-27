@@ -1,11 +1,12 @@
 (setq
  user-mail-address "pepe@pepegar.com"
  user-full-name "Pepe García"
- gnus-select-method '(nnnil)
+ gnus-select-method
+   '(nnnil)
  gnus-secondary-select-methods
- '((nnmaildir "pepegar" (directory "~/Mail/pepegar/"))
-   (nnmaildir "47deg" (directory "~/Mail/47deg/"))
-   (nntp "news.gmane.org")))
+   '((nnmaildir "pepegar" (directory "~/Mail/pepegar/"))
+     (nnmaildir "47deg" (directory "~/Mail/47deg/"))
+     (nntp "news.gmane.org")))
 
 
 (setq-default
