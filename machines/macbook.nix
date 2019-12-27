@@ -25,7 +25,6 @@
               (attrNames (readDir path)));
 
   home.packages = with pkgs; [
-    gitAndTools.gitFull
     gnupg
     pass
     htop
@@ -35,7 +34,7 @@
     sbt
     stack
     ag
-
+    texFull
     metals-emacs
     metals-vim
 
