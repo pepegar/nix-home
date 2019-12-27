@@ -22,18 +22,8 @@
     oh-my-zsh = {
       enable = true;
       plugins = ["git"];
-      theme = "powerlevel9k/powerlevel9k";
+      theme = "robbyrussell";
       custom = "$HOME/.oh-my-zsh/custom";
-    };
-
-    localVariables = {
-      POWERLEVEL9K_PROMPT_ON_NEWLINE = true;
-      POWERLEVEL9K_PROMPT_ADD_NEWLINE = true;
-      POWERLEVEL9K_SHORTEN_STRATEGY = "truncate_middle";
-      POWERLEVEL9K_VCS_SHORTEN_LENGTH = 4;
-      POWERLEVEL9K_VCS_SHORTEN_MIN_LENGTH = 11;
-      POWERLEVEL9K_VCS_SHORTEN_STRATEGY = "truncate_middle";
-      POWERLEVEL9K_VCS_SHORTEN_DELIMITER = "..";
     };
 
     plugins = [
@@ -48,10 +38,5 @@
         };
       }
     ];
-  };
-
-  home.file.".oh-my-zsh/custom/themes/powerlevel9k" = {
-    source = ../../powerlevel9k;
-    recursive = true;
   };
 }
