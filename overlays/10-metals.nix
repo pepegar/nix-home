@@ -3,7 +3,7 @@ self: super: {
   metals-emacs =
     let
       baseName = "metals-emacs";
-      version = "0.7.6";
+      version = "0.8.0";
       deps = with super; stdenv.mkDerivation {
         name = "${baseName}-deps-${version}";
         buildCommand = ''
@@ -14,7 +14,7 @@ self: super: {
         '';
         outputHashMode = "recursive";
         outputHashAlgo = "sha256";
-        outputHash     = "03vx8n77mndpqbvq14cy3k9r4jwgjacrv56v5n87da8rqiclx37j";
+        outputHash     = "00n116krll8gpq2p8rkpzqs2qafc71wimwfbmhi4y9c6pjas0baf";
       };
     in
       with super; stdenv.mkDerivation {
@@ -30,7 +30,7 @@ self: super: {
 
   metals-vim = let
     baseName = "metals-vim";
-    version = "0.7.6";
+    version = "0.8.0";
     deps = with super; stdenv.mkDerivation {
       name = "${baseName}-deps-${version}";
       buildCommand = ''
@@ -41,7 +41,7 @@ self: super: {
       '';
       outputHashMode = "recursive";
       outputHashAlgo = "sha256";
-      outputHash     = "03vx8n77mndpqbvq14cy3k9r4jwgjacrv56v5n87da8rqiclx37j";
+      outputHash     = "00n116krll8gpq2p8rkpzqs2qafc71wimwfbmhi4y9c6pjas0baf";
     };
   in
     with super; stdenv.mkDerivation {

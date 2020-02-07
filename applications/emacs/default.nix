@@ -8,11 +8,12 @@
       epkgs.add-node-modules-path
       epkgs.all-the-icons
       epkgs.company
+      epkgs.company-lsp
       epkgs.counsel
       epkgs.counsel-projectile
       epkgs.dashboard
-      epkgs.dashboard
       epkgs.doom-themes
+      epkgs.emmet-mode
       epkgs.exec-path-from-shell
       epkgs.expand-region
       epkgs.flx
@@ -22,9 +23,12 @@
       epkgs.graphql-mode
       epkgs.haskell-mode
       epkgs.hindent
+      epkgs.web-mode
       epkgs.ivy
       epkgs.ivy-posframe
+      epkgs.jedi
       epkgs.lsp-mode
+      epkgs.lsp-ui
       epkgs.magit
       epkgs.multiple-cursors
       epkgs.neotree
@@ -39,6 +43,7 @@
       epkgs.swiper
       epkgs.tide
       epkgs.web-mode
+      epkgs.yasnippet
     ];
   };
 

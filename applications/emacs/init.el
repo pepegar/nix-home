@@ -229,7 +229,7 @@
   :ensure nil
   :config
   (when (member "PragmataPro Mono Liga" (font-family-list))
-    (set-face-attribute 'default nil :font "PragmataPro Mono Liga 14"))
+    (set-face-attribute 'default nil :font "PragmataPro Mono Liga 12"))
   (when (member "Hack" (font-family-list))
     (set-face-attribute 'default nil :font "Hack 9"))
   (when (member "FontAwesome" (font-family-list))
@@ -339,3 +339,68 @@
 
 (use-package forge
   :straight t)
+
+(use-package scala-mode
+  :mode "\\.s\\(cala\\|bt\\)$")
+
+(use-package sbt-mode
+  :commands sbt-start sbt-command
+  :config
+  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+  ;; allows using SPACE when in the minibuffer
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
+   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+   (setq sbt:program-options '("-Dsbt.supershell=false"))
+)
+
+;; Enable nice rendering of diagnostics like compile errors.
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+(use-package lsp-mode
+  ;; Optional - enable lsp-mode automatically in scala files
+  :hook (scala-mode . lsp)
+  :config (setq lsp-prefer-flymake nil))
+
+(use-package lsp-ui
+  :custom
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-include-signature t)
+  (lsp-ui-doc-position 'top)
+  (lsp-ui-sideline-enable nil))
+
+;; lsp-mode supports snippets, but in order for them to work you need to use yasnippet
+;; If you don't want to use snippets set lsp-enable-snippet to nil in your lsp-mode settings
+;;   to avoid odd behavior with snippets and indentation
+(use-package yasnippet)
+
+;; Add company-lsp backend for metals
+(use-package company-lsp)
+
+
+(use-package web-mode
+  :ensure t
+  :init (setq web-mode-enable-auto-pairing nil)
+  :mode ("\\.html?\\'" "\\.twig\\'" "\\.vue\\'"))
+
+(use-package emmet-mode
+  ;; C-j to expand
+  :ensure t
+  :hook ((css-mode . emmet-mode)
+         (php-mode . emmet-mode)
+         (sgnl-mode . emmet-mode)
+         (rjsx-mode . emmet-mode)
+         (web-mode . emmet-mode)))
+
+
+(use-package jedi
+	:ensure t
+  :config
+        (progn
+          (jedi:setup)
+          (jedi:ac-setup)
+          (setq jedi:setup-keys t)
+          (setq jedi:complete-on-dot t)))
