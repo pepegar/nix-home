@@ -35,6 +35,7 @@
       epkgs.nix-mode
       epkgs.prettier-js
       epkgs.projectile
+      epkgs.proof-general
       epkgs.rainbow-delimiters
       epkgs.rainbow-mode
       epkgs.rainbow-mode

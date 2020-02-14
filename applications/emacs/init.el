@@ -352,9 +352,9 @@
    'minibuffer-complete-word
    'self-insert-command
    minibuffer-local-completion-map)
-   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-   (setq sbt:program-options '("-Dsbt.supershell=false"))
-)
+  ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+  (setq sbt:program-options '("-Dsbt.supershell=false"))
+  )
 
 ;; Enable nice rendering of diagnostics like compile errors.
 (use-package flycheck
@@ -399,8 +399,16 @@
 (use-package jedi
 	:ensure t
   :config
-        (progn
-          (jedi:setup)
-          (jedi:ac-setup)
-          (setq jedi:setup-keys t)
-          (setq jedi:complete-on-dot t)))
+  (progn
+    (jedi:setup)
+    (jedi:ac-setup)
+    (setq jedi:setup-keys t)
+    (setq jedi:complete-on-dot t)))
+
+
+
+(use-package proof-general
+  :custom
+  (proof-disappearing-proofs t)
+  (proof-splash-enable nil)
+  (proof-three-window-enable nil))
