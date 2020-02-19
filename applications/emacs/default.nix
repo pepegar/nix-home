@@ -27,7 +27,9 @@
       epkgs.ivy
       epkgs.ivy-posframe
       epkgs.jedi
+      epkgs.dap-mode
       epkgs.lsp-mode
+      epkgs.lsp-java
       epkgs.lsp-ui
       epkgs.magit
       epkgs.multiple-cursors

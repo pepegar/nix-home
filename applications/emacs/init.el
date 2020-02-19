@@ -363,6 +363,7 @@
 (use-package lsp-mode
   ;; Optional - enable lsp-mode automatically in scala files
   :hook (scala-mode . lsp)
+  :hook (java-mode . lsp)
   :config (setq lsp-prefer-flymake nil))
 
 (use-package lsp-ui
@@ -380,6 +381,19 @@
 ;; Add company-lsp backend for metals
 (use-package company-lsp)
 
+(use-package lsp-java
+  :ensure t
+  :bind (("M-<return>" . lsp-execute-code-action))
+  :config
+  (setq lsp-java-server-install-dir "~/eclipse-lsp"))
+
+(use-package dap-mode
+  :ensure t :after lsp-mode
+  :config
+  (dap-mode t)
+  (dap-ui-mode t))
+
+(use-package dap-java :after (lsp-java))
 
 (use-package web-mode
   :ensure t
