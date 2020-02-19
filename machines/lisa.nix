@@ -10,8 +10,18 @@ let
     tensorflow
     numpy
     scipy
+    scikitlearn
+    spacy
+    gensim
+    xgboost
     nltk
     jupyter
+    matplotlib
+    seaborn
+
+    flask
+    flask-sqlalchemy
+    dash
   ];
   python-with-packages = pkgs.python3.withPackages python-packages;
 in rec {
@@ -39,6 +49,7 @@ in rec {
   programs.home-manager.enable = true;
 
   home.packages = [
+    pkgs.heroku
     pkgs.ag
     pkgs.gnupg
     pkgs.pass
