@@ -271,6 +271,9 @@
   :bind (("C-s" . swiper)
          ("M-l" . swiper-avy)))
 
+(use-package avy
+  :bind (("C-:" . avy-goto-char)))
+
 (use-package ivy-posframe
   :after ivy
   :config
@@ -361,9 +364,9 @@
   :init (global-flycheck-mode))
 
 (use-package lsp-mode
-  ;; Optional - enable lsp-mode automatically in scala files
   :hook (scala-mode . lsp)
   :hook (java-mode . lsp)
+  :hook (haskell-mode . lsp)
   :config (setq lsp-prefer-flymake nil))
 
 (use-package lsp-ui
@@ -376,7 +379,20 @@
 ;; lsp-mode supports snippets, but in order for them to work you need to use yasnippet
 ;; If you don't want to use snippets set lsp-enable-snippet to nil in your lsp-mode settings
 ;;   to avoid odd behavior with snippets and indentation
-(use-package yasnippet)
+(use-package yasnippet                  ; Snippets
+  :ensure t
+  :config
+  (setq
+   yas-wrap-around-region t)
+
+  (with-eval-after-load 'yasnippet
+    (setq yas-snippet-dirs '(yasnippet-snippets-dir)))
+
+  (yas-reload-all)
+  (yas-global-mode))
+
+(use-package yasnippet-snippets         ; Collection of snippets
+  :ensure t)
 
 ;; Add company-lsp backend for metals
 (use-package company-lsp)
@@ -387,13 +403,22 @@
   :config
   (setq lsp-java-server-install-dir "~/eclipse-lsp"))
 
-(use-package dap-mode
-  :ensure t :after lsp-mode
-  :config
-  (dap-mode t)
-  (dap-ui-mode t))
+(use-package lsp-ivy :ensure t)
 
 (use-package dap-java :after (lsp-java))
+
+(use-package dap-mode
+  :hook
+  (lsp-mode . dap-mode)
+  (lsp-mode . dap-ui-mode)
+  )
+
+;; Use the Tree View Protocol for viewing the project structure and triggering compilation
+(use-package lsp-treemacs
+  :config
+  (lsp-metals-treeview-enable t)
+  (setq lsp-metals-treeview-show-when-views-received t)
+  )
 
 (use-package web-mode
   :ensure t
@@ -409,9 +434,8 @@
          (rjsx-mode . emmet-mode)
          (web-mode . emmet-mode)))
 
-
 (use-package jedi
-	:ensure t
+  :ensure t
   :config
   (progn
     (jedi:setup)
@@ -419,10 +443,26 @@
     (setq jedi:setup-keys t)
     (setq jedi:complete-on-dot t)))
 
-
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
 
 (use-package proof-general
   :custom
   (proof-disappearing-proofs t)
   (proof-splash-enable nil)
   (proof-three-window-enable nil))
+
+
+;; YAML configuration
+(use-package yaml-mode
+  :ensure t
+  :mode (("\\.yaml\\'" . yaml-mode)
+         ("\\.yml\\'" . yaml-mode)))
+
+(use-package lsp-haskell
+ :ensure t
+ :config
+ (setq lsp-haskell-process-path-hie "ghcide")
+ (setq lsp-haskell-process-args-hie '())
+ (setq lsp-log-io t))
