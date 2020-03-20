@@ -133,7 +133,6 @@
   (doom-themes-enable-bold t)
   (doom-themes-enable-italic t)
   :config
-  (load-theme 'doom-one t)
   (doom-themes-org-config))
 
 (use-package dashboard
@@ -460,9 +459,19 @@
   :mode (("\\.yaml\\'" . yaml-mode)
          ("\\.yml\\'" . yaml-mode)))
 
+(use-package haskell-mode
+  :ensure t
+  :custom
+  (haskell-stylish-on-save t))
+
 (use-package lsp-haskell
  :ensure t
  :config
  (setq lsp-haskell-process-path-hie "ghcide")
  (setq lsp-haskell-process-args-hie '())
  (setq lsp-log-io t))
+
+(use-package remember-last-theme
+  :ensure t
+  :if (display-graphic-p)
+  :config (remember-last-theme-with-file-enable (expand-file-name "last-theme.el" user-emacs-directory)))

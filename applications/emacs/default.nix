@@ -7,6 +7,7 @@
       epkgs.ace-window
       epkgs.add-node-modules-path
       epkgs.all-the-icons
+      epkgs.remember-last-theme
       epkgs.company
       epkgs.company-lsp
       epkgs.counsel
