@@ -34,26 +34,26 @@ in rec {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  home.packages = [
-    pkgs.heroku
-    pkgs.ag
-    pkgs.clang
-    pkgs.gnupg
-    pkgs.pass
-    pkgs.htop
-    pkgs.jdk8
-    pkgs.nix-prefetch-scripts
-    pkgs.openvpn
-    pkgs.dunst
-    pkgs.sbt
-    pkgs.libreoffice
-    pkgs.slack
-    pkgs.sqlite
-    pkgs.metals-emacs
-    pkgs.metals-vim
-    pkgs.robo3t
-    pkgs.spotify
+  home.packages = with pkgs; [
+    heroku
+    ag
+    clang
+    gnupg
+    pass
+    htop
+    jdk8
+    nix-prefetch-scripts
+    openvpn
+    dunst
+    sbt
+    libreoffice
+    slack
+    sqlite
+    metals-emacs
+    metals-vim
+    robo3t
+    spotify
     python-with-packages
-    pkgs.run-jupyter
+    run-jupyter
   ];
 }
