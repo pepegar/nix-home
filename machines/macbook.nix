@@ -1,10 +1,11 @@
 { config, pkgs, ... }:
 
-{
+let 
+  all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
+in  {
   imports = [
     ../applications/fzf
     ../applications/zsh
-    ../applications/neovim
     ../applications/emacs
     #../applications/tmux
 
@@ -17,45 +18,37 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  nixpkgs.overlays =
-    let path = ../overlays; in with builtins;
-          map (n: import (path + ("/" + n)))
-            (filter (n: match ".*\\.nix" n != null ||
-                        pathExists (path + ("/" + n + "/default.nix")))
-              (attrNames (readDir path)));
+  nixpkgs.overlays = let path = ../overlays;
+  in with builtins;
+  map (n: import (path + ("/" + n))) (filter (n:
+    match ".*\\.nix" n != null
+    || pathExists (path + ("/" + n + "/default.nix")))
+    (attrNames (readDir path)));
 
   home.packages = with pkgs; [
     gnupg
     pass
     htop
     jdk8
-    nix-prefetch-scripts
     openvpn
     sbt
     stack
     ag
-    texFull
     metals-emacs
-    metals-vim
+    (all-hies.selection { selector = p: p; })
 
     # apps
-    Anki
+    # Anki
     # LunaDisplay
     # Docker
-    Dash
-    iTerm2
-    Tunnelblick
+    # Dash
+    # iTerm2
+    # Tunnelblick
   ];
-
-
-  programs.zsh.initExtra = ''
-  source ~/.nix-profile/etc/profile.d/nix.sh
-  '';
 
   programs.zsh.sessionVariables = {
     NIX_PATH = "$HOME/.nix-defexpr/channels\${NIX_PATH:+:}$NIX_PATH";
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
   };
-
 }

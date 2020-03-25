@@ -19,7 +19,6 @@
       epkgs.exec-path-from-shell
       epkgs.expand-region
       epkgs.flx
-      epkgs.flx
       epkgs.flycheck
       epkgs.graphql-mode
       epkgs.haskell-mode

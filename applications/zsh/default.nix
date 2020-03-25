@@ -16,7 +16,7 @@
     defaultKeymap = "emacs";
 
     initExtra = ''
-    export PATH=/Users/pepe/anaconda3/bin:$PATH
+    export PATH=/Users/pepe/Library/Python/3.7/bin:$PATH
     '';
 
     oh-my-zsh = {

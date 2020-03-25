@@ -9,6 +9,7 @@
         hostname = "${name}-bastion01.packitos.com";
         port = 22822;
         user = "packdev";
+        identityFile = "~/.ssh/packlink";
       };
       packHostTunnelConsul = name : packHost name // {
         extraOptions = {
