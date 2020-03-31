@@ -23,7 +23,6 @@
       epkgs.graphql-mode
       epkgs.haskell-mode
       epkgs.lsp-haskell
-      epkgs.hindent
       epkgs.web-mode
       epkgs.ivy
       epkgs.avy
