@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./services/lorri.nix
+  ];
+  
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs;
@@ -12,7 +16,7 @@
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
   # Auto upgrade nix package and the daemon service.
-  # services.nix-daemon.enable = true;
+  services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
 
   # Create /etc/bashrc that loads the nix-darwin environment.
@@ -30,19 +34,4 @@
   nix.buildCores = 4;
   nix.useDaemon = true;
   services.activate-system.enable = true;
-
-  launchd.user.agents = {
-    mbsync = {
-      command = "${pkgs.isync}/bin/mbsync -a";
-      environment.HOME = "";
-      environment.NIX_SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-      serviceConfig.KeepAlive = false;
-      serviceConfig.ProcessType = "Background";
-      serviceConfig.StartInterval = 360;
-    };
-  };
-
-  programs.nix-index.enable = true;
-  programs.gnupg.agent.enable = true;
-  programs.gnupg.agent.enableSSHSupport = true;
 }
