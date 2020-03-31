@@ -7,7 +7,7 @@ in  {
     ../applications/fzf
     ../applications/zsh
     ../applications/emacs
-    #../applications/tmux
+    ../applications/direnv
 
     ../cfg/git.nix
     ../cfg/ssh.nix
@@ -29,13 +29,10 @@ in  {
     gnupg
     pass
     htop
-    jdk8
     openvpn
-    sbt
     stack
     ag
     metals-emacs
-    (all-hies.selection { selector = p: p; })
 
     # apps
     # Anki
