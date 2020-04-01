@@ -8,6 +8,7 @@ in  {
     ../applications/zsh
     ../applications/emacs
     ../applications/direnv
+    ../applications/tmux
 
     ../cfg/git.nix
     ../cfg/ssh.nix
