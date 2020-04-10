@@ -17,6 +17,7 @@ in rec {
     ../applications/emacs
     ../applications/tmux
     ../applications/direnv
+    ../applications/go
 
     ../cfg/git.nix
     ../cfg/ssh.nix
@@ -55,5 +56,8 @@ in rec {
     spotify
     python-with-packages
     run-jupyter
+    graphviz
+    ghq
+    mr
   ];
 }
