@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-let 
+let
   all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
 in  {
   imports = [
@@ -31,9 +31,11 @@ in  {
     pass
     htop
     openvpn
-    stack
     ag
     metals-emacs
+    ghq
+    mr
+    graphviz
 
     # apps
     # Anki
