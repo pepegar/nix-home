@@ -3,6 +3,6 @@
 {
   programs.go = {
     enable = true;
-    goPath = "~/go";
+    goPath = "go";
   };
 }
