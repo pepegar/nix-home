@@ -55,9 +55,9 @@ in rec {
     robo3t
     spotify
     python-with-packages
-    run-jupyter
     graphviz
     ghq
     mr
+    zotero
   ];
 }
