@@ -18,6 +18,7 @@ in rec {
     ../applications/tmux
     ../applications/direnv
     ../applications/go
+    ../applications/rofi
 
     ../cfg/git.nix
     ../cfg/ssh.nix
@@ -59,5 +60,6 @@ in rec {
     ghq
     mr
     zotero
+    rofi-vpn
   ];
 }
