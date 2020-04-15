@@ -19,6 +19,7 @@ in rec {
     ../applications/direnv
     ../applications/go
     ../applications/rofi
+    ../applications/texlive
 
     ../cfg/git.nix
     ../cfg/ssh.nix
