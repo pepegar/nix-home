@@ -7,7 +7,9 @@
       inherit (tpkgs)
         collection-fontsrecommended
         algorithms
-        scheme-medium;
+        scheme-medium
+        wrapfig
+      ;
     };
   };
 }
