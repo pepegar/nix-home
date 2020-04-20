@@ -25,6 +25,7 @@ in rec {
     ../cfg/ssh.nix
     ../cfg/xresources.nix
     ../cfg/sbt
+    ../cfg/pandoc
   ];
 
   nixpkgs.overlays =
@@ -44,11 +45,9 @@ in rec {
     gnupg
     pass
     htop
-    jdk8
     nix-prefetch-scripts
     openvpn
     dunst
-    sbt
     libreoffice
     slack
     sqlite

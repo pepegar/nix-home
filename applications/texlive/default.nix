@@ -9,6 +9,8 @@
         algorithms
         scheme-medium
         wrapfig
+        capt-of
+        framed
       ;
     };
   };
