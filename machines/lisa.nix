@@ -61,5 +61,6 @@ in rec {
     mr
     zotero
     rofi-vpn
+    rescuetime
   ];
 }
