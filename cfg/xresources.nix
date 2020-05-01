@@ -1,9 +1,10 @@
 { pkgs, ... }:
 
 {
-  home.file.".xprofile".source = ./xresources/xprofile;
   xresources = {
     properties = {
+      "URxvt.font" = "xft:PragmataPro Mono:size=12,xft:Symbola,xft:EmojiOne Color,xft:Noto Color Emoji";
+      "URxvt*boldFont" = "xft:PragmataPro Mono:size=12,xft:Symbola,xft:EmojiOne Color,xft:Noto Color Emoji";
       "URxvt.modifier" = "mod1";
       "URxvt*loginShell" = "true";
       "URxvt*depth" = "32";
@@ -18,8 +19,6 @@
       "URxvt.visualBell" = "false";
       "URxvt.iso14755" = "false";
       "URxvt.iso14755_52" =          "false";
-      "URxvt.font" = "xft:PragmataPro Mono:size=12,xft:Symbola,xft:EmojiOne Color,xft:Noto Color Emoji";
-      "URxvt*boldFont" = "xft:PragmataPro Mono:size=12,xft:Symbola,xft:EmojiOne Color,xft:Noto Color Emoji";
       "URxvt.allow_bold" =           "true";
       "URxvt*boldMode" = "true";
       "URxvt*letterSpace" = "1";
@@ -32,12 +31,19 @@
 
     extraConfig = builtins.readFile (
       pkgs.fetchFromGitHub {
-        owner = "solarized";
-        repo = "xresources";
-        rev = "025ceddbddf55f2eb4ab40b05889148aab9699fc";
-        sha256 = "0lxv37gmh38y9d3l8nbnsm1mskcv10g3i83j0kac0a2qmypv1k9f";
-      } + "/Xresources.dark"
+        owner = "logico-dev";
+        repo = "Xresources-themes";
+        rev = "83ac62c07d7acaf8f67bb046a42f35a553a502fd";
+        sha256 = "0izcc2frpn2ymnzxzghnl8yza73vkald27al6cpq6agh10ypdkp2";
+      } + "/iterm-Molokai.Xresources"
     );
 
   };
+
+  home.file.".xprofile".text = ''
+#!/usr/bin/env bash
+
+${pkgs.rescuetime}/bin/rescuetime &
+${pkgs.i3}/bin/i3 &
+'';
 }
