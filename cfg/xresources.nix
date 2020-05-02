@@ -41,9 +41,9 @@
   };
 
   home.file.".xprofile".text = ''
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
+${pkgs.i3-gaps}/bin/i3 &
 ${pkgs.rescuetime}/bin/rescuetime &
-${pkgs.i3}/bin/i3 &
 '';
 }

@@ -20,6 +20,7 @@ in rec {
     ../applications/go
     ../applications/rofi
     ../applications/texlive
+    ../applications/i3
 
     ../cfg/git.nix
     ../cfg/ssh.nix
@@ -62,5 +63,7 @@ in rec {
     zotero
     rofi-vpn
     rescuetime
+    rxvt_unicode
+    pavucontrol
   ];
 }
