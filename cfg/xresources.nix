@@ -27,6 +27,9 @@
       "URxvt.cursorBlink" = "false";
       "URxvt.cursorUnderline" = "false";
       "URxvt.pointerBlank" = "false";
+      "URxvt*urlLauncher" = "${pkgs.firefox}/bin/firefox";
+      "URxvt*matcher.button" = "1";
+      "URxvt*matcher.pattern.1" = "\\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]";
     };
 
     extraConfig = builtins.readFile (
@@ -43,7 +46,6 @@
   home.file.".xprofile".text = ''
 #!/usr/bin/env sh
 
-${pkgs.i3-gaps}/bin/i3 &
 ${pkgs.rescuetime}/bin/rescuetime &
 '';
 }
