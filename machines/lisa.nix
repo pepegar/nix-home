@@ -22,6 +22,10 @@ in rec {
     ../applications/texlive
     ../applications/i3
 
+    ../services/gnome-keyring.nix
+    ../services/network-manager-applet.nix
+    ../services/dunst.nix
+
     ../cfg/git.nix
     ../cfg/ssh.nix
     ../cfg/xresources.nix
@@ -40,30 +44,30 @@ in rec {
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    heroku
     ag
     clang
-    gnupg
-    pass
-    htop
-    nix-prefetch-scripts
-    openvpn
     dunst
+    ghq
+    gnupg
+    graphviz
+    heroku
+    htop
     libreoffice
-    slack
-    sqlite
     metals-emacs
     metals-vim
-    robo3t
-    spotify
-    python-with-packages
-    graphviz
-    ghq
     mr
-    zotero
-    rofi-vpn
-    rescuetime
-    rxvt_unicode
+    nix-prefetch-scripts
+    openvpn
+    pass
     pavucontrol
+    python-with-packages
+    rescuetime
+    robo3t
+    rofi-vpn
+    rxvt_unicode
+    slack
+    spotify
+    sqlite
+    zotero
   ];
 }
