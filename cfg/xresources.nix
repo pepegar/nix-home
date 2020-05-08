@@ -15,7 +15,6 @@
       "URxvt.lineSpace" = "1";
       "URxvt.saveLines" = "20000";
       "URxvt*termName" = "xterm-256color";
-      "URxvt.transparent" = "false";
       "URxvt.visualBell" = "false";
       "URxvt.iso14755" = "false";
       "URxvt.iso14755_52" =          "false";
@@ -30,6 +29,8 @@
       "URxvt*urlLauncher" = "${pkgs.firefox}/bin/firefox";
       "URxvt*matcher.button" = "1";
       "URxvt*matcher.pattern.1" = "\\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]";
+      "URxvt.transparent" = "true";
+      "URxvt.shading" = "20";
     };
 
     extraConfig = builtins.readFile (
@@ -47,5 +48,9 @@
 #!/usr/bin/env sh
 
 ${pkgs.rescuetime}/bin/rescuetime &
+${pkgs.feh}/bin/feh --bg-fill --randomize ~/.config/nixpkgs/cfg/wallpapers/img/ &
+${pkgs.rxvt_unicode}/bin/urxvt &
+${pkgs.firefox}/bin/firefox &
+${pkgs.emacs}/bin/emacs &
 '';
 }

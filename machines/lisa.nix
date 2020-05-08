@@ -48,6 +48,7 @@ in rec {
     clang
     dunst
     ghq
+    gnome3.nautilus
     gnupg
     graphviz
     heroku
@@ -57,6 +58,7 @@ in rec {
     metals-vim
     mr
     nix-prefetch-scripts
+    obs-studio
     openvpn
     pass
     pavucontrol
@@ -68,6 +70,7 @@ in rec {
     slack
     spotify
     sqlite
+    vlc
     zotero
   ];
 }
