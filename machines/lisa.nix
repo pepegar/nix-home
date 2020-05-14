@@ -22,7 +22,6 @@ in rec {
     ../applications/texlive
     ../applications/i3
 
-    ../services/gnome-keyring.nix
     ../services/network-manager-applet.nix
     ../services/dunst.nix
 
@@ -68,9 +67,10 @@ in rec {
     rofi-vpn
     rxvt_unicode
     slack
-    spotify
+    spotifywm
     sqlite
     vlc
     zotero
+    ripgrep-all
   ];
 }
