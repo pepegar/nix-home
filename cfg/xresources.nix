@@ -49,9 +49,5 @@
 
 ${pkgs.rescuetime}/bin/rescuetime &
 ${pkgs.feh}/bin/feh --bg-fill --randomize ~/.config/nixpkgs/cfg/wallpapers/img/ &
-${pkgs.rxvt_unicode}/bin/urxvt &
-${pkgs.firefox}/bin/firefox &
-${pkgs.emacs}/bin/emacs &
-${pkgs.slack}/bin/slack &
 '';
 }

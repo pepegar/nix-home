@@ -11,18 +11,21 @@ let
 
 in rec {
   imports = [
+    ../applications/fish
     ../applications/fzf
     ../applications/zsh
     ../applications/neovim
+    ../applications/alacritty
     ../applications/emacs
     ../applications/tmux
     ../applications/direnv
     ../applications/go
     ../applications/rofi
     ../applications/texlive
-    ../applications/i3
+    ../applications/xmonad
 
     ../services/network-manager-applet.nix
+    ../services/polybar.nix
     ../services/dunst.nix
 
     ../cfg/git.nix
@@ -44,8 +47,11 @@ in rec {
 
   home.packages = with pkgs; [
     ag
+    any-nix-shell
+    bat
     clang
     dunst
+    exa
     ghq
     gnome3.nautilus
     gnupg
@@ -53,24 +59,29 @@ in rec {
     heroku
     htop
     libreoffice
-    metals-emacs
-    metals-vim
     mr
     nix-prefetch-scripts
     obs-studio
     openvpn
     pass
     pavucontrol
+    prettyping
     python-with-packages
+    haskellPackages.haskell-language-server
     rescuetime
+    ripgrep-all
+    rnix-lsp
     robo3t
     rofi-vpn
-    rxvt_unicode
     slack
     spotifywm
     sqlite
     vlc
     zotero
-    ripgrep-all
   ];
+
+  home.sessionVariables = {
+    DISPLAY = ":0";
+    EDITOR = "nvim";
+  };
 }

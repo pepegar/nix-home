@@ -1,35 +1,84 @@
 { pkgs, ... }:
 
+let 
+  custom-plugins = pkgs.callPackage ./custom-plugins.nix {
+    inherit (pkgs.vimUtils) buildVimPlugin;
+  };
 
-{
+  plugins = pkgs.vimPlugins // custom-plugins;
+
+  overriddenPlugins = with pkgs; [];
+
+  myVimPlugins = with plugins; [
+    asyncrun-vim            # run async commands, show result in quickfix window
+    coc-metals              # Scala LSP client for CoC
+    coc-nvim                # LSP client + autocompletion plugin
+    coc-yank                # yank plugin for CoC
+    ctrlsf-vim              # edit file in place after searching with ripgrep
+    dhall-vim               # Syntax highlighting for Dhall lang
+    emmet-vim
+    fzf-hoogle              # search hoogle with fzf
+    fzf-vim                 # fuzzy finder
+    ghcid                   # ghcid for Haskell
+    lightline-vim           # configurable status line (can be used by coc)
+    material-vim            # modern theme with true colors support
+    multiple-cursors        # Multiple cursors selection, etc
+    neomake                 # run programs asynchronously and highlight errors
+    nerdcommenter           # code commenter
+    nerdtree                # tree explorer
+    nerdtree-git-plugin     # shows files git status on the NerdTree
+    quickfix-reflector-vim  # make modifications right in the quickfix window
+    rainbow_parentheses-vim # for nested parentheses
+    tender-vim              # a clean dark theme
+    vim-airline             # bottom status bar
+    vim-airline-themes
+    vim-css-color           # preview css colors
+    vim-devicons            # dev icons shown in the tree explorer
+    vim-easy-align          # alignment plugin
+    vim-easymotion          # highlights keys to move quickly
+    vim-fish                # fish shell highlighting
+    vim-fugitive            # git plugin
+    vim-gtfo                # go to terminal or file manager
+    vim-javascript
+    vim-nix                 # nix support (highlighting, etc)
+    vim-repeat              # repeat plugin commands with (.)
+    vim-rhubarb
+    vim-ripgrep             # blazing fast search using ripgrep
+    vim-scala               # scala plugin
+    vim-sensible
+    vim-surround            # quickly edit surroundings (brackets, html tags, etc)
+    vim-tmux                # syntax highlighting for tmux conf file and more
+  ] ++ overriddenPlugins;
+
+  baseConfig    = builtins.readFile ./config.vim;
+  cocConfig     = builtins.readFile ./coc.vim;
+  cocSettings   = builtins.toJSON (import ./coc-settings.nix);
+  pluginsConfig = builtins.readFile ./plugins.vim;
+  vimConfig     = baseConfig + pluginsConfig + cocConfig;
+
+  # neovim-5 nightly stuff
+  neovim-5     = pkgs.callPackage ./dev/nightly.nix {};
+  nvim5-config = builtins.readFile ./dev/metals.vim;
+  new-plugins  = pkgs.callPackage ./dev/plugins.nix {
+    inherit (pkgs.vimUtils) buildVimPlugin;
+    inherit (pkgs) fetchFromGitHub;
+  };
+  nvim5-plugins = with new-plugins; [
+    completion-nvim
+    diagnostic-nvim
+    nvim-lsp
+    nvim-metals
+  ];
+in {
   programs.neovim = {
     enable = true;
     viAlias = true;
-    vimAlias = true;
+    vimAlias = true; 
+    vimdiffAlias = true; 
     withNodeJs = true;
+    withPython = true;
     withPython3 = true;
-    extraPython3Packages = (ps: with ps; [ python-language-server ]);
-    package = pkgs.neovim;
-    plugins = with pkgs.vimPlugins; [
-      jedi-vim
-      vim-surround
-      vim-fugitive
-      vim-rhubarb
-      vim-airline
-      haskell-vim
-      vim-sensible
-      vim-easy-align
-      vim-javascript
-      nerdtree
-      nerdcommenter
-      emmet-vim
-      fzf-vim
-      vim-nix
-      vim-airline-themes
-      coc-nvim
-      vim
-    ];
-
+    plugins = myVimPlugins;
     extraConfig = ''
       " basic config {{{
       set hidden
@@ -55,9 +104,6 @@
       " Some servers have issues with backup files, see #649
       set nobackup
       set nowritebackup
-
-      " Better display for messages
-      set cmdheight=2
 
       " You will have bad experience for diagnostic messages when it's default 4000.
       set updatetime=300
@@ -90,7 +136,7 @@
 
       set foldmethod=marker
 
-      let g:airline_theme='dracula'
+      let g:airline_theme='deus'
       syntax on
 
       set relativenumber
@@ -231,5 +277,9 @@
       au BufRead,BufNewFile *.sbt set filetype=scala
       " }}}
       '';
+  };
+
+  xdg.configFile = {
+    "nvim/coc-settings.json".text = cocSettings;
   };
 }
