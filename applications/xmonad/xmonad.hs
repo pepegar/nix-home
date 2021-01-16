@@ -455,7 +455,7 @@ projects =
             }
   , Project { projectName      = devWs
             , projectDirectory = "~/"
-            , projectStartHook = Just . replicateM_ 3 $ spawn myTerminal
+            , projectStartHook = Just $ spawn myTerminal >> spawn "emacs"
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
