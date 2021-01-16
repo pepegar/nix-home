@@ -454,8 +454,8 @@ projects =
             , projectStartHook = Just $ spawn "firefox"
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/projects/github.com/"
-            , projectStartHook = Just . replicateM_ 3 $ spawn myTerminal >> sendMessage
+            , projectDirectory = "~/"
+            , projectStartHook = Just . replicateM_ 3 $ spawn myTerminal
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"

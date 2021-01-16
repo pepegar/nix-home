@@ -64,6 +64,7 @@ in rec {
     obs-studio
     openvpn
     pass
+    pasystray
     pavucontrol
     prettyping
     python-with-packages

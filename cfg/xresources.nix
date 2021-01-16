@@ -48,6 +48,7 @@
 #!/usr/bin/env sh
 
 ${pkgs.rescuetime}/bin/rescuetime &
+pasystray &
 ${pkgs.feh}/bin/feh --bg-fill --randomize ~/.config/nixpkgs/cfg/wallpapers/img/ &
 '';
 }

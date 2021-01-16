@@ -18,7 +18,7 @@
       };
       font = {
         normal = {
-          family = "PragmataPro";
+          family = "JetBrainsMono Nerd Font";
           style = "Medium";
         };
         size = 11;

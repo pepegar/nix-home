@@ -26,7 +26,6 @@ let
     neomake                 # run programs asynchronously and highlight errors
     nerdcommenter           # code commenter
     nerdtree                # tree explorer
-    nerdtree-git-plugin     # shows files git status on the NerdTree
     quickfix-reflector-vim  # make modifications right in the quickfix window
     rainbow_parentheses-vim # for nested parentheses
     tender-vim              # a clean dark theme
@@ -48,6 +47,8 @@ let
     vim-sensible
     vim-surround            # quickly edit surroundings (brackets, html tags, etc)
     vim-tmux                # syntax highlighting for tmux conf file and more
+    vim-markdown
+    tabular
   ] ++ overriddenPlugins;
 
   baseConfig    = builtins.readFile ./config.vim;
@@ -55,20 +56,6 @@ let
   cocSettings   = builtins.toJSON (import ./coc-settings.nix);
   pluginsConfig = builtins.readFile ./plugins.vim;
   vimConfig     = baseConfig + pluginsConfig + cocConfig;
-
-  # neovim-5 nightly stuff
-  neovim-5     = pkgs.callPackage ./dev/nightly.nix {};
-  nvim5-config = builtins.readFile ./dev/metals.vim;
-  new-plugins  = pkgs.callPackage ./dev/plugins.nix {
-    inherit (pkgs.vimUtils) buildVimPlugin;
-    inherit (pkgs) fetchFromGitHub;
-  };
-  nvim5-plugins = with new-plugins; [
-    completion-nvim
-    diagnostic-nvim
-    nvim-lsp
-    nvim-metals
-  ];
 in {
   programs.neovim = {
     enable = true;
@@ -79,11 +66,14 @@ in {
     withPython = true;
     withPython3 = true;
     plugins = myVimPlugins;
+    package = pkgs.neovim-nightly;
     extraConfig = ''
       " basic config {{{
       set hidden
+      set ignorecase
       let mapleader=" "
       set mouse=a
+      colorscheme material 
 
       set expandtab
 
@@ -129,6 +119,7 @@ in {
       " }}}
       " fzf {{{
       nnoremap <C-p> :Files<cr>
+      nnoremap <C-b> :Buffers<cr>
       nnoremap <C-g> :Commits<cr>
       " }}}
       " appearance {{{

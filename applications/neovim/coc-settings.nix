@@ -24,6 +24,10 @@
       "command" = "rnix-lsp";
       "filetypes" = [ "nix" ];
     };
+
+    "scala" = {
+      "filetypes" = [ "scala" "sbt" ];
+    };
   };
 
   "yank.highlight.duration" = 700;
