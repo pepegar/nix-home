@@ -7,6 +7,7 @@ in {
     nurNoPkgs.repos.rycee.hmModules.emacs-init
     ./core.nix
     ./packages.nix
+    ./editing.nix
     ./languages
   ];
 
