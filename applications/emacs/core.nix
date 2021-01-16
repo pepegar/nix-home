@@ -17,16 +17,36 @@
     };
 
     emacs = {
-      bind = {
-        "C-c C-c" = "comment-or-uncomment-region-or-line";
-      };
+      enable = true;
       config = ''
       (put 'downcase-region 'disabled nil)
       (fset 'yes-or-no-p 'y-or-n-p)
       (load (concat user-emacs-directory "localrc.el") 'noerror)
       '';
 
-      enable = true;
+      bind = {
+        "C-c C-c" = "comment-or-uncomment-region-or-line";
+      };
+
+      extraConfig = ''
+      :custom
+      (make-backup-files nil)
+      (c-basic-offset 2)
+      (tab-width 2)
+      (tab-always-indent nil)
+      (indent-tabs-mode nil)
+      (show-paren-mode t)
+      (electric-pair-mode t)
+      (delete-selection-mode t)
+      (global-auto-revert-mode t)
+      (custom-file null-device "Do not store customizations")
+      ; Smooth scrolling
+      (redisplay-dont-pause t)
+      (scroll-margin 5)
+      (scroll-step 1)
+      (scroll-conservatively 10000)
+      (scroll-preserve-screen-position t)
+      '';
     };
 
     mwim = {
