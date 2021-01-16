@@ -7,7 +7,6 @@ with pkgs;
     macrostep.enable = true;
     general.enable = true;
     hydra.enable = true;
-    initchart.enable = true;
 
     restart-emacs.enable = true;
     restart-emacs.command = [ "restart-emacs" ];
@@ -51,16 +50,37 @@ with pkgs;
       command = [
         "consult-buffer"
       ];
-      extraConfig = ''
-        :general
-        ("C-s" 'consult-line)
-        ("C-h a" 'consult-apropos)
-      '';
+      bind = {
+        "C-x C-b" = "consult-buffer";
+        "C-s" = "consult-line";
+      };
     };
 
     consult-selectrum = {
       enable = true;
       hook = [ "(consult-mode . (lambda () (require 'consult-selectrum)))" ];
+    };
+
+    embark = {
+      enable = true;
+      bind = {
+        "C-," = "embark-act";
+      };
+    };
+
+    marginalia = {
+      enable = true;
+      config = ''
+        ;; Must be in the :init section of use-package such that the mode gets
+        ;; enabled right away. Note that this forces loading the package.
+        (marginalia-mode)
+
+        ;; When using Selectrum, ensure that Selectrum is refreshed when cycling annotations.
+        (advice-add #'marginalia-cycle :after
+                    (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
+
+        (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+     '';
     };
 
     projectile = {
@@ -76,9 +96,28 @@ with pkgs;
         (projectile-sort-order 'recentf-active)
         (projectile-enable-caching t)
       '';
+      bind = {
+        "C-c a g" = "projectile-ripgrep";
+        "C-c p h" = "projectile-find-file";
+        "C-c p r" = "projectile-replace";
+        "C-c p v" = "projectile-vc";
+        "C-c p p" = "projectile-switch-project";
+      };
+
     };
 
-    envrc.enable = true;
+    envrc = {
+      enable = true;
+      demand = true;
+      config = ''
+      (envrc-global-mode)
+      (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)
+      (define-key envrc-command-map (kbd "R") 'envrc-reload-all)
+    '';
+      extraPackages = [
+        direnv
+      ];
+    };
 
     magit = {
       enable = true;
