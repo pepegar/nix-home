@@ -16,30 +16,20 @@
       (require 'pkg-info)
     '';
 
-    company = {
-      enable = true;
-      extraConfig = ''
-        :general
-        (:keymaps 'company-active-map
-          "C-n" 'company-select-next
-          "C-p" 'company-select-previous)
-      '';
-    };
-
     yasnippet.enable = true;
     yasnippet.defer = true;
 
     lsp-ui = {
       enable = true;
-      config = ''
-  (lsp-ui-doc-enable t)
-  (lsp-ui-doc-include-signture t)
-  (lsp-ui-doc-position 'top)
-  (lsp-ui-sideline-enable nil)
-'';
       command = ["lsp-ui-mode"];
+      extraConfig = ''
+       :custom
+       (lsp-ui-doc-enable t)
+       (lsp-ui-doc-include-signture t)
+       (lsp-ui-doc-position 'top)
+       (lsp-ui-sideline-enable nil)
+     '';
     };
-
 
     lsp-mode = {
       enable = true;
@@ -47,11 +37,36 @@
         "(lsp-mode . lsp-enable-which-key-integration)"
       ];
       command = ["lsp"];
+      extraConfig = ''
+        :custom
+        (lsp-prefer-flymake t)
+        (lsp-enable-snippet nil)
+      '';
     };
 
     lsp-treemacs = {
       enable = true;
       command = ["lsp-treemacs-errors-list"];
+    };
+
+    company = {
+      enable = true;
+      extraConfig = ''
+        :bind (("M-/" . company-complete)
+               :map company-active-map
+               ("C-p" . company-select-previous)
+               ("C-n" . company-select-next)
+               ("<tab>" . company-complete-common-or-cycle))
+        :custom
+        (company-idle-delay 0)
+        (company-echo-delay 0)
+        (company-minimum-prefix-length 0)
+        (company-tooltip-limit 12)
+        (company-tooltip-align-annotations t)
+        (company-show-numbers t)
+        (company-dabbrev-downcase nil)
+        (company-dabbrev-ignore-case t)
+      '';
     };
 
     company-lsp = {
@@ -64,5 +79,13 @@
 '';
     };
 
+    dap-mode = {
+      enable = true;
+      after = ["lsp-mode"];
+      config = ''
+        (dap-mode t)
+        ;;(dap-ui-mode t)
+      '';
+    };
   };
 }
