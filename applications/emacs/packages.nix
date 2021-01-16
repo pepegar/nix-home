@@ -75,7 +75,6 @@ with pkgs;
         (projectile-indexing-method 'alien)
         (projectile-sort-order 'recentf-active)
         (projectile-enable-caching t)
-        (projectile-project-search-path '("~/projects/github.com/" "~/.config/"))
       '';
     };
 
@@ -151,15 +150,6 @@ with pkgs;
         (doom-modeline-height 1)
         (doom-modeline-bar-width 3)
         (doom-modeline-buffer-file-name-style 'truncate-with-project)
-      '';
-    };
-
-    parrot = {
-      enable = true;
-      config = "(parrot-mode 1)";
-      extraConfig = ''
-        :custom
-        (parrot-num-rotations 10)
       '';
     };
 
