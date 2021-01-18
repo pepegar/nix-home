@@ -48,6 +48,12 @@ with pkgs;
 
     consult = {
       enable = true;
+      package = epkgs: epkgs.consult.overrideAttrs (drv: {
+        src = fetchGit {
+          url = git://github.com/minad/consult.git;
+          rev = "4fa902e9a86b67e7bf56a79f8b575fd3ecfa7aa8";
+        };
+      });
       command = [
         "consult-buffer"
       ];
