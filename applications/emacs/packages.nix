@@ -58,12 +58,6 @@ with pkgs;
 
     consult = {
       enable = true;
-      # package = epkgs: epkgs.consult.overrideAttrs (drv: {
-      #   src = fetchGit {
-      #     url = git://github.com/minad/consult.git;
-      #     rev = "4fa902e9a86b67e7bf56a79f8b575fd3ecfa7aa8";
-      #   };
-      # });
       command = [
         "consult-buffer"
       ];
@@ -120,6 +114,11 @@ with pkgs;
         (projectile-indexing-method 'alien)
         (projectile-sort-order 'recentf-active)
         (projectile-enable-caching t)
+        (projectile-project-search-path '(
+          "~/projects/github.com/47deg/"
+          "~/projects/github.com/higherkindness/"
+          "~/projects/github.com/pepegar/"
+           "~/.config/"))
       '';
       bind = {
         "C-c p h" = "projectile-find-file";
@@ -127,7 +126,6 @@ with pkgs;
         "C-c p v" = "projectile-vc";
         "C-c p p" = "projectile-switch-project";
       };
-
     };
 
     envrc = {
