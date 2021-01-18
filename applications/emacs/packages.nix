@@ -58,6 +58,7 @@ with pkgs;
 
     consult = {
       enable = true;
+      after = [ "projectile" ];
       command = [
         "consult-buffer"
       ];
@@ -66,10 +67,15 @@ with pkgs;
         "C-s" = "consult-line";
         "C-c a g" = "consult-ripgrep";
       };
+      config = ''
+        (autoload 'projectile-project-root "projectile")
+        (setq consult-project-root-function #'projectile-project-root)
+      '';
     };
 
     consult-selectrum = {
       enable = true;
+      after = [ "consult" "selectrum" ];
       hook = [ "(consult-mode . (lambda () (require 'consult-selectrum)))" ];
     };
 
