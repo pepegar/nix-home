@@ -1,8 +1,10 @@
 { pkgs, ... }:
 
 let
-  nurNoPkgs = import (import ../../nix/sources.nix).nur { };
+  sources = import ../../nix/sources.nix;
+  nurNoPkgs = import sources.nur { };
 in {
+
   imports = [
     nurNoPkgs.repos.rycee.hmModules.emacs-init
     ./core.nix
@@ -10,6 +12,11 @@ in {
     ./editing.nix
     ./languages
   ];
+
+  nixpkgs.overlays = [
+    (import sources.emacs-overlay)
+  ];
+
 
   programs.emacs = {
     enable = true;
