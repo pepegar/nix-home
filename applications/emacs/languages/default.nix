@@ -134,11 +134,31 @@
 
     dap-mode = {
       enable = true;
-      after = ["lsp-mode"];
+      after = [
+        "lsp-mode"
+        "dap-ui"
+        "dap-mouse"
+      ];
+      command = [ "dap-mode" "dap-auto-configure-mode" ];
       config = ''
-        (dap-mode t)
-        ;;(dap-ui-mode t)
-      '';
+          (dap-auto-configure-mode)
+        '';
     };
+
+    dap-ui = {
+      enable = true;
+      command = [ "dap-ui-mode" ];
+      config = ''
+          (dap-ui-mode t)
+        '';
+    };
+
+    dap-mouse = {
+      enable = true;
+      config = ''
+        (dap-tooltip-mode t)
+        '';
+    };
+
   };
 }
