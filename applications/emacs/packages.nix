@@ -4,6 +4,16 @@ with pkgs;
 {
   programs.emacs.init.usePackage = {
 
+    use-package = {
+      enable = true;
+      package = epkgs: epkgs.use-package.overrideAttrs (drv: {
+        src = fetchGit {
+          url = git://github.com/jwiegley/use-package.git;
+          rev = "caa92f1d64fc25480551757d854b4b49981dfa6b";
+        };
+      });
+    };
+
     macrostep.enable = true;
     general.enable = true;
     hydra.enable = true;
@@ -48,18 +58,19 @@ with pkgs;
 
     consult = {
       enable = true;
-      package = epkgs: epkgs.consult.overrideAttrs (drv: {
-        src = fetchGit {
-          url = git://github.com/minad/consult.git;
-          rev = "4fa902e9a86b67e7bf56a79f8b575fd3ecfa7aa8";
-        };
-      });
+      # package = epkgs: epkgs.consult.overrideAttrs (drv: {
+      #   src = fetchGit {
+      #     url = git://github.com/minad/consult.git;
+      #     rev = "4fa902e9a86b67e7bf56a79f8b575fd3ecfa7aa8";
+      #   };
+      # });
       command = [
         "consult-buffer"
       ];
       bind = {
         "C-x C-b" = "consult-buffer";
         "C-s" = "consult-line";
+        "C-c a g" = "consult-ripgrep";
       };
     };
 
@@ -73,6 +84,13 @@ with pkgs;
       bind = {
         "C-," = "embark-act";
       };
+    };
+
+    embark-consult = {
+      enable = true;
+      after = ["embark" "consult"];
+      demand = true;
+      hook = [ "(embark-collect-mode . embark-consult-preview-minor-mode)" ];
     };
 
     marginalia = {
@@ -104,7 +122,6 @@ with pkgs;
         (projectile-enable-caching t)
       '';
       bind = {
-        "C-c a g" = "projectile-ripgrep";
         "C-c p h" = "projectile-find-file";
         "C-c p r" = "projectile-replace";
         "C-c p v" = "projectile-vc";
@@ -220,34 +237,5 @@ with pkgs;
 
     ebib.enable = true;
     ebib.command = [ "ebib" ];
-
-    dashboard = {
-      enable = true;
-      extraConfig = ''
-  :custom
-  (dashboard-startup-banner 'logo)
-  (dashboard-banner-logo-title "The One True Editor, Emacs")
-  (dashboard-set-heading-icons t)
-  (dashboard-set-file-icons t)
-  (dashboard-set-init-info nil)
-  (dashboard-set-navigator t)
-  (dashboard-footer-icon (cond ((display-graphic-p)
-                                (all-the-icons-faicon "code" :height 1.5 :v-adjust -0.1 :face 'error))
-                               (t (propertize ">" 'face 'font-lock-doc-face))))
-'';
-      config = ''
-      (defun dashboard-load-packages (list-size)
-      (insert (make-string (ceiling (max 0 (- dashboard-banner-length 38)) 2) ? )
-              (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
-
-      (add-to-list 'dashboard-item-generators '(packages . dashboard-load-packages))
-
-      (setq dashboard-items '((packages)
-                          (projects . 10)
-                          (recents . 10)))
-      (dashboard-setup-startup-hook)
-      '';
-    };
-
   };
 }
