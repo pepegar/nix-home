@@ -7,6 +7,7 @@ with pkgs;
     macrostep.enable = true;
     general.enable = true;
     hydra.enable = true;
+    ripgrep.enable = true;
 
     restart-emacs.enable = true;
     restart-emacs.command = [ "restart-emacs" ];
