@@ -7,6 +7,8 @@
     ./jupyter
     ./restclient
     ./org
+    ./haskell
+    ./rust
   ];
 
   programs.emacs.init.usePackage = {
