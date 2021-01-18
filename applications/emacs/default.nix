@@ -17,7 +17,6 @@ in {
     (import sources.emacs-overlay)
   ];
 
-
   programs.emacs = {
     enable = true;
     init = {
@@ -38,6 +37,8 @@ in {
       (set-face-attribute 'variable-pitch
                           nil
                           :family "DejaVu Sans")
+
+      (global-set-key (kbd "C-c C-c") 'comment-or-uncomment-region)
       '';
     };
   };

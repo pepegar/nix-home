@@ -34,19 +34,17 @@
     lsp-ui = {
       enable = true;
       command = [ "lsp-ui-mode" ];
-      bindLocal = {
-        lsp-mode-map = {
-          "C-c r d" = "lsp-ui-doc-glance";
-          "C-c f s" = "lsp-ui-find-workspace-symbol";
-        };
+      bind = {
+        "C-c r d" = "lsp-ui-doc-glance";
+        "C-c f s" = "lsp-ui-find-workspace-symbol";
       };
       config = ''
           (setq lsp-ui-sideline-enable t
-                lsp-ui-sideline-show-symbol nil
-                lsp-ui-sideline-show-hover nil
-                lsp-ui-sideline-show-code-actions nil
+                ;;lsp-ui-sideline-show-symbol nil
+                ;;lsp-ui-sideline-show-hover nil
+                ;;lsp-ui-sideline-show-code-actions nil
                 lsp-ui-sideline-update-mode 'point)
-          (setq lsp-ui-doc-enable nil
+          (setq ;;lsp-ui-doc-enable nil
                 lsp-ui-doc-position 'at-point
                 lsp-ui-doc-max-width 120
                 lsp-ui-doc-max-height 15)
@@ -85,17 +83,8 @@
           "C-c f r" = "lsp-find-references";
         };
       };
-      init = ''
-          (setq lsp-keymap-prefix "C-c l")
-        '';
       config = ''
-          (setq lsp-diagnostics-provider :flycheck
-                lsp-eldoc-render-all nil
-                lsp-headerline-breadcrumb-enable nil
-                lsp-modeline-code-actions-enable nil
-                lsp-modeline-diagnostics-enable nil
-                lsp-modeline-workspace-status-enable nil)
-          (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+        (setq lsp-diagnostics-provider :flycheck)
         '';
     };
 

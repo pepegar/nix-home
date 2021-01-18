@@ -132,6 +132,9 @@ with pkgs;
         "C-c p v" = "projectile-vc";
         "C-c p p" = "projectile-switch-project";
       };
+      config = ''
+        (setq ad-redefinition-action 'accept)
+        '';
     };
 
     envrc = {
@@ -185,7 +188,7 @@ with pkgs;
     doom-themes = {
       enable = true;
       config = ''
-        (load-theme 'doom-opera t)
+        (load-theme 'tango)
         (require 'doom-themes-ext-treemacs)
         (doom-themes-treemacs-config)
       '';

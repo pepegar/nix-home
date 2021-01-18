@@ -24,10 +24,6 @@
       (load (concat user-emacs-directory "localrc.el") 'noerror)
       '';
 
-      bind = {
-        "C-c C-c" = "comment-or-uncomment-region-or-line";
-      };
-
       extraConfig = ''
       :custom
       (make-backup-files nil)

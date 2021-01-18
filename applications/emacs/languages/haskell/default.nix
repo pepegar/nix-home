@@ -7,9 +7,7 @@
       defer = true;
       hook = [
         ''
-           (haskell-mode . (lambda ()
-                             (direnv-update-environment)
-                             (lsp)))
+           (haskell-mode . lsp-deferred)
          ''
       ];
     };

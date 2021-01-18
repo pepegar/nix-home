@@ -1,4 +1,4 @@
-{...}:
+{ pkgs, ... }:
 
 {
   programs.emacs.init.usePackage = {
@@ -6,14 +6,11 @@
 
     lsp-rust = {
       enable = true;
-      defer = true;
-      hook = [
-        ''
-            (rust-mode . (lambda ()
-                           (direnv-update-environment)
-                           (lsp)))
-          ''
+      extraPackages = [
+        pkgs.rust-analyzer
       ];
+      defer = true;
+      hook = [ "(rust-mode . lsp-deferred)" ];
     };
 
   };
