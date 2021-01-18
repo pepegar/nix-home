@@ -19,7 +19,6 @@
  '((emacs-lisp . t)
    (shell . t)
    (python . t)
-   (julia . t)
    (jupyter . t)
    (restclient . t)))
 
