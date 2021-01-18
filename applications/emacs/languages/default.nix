@@ -9,6 +9,13 @@
 
   programs.emacs.init.usePackage = {
 
+    rainbow-delimiters = {
+      enable = true;
+      hook = [
+        "(prog-mode . rainbow-delimiters-mode)"
+      ];
+    };
+
     smartparens.enable = true;
     smartparens.config = "(require 'smartparens-config)";
 
