@@ -4,6 +4,7 @@
     ./nix
     ./scala
     ./python
+    ./org
   ];
 
   programs.emacs.init.usePackage = {
