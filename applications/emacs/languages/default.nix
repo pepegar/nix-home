@@ -1,14 +1,15 @@
 {...}: {
 
   imports = [
-    ./nix
-    ./scala
-    ./python
-    ./jupyter
-    ./restclient
-    ./org
     ./haskell
+    ./jupyter
+    ./markdown
+    ./nix
+    ./org
+    ./python
+    ./restclient
     ./rust
+    ./scala
   ];
 
   programs.emacs.init.usePackage = {
