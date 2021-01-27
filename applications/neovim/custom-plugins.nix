@@ -28,30 +28,4 @@
     };
   };
 
-  material-vim = buildVimPlugin {
-    name = "material-vim";
-    src = builtins.fetchTarball {
-      name   = "material-vim-2020-10-21";
-      url    = "https://github.com/kaicataldo/material.vim/archive/7a725ae.tar.gz";
-      sha256 = "0nd3qvwpcbvawc6zaczzzyq0mxgfn7bfv36yw05f03rqipgfw6fn";
-    };
-  };
-
-  vim-gtfo = buildVimPlugin {
-    name = "vim-gtfo";
-    src = builtins.fetchTarball {
-      name   = "Vim-Gtfo-v2.0.0";
-      url    = "https://github.com/justinmk/vim-gtfo/archive/2.0.0.tar.gz";
-      sha256 = "0zq3pjdiahpq53g27rdd5jjfrz8kddqvm1jpsdqamkd1rjvrwr1y";
-    };
-  };
-
-  vim-ripgrep = buildVimPlugin {
-    name = "vim-ripgrep";
-    src = builtins.fetchTarball {
-      name   = "RipGrep-v1.0.2";
-      url    = "https://github.com/jremmen/vim-ripgrep/archive/v1.0.2.tar.gz";
-      sha256 = "1by56rflr0bmnjvcvaa9r228zyrmxwfkzkclxvdfscm7l7n7jnmh";
-    };
-  };
 }
