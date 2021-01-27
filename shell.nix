@@ -8,6 +8,7 @@ let
     hooks = { nixfmt.enable = true; };
   };
 in pkgs.mkShell {
+  buildInputs = [ pkgs.nixfmt ];
   shellHook = ''
     ${pre-commit-check.shellHook}
   '';

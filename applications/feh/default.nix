@@ -1,7 +1,1 @@
-{ pkgs, ... }:
-
-{
-  programs.feh = {
-    enable = true;
-  }
-}
+{ pkgs, ... }: { programs.feh = { enable = true; }; }

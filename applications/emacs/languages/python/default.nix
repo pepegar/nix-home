@@ -1,5 +1,4 @@
-{ config, pkgs, lib, ... }:
-{
+{ config, pkgs, lib, ... }: {
   programs.emacs.init.usePackage = {
     python-mode = {
       enable = true;

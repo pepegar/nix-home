@@ -1,17 +1,17 @@
 { pkgs, ... }:
 
-with pkgs;
-{
+with pkgs; {
   programs.emacs.init.usePackage = {
 
     use-package = {
       enable = true;
-      package = epkgs: epkgs.use-package.overrideAttrs (drv: {
-        src = fetchGit {
-          url = git://github.com/jwiegley/use-package.git;
-          rev = "caa92f1d64fc25480551757d854b4b49981dfa6b";
-        };
-      });
+      package = epkgs:
+        epkgs.use-package.overrideAttrs (drv: {
+          src = fetchGit {
+            url = "git://github.com/jwiegley/use-package.git";
+            rev = "caa92f1d64fc25480551757d854b4b49981dfa6b";
+          };
+        });
     };
 
     macrostep.enable = true;
@@ -59,9 +59,7 @@ with pkgs;
     consult = {
       enable = true;
       after = [ "projectile" ];
-      command = [
-        "consult-buffer"
-      ];
+      command = [ "consult-buffer" ];
       bind = {
         "C-x C-b" = "consult-buffer";
         "C-s" = "consult-line";
@@ -81,14 +79,12 @@ with pkgs;
 
     embark = {
       enable = true;
-      bind = {
-        "C-," = "embark-act";
-      };
+      bind = { "C-," = "embark-act"; };
     };
 
     embark-consult = {
       enable = true;
-      after = ["embark" "consult"];
+      after = [ "embark" "consult" ];
       demand = true;
       hook = [ "(embark-collect-mode . embark-consult-preview-minor-mode)" ];
     };
@@ -105,15 +101,12 @@ with pkgs;
                     (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
 
         (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
-     '';
+      '';
     };
 
     projectile = {
       enable = true;
-      extraPackages = [
-        fd
-        ripgrep
-      ];
+      extraPackages = [ fd ripgrep ];
       hook = [ "(selectrum-mode . projectile-mode)" ];
       extraConfig = ''
         :custom
@@ -135,20 +128,18 @@ with pkgs;
       };
       config = ''
         (setq ad-redefinition-action 'accept)
-        '';
+      '';
     };
 
     envrc = {
       enable = true;
       demand = true;
       config = ''
-      (envrc-global-mode)
-      (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)
-      (define-key envrc-command-map (kbd "R") 'envrc-reload-all)
-    '';
-      extraPackages = [
-        direnv
-      ];
+        (envrc-global-mode)
+        (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)
+        (define-key envrc-command-map (kbd "R") 'envrc-reload-all)
+      '';
+      extraPackages = [ direnv ];
     };
 
     magit = {
@@ -163,10 +154,7 @@ with pkgs;
 
     treemacs = {
       enable = true;
-      command = [
-        "treemacs"
-        "treemacs-select-window"
-      ];
+      command = [ "treemacs" "treemacs-select-window" ];
       config = ''
         (treemacs-git-mode 'deferred)
         (require 'treemacs-magit)

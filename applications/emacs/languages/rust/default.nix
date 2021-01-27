@@ -6,9 +6,7 @@
 
     lsp-rust = {
       enable = true;
-      extraPackages = [
-        pkgs.rust-analyzer
-      ];
+      extraPackages = [ pkgs.rust-analyzer ];
       defer = true;
       hook = [ "(rust-mode . lsp-deferred)" ];
     };

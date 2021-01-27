@@ -15,14 +15,13 @@ let
     set -g theme_color_scheme solarized
   '';
 
-  fishPlugins = pkgs.callPackage ./plugins.nix {};
+  fishPlugins = pkgs.callPackage ./plugins.nix { };
 
   fishConfig = ''
     bind \t accept-autosuggestion
     set fish_greeting
   '' + fzfConfig + themeConfig;
-in
-{
+in {
   programs.fish = {
     enable = true;
     plugins = [ fishPlugins.theme ];
@@ -31,14 +30,14 @@ in
       any-nix-shell fish --info-right | source
     '';
     shellAliases = {
-      cat  = "bat";
-      du   = "ncdu --color dark -rr -x";
-      g    = "git";
-      gst  = "git status";
-      ls   = "exa";
-      ll   = "ls -a";
-      vin   = "cd ~/.config/nixpkgs & nvim";
-      vix   = "cd ~/.config/nixpkgs & nvim applications/xmonad/xmonad.hs";
+      cat = "bat";
+      du = "ncdu --color dark -rr -x";
+      g = "git";
+      gst = "git status";
+      ls = "exa";
+      ll = "ls -a";
+      vin = "cd ~/.config/nixpkgs & nvim";
+      vix = "cd ~/.config/nixpkgs & nvim applications/xmonad/xmonad.hs";
       ".." = "cd ..";
       ping = "prettyping";
     };

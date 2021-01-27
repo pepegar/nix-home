@@ -1,15 +1,13 @@
-{...}:
+{ ... }:
 
 {
   programs.emacs.init.usePackage = {
     lsp-haskell = {
       enable = true;
       defer = true;
-      hook = [
-        ''
-           (haskell-mode . lsp-deferred)
-         ''
-      ];
+      hook = [''
+        (haskell-mode . lsp-deferred)
+      ''];
     };
 
     haskell-mode = {
@@ -21,18 +19,16 @@
         ''("\\.cpphs\\'" . haskell-mode)''
         ''("\\.lhs\\'" . haskell-literate-mode)''
       ];
-      hook = [
-        ''(haskell-mode . subword-mode)''
-      ];
+      hook = [ "(haskell-mode . subword-mode)" ];
       config = ''
-          (setq tab-width 2)
+        (setq tab-width 2)
 
-          (setq haskell-process-log t
-                haskell-notify-p t)
+        (setq haskell-process-log t
+              haskell-notify-p t)
 
-          (setq haskell-process-args-cabal-repl
-                '("--ghc-options=+RTS -M500m -RTS -ferror-spans -fshow-loaded-modules"))
-        '';
+        (setq haskell-process-args-cabal-repl
+              '("--ghc-options=+RTS -M500m -RTS -ferror-spans -fshow-loaded-modules"))
+      '';
     };
 
     haskell-cabal = {

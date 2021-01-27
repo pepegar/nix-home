@@ -7,52 +7,53 @@ let
 
   plugins = pkgs.vimPlugins // custom-plugins;
 
-  overriddenPlugins = with pkgs; [];
+  overriddenPlugins = with pkgs; [ ];
 
-  myVimPlugins = with plugins; [
-    asyncrun-vim            # run async commands, show result in quickfix window
-    coc-metals              # Scala LSP client for CoC
-    coc-nvim                # LSP client + autocompletion plugin
-    coc-yank                # yank plugin for CoC
-    ctrlsf-vim              # edit file in place after searching with ripgrep
-    dhall-vim               # Syntax highlighting for Dhall lang
-    emmet-vim
-    fzf-hoogle              # search hoogle with fzf
-    fzf-vim                 # fuzzy finder
-    ghcid                   # ghcid for Haskell
-    lightline-vim           # configurable status line (can be used by coc)
-    multiple-cursors        # Multiple cursors selection, etc
-    neomake                 # run programs asynchronously and highlight errors
-    nerdcommenter           # code commenter
-    nerdtree                # tree explorer
-    quickfix-reflector-vim  # make modifications right in the quickfix window
-    rainbow_parentheses-vim # for nested parentheses
-    tender-vim              # a clean dark theme
-    vim-airline             # bottom status bar
-    vim-airline-themes
-    vim-css-color           # preview css colors
-    vim-devicons            # dev icons shown in the tree explorer
-    vim-easy-align          # alignment plugin
-    vim-easymotion          # highlights keys to move quickly
-    vim-fish                # fish shell highlighting
-    vim-fugitive            # git plugin
-    vim-javascript
-    vim-nix                 # nix support (highlighting, etc)
-    vim-repeat              # repeat plugin commands with (.)
-    vim-rhubarb
-    vim-scala               # scala plugin
-    vim-sensible
-    vim-surround            # quickly edit surroundings (brackets, html tags, etc)
-    vim-tmux                # syntax highlighting for tmux conf file and more
-    vim-markdown
-    tabular
-  ] ++ overriddenPlugins;
+  myVimPlugins = with plugins;
+    [
+      asyncrun-vim # run async commands, show result in quickfix window
+      coc-metals # Scala LSP client for CoC
+      coc-nvim # LSP client + autocompletion plugin
+      coc-yank # yank plugin for CoC
+      ctrlsf-vim # edit file in place after searching with ripgrep
+      dhall-vim # Syntax highlighting for Dhall lang
+      emmet-vim
+      fzf-hoogle # search hoogle with fzf
+      fzf-vim # fuzzy finder
+      ghcid # ghcid for Haskell
+      lightline-vim # configurable status line (can be used by coc)
+      multiple-cursors # Multiple cursors selection, etc
+      neomake # run programs asynchronously and highlight errors
+      nerdcommenter # code commenter
+      nerdtree # tree explorer
+      quickfix-reflector-vim # make modifications right in the quickfix window
+      rainbow_parentheses-vim # for nested parentheses
+      tender-vim # a clean dark theme
+      vim-airline # bottom status bar
+      vim-airline-themes
+      vim-css-color # preview css colors
+      vim-devicons # dev icons shown in the tree explorer
+      vim-easy-align # alignment plugin
+      vim-easymotion # highlights keys to move quickly
+      vim-fish # fish shell highlighting
+      vim-fugitive # git plugin
+      vim-javascript
+      vim-nix # nix support (highlighting, etc)
+      vim-repeat # repeat plugin commands with (.)
+      vim-rhubarb
+      vim-scala # scala plugin
+      vim-sensible
+      vim-surround # quickly edit surroundings (brackets, html tags, etc)
+      vim-tmux # syntax highlighting for tmux conf file and more
+      vim-markdown
+      tabular
+    ] ++ overriddenPlugins;
 
-  baseConfig    = builtins.readFile ./config.vim;
-  cocConfig     = builtins.readFile ./coc.vim;
-  cocSettings   = builtins.toJSON (import ./coc-settings.nix);
+  baseConfig = builtins.readFile ./config.vim;
+  cocConfig = builtins.readFile ./coc.vim;
+  cocSettings = builtins.toJSON (import ./coc-settings.nix);
   pluginsConfig = builtins.readFile ./plugins.vim;
-  vimConfig     = baseConfig + pluginsConfig + cocConfig;
+  vimConfig = baseConfig + pluginsConfig + cocConfig;
 in {
   programs.neovim = {
     enable = true;
@@ -264,10 +265,8 @@ in {
       " Scala {{{
       au BufRead,BufNewFile *.sbt set filetype=scala
       " }}}
-      '';
+    '';
   };
 
-  xdg.configFile = {
-    "nvim/coc-settings.json".text = cocSettings;
-  };
+  xdg.configFile = { "nvim/coc-settings.json".text = cocSettings; };
 }

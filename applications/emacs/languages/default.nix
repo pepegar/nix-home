@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
 
   imports = [
     ./haskell
@@ -16,9 +16,7 @@
 
     rainbow-delimiters = {
       enable = true;
-      hook = [
-        "(prog-mode . rainbow-delimiters-mode)"
-      ];
+      hook = [ "(prog-mode . rainbow-delimiters-mode)" ];
     };
 
     smartparens.enable = true;
@@ -37,10 +35,8 @@
         "M-p" = "flycheck-previous-error";
       };
       init = ''(setq ispell-program-name "aspell")'';
-      config = "
-      (require 'pkg-info)
-      (global-flycheck-mode t)
-      ";
+      config =
+        "\n      (require 'pkg-info)\n      (global-flycheck-mode t)\n      ";
     };
 
     lsp-headerline = {
@@ -70,7 +66,7 @@
       ];
       config = ''
         (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
-        '';
+      '';
       bindLocal = {
         lsp-mode-map = {
           "C-c r r" = "lsp-rename";
@@ -86,7 +82,7 @@
         (lsp-diagnostics-provider :flycheck)
         (lsp-prefer-flymake nil)
         (lsp-file-watch-threshold 30000)
-        '';
+      '';
     };
 
     lsp-ui = {
@@ -104,7 +100,7 @@
         (lsp-ui-doc-include-signture t)
         (lsp-ui-doc-position 'top)
         (lsp-ui-sideline-enable nil)
-        '';
+      '';
     };
 
     lsp-ui-flycheck = {
@@ -125,7 +121,7 @@
     lsp-treemacs = {
       enable = true;
       after = [ "lsp-mode" ];
-      command = ["lsp-treemacs-errors-list"];
+      command = [ "lsp-treemacs-errors-list" ];
     };
 
     company = {
@@ -157,7 +153,7 @@
 
     company-lsp = {
       enable = true;
-      after = [ "company-mode" "lsp-mode"];
+      after = [ "company-mode" "lsp-mode" ];
       config = ''
         (company-lsp-cache-candidates nil)
         (company-lsp-async t)
@@ -167,30 +163,26 @@
 
     dap-mode = {
       enable = true;
-      after = [
-        "lsp-mode"
-        "dap-ui"
-        "dap-mouse"
-      ];
+      after = [ "lsp-mode" "dap-ui" "dap-mouse" ];
       command = [ "dap-mode" "dap-auto-configure-mode" ];
       config = ''
-          (dap-auto-configure-mode)
-        '';
+        (dap-auto-configure-mode)
+      '';
     };
 
     dap-ui = {
       enable = true;
       command = [ "dap-ui-mode" ];
       config = ''
-          (dap-ui-mode t)
-        '';
+        (dap-ui-mode t)
+      '';
     };
 
     dap-mouse = {
       enable = true;
       config = ''
         (dap-tooltip-mode t)
-        '';
+      '';
     };
 
   };

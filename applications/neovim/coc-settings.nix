@@ -25,9 +25,7 @@
       "filetypes" = [ "nix" ];
     };
 
-    "scala" = {
-      "filetypes" = [ "scala" "sbt" ];
-    };
+    "scala" = { "filetypes" = [ "scala" "sbt" ]; };
   };
 
   "yank.highlight.duration" = 700;
