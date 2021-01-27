@@ -8,7 +8,8 @@ jobs:
       with:
         submodules: true
     - uses: cachix/install-nix-action@v12
-    - run: nix-channel --add https://nixos.org/channels/nixos-20.09 nixos
+      with:
+        nix_path: nixpkgs=channel:nixos-20.09
     - run: mkdir -p ~/.config/nixpkgs
     - run: cp -R * ~/.config/nixpkgs
     - run: ln -s ~/.config/nixpkgs/machines/lisa.nix ~/.config/nixpkgs/home.nix
