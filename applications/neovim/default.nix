@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-let 
+let
   custom-plugins = pkgs.callPackage ./custom-plugins.nix {
     inherit (pkgs.vimUtils) buildVimPlugin;
   };
@@ -21,7 +21,6 @@ let
     fzf-vim                 # fuzzy finder
     ghcid                   # ghcid for Haskell
     lightline-vim           # configurable status line (can be used by coc)
-    material-vim            # modern theme with true colors support
     multiple-cursors        # Multiple cursors selection, etc
     neomake                 # run programs asynchronously and highlight errors
     nerdcommenter           # code commenter
@@ -37,12 +36,10 @@ let
     vim-easymotion          # highlights keys to move quickly
     vim-fish                # fish shell highlighting
     vim-fugitive            # git plugin
-    vim-gtfo                # go to terminal or file manager
     vim-javascript
     vim-nix                 # nix support (highlighting, etc)
     vim-repeat              # repeat plugin commands with (.)
     vim-rhubarb
-    vim-ripgrep             # blazing fast search using ripgrep
     vim-scala               # scala plugin
     vim-sensible
     vim-surround            # quickly edit surroundings (brackets, html tags, etc)
@@ -60,8 +57,8 @@ in {
   programs.neovim = {
     enable = true;
     viAlias = true;
-    vimAlias = true; 
-    vimdiffAlias = true; 
+    vimAlias = true;
+    vimdiffAlias = true;
     withNodeJs = true;
     withPython = true;
     withPython3 = true;
@@ -73,7 +70,7 @@ in {
       set ignorecase
       let mapleader=" "
       set mouse=a
-      colorscheme material 
+      colorscheme material
 
       set expandtab
 
