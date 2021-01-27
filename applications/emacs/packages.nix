@@ -124,6 +124,7 @@ with pkgs;
           "~/projects/github.com/47deg/"
           "~/projects/github.com/higherkindness/"
           "~/projects/github.com/pepegar/"
+          "~/projects/github.com/app-2020/"
            "~/.config/"))
       '';
       bind = {
@@ -153,6 +154,11 @@ with pkgs;
     magit = {
       enable = true;
       command = [ "magit-status" ];
+    };
+
+    forge = {
+      enable = true;
+      after = [ "magit" ];
     };
 
     treemacs = {

@@ -35,6 +35,7 @@
       (electric-pair-mode t)
       (delete-selection-mode t)
       (global-auto-revert-mode t)
+      (global-display-line-numbers-mode t)
       (custom-file null-device "Do not store customizations")
       ; Smooth scrolling
       (redisplay-dont-pause t)

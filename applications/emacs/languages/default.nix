@@ -2,7 +2,6 @@
 
   imports = [
     ./haskell
-    ./jupyter
     ./markdown
     ./nix
     ./org
@@ -10,6 +9,7 @@
     ./restclient
     ./rust
     ./scala
+    ./yaml
   ];
 
   programs.emacs.init.usePackage = {
@@ -24,57 +24,53 @@
     smartparens.enable = true;
     smartparens.config = "(require 'smartparens-config)";
 
-    flycheck.enable = true;
-    flycheck.config = ''
-      (require 'pkg-info)
-    '';
-
-    yasnippet.enable = true;
-    yasnippet.defer = true;
-
-    lsp-ui = {
+    yasnippet = {
       enable = true;
-      command = [ "lsp-ui-mode" ];
+      defer = true;
+      hook = [ "(prog-mode . yas-minor-mode)" ];
+    };
+
+    flycheck = {
+      enable = true;
       bind = {
-        "C-c r d" = "lsp-ui-doc-glance";
-        "C-c f s" = "lsp-ui-find-workspace-symbol";
+        "M-n" = "flycheck-next-error";
+        "M-p" = "flycheck-previous-error";
       };
-      config = ''
-          (setq lsp-ui-sideline-enable t
-                ;;lsp-ui-sideline-show-symbol nil
-                ;;lsp-ui-sideline-show-hover nil
-                ;;lsp-ui-sideline-show-code-actions nil
-                lsp-ui-sideline-update-mode 'point)
-          (setq ;;lsp-ui-doc-enable nil
-                lsp-ui-doc-position 'at-point
-                lsp-ui-doc-max-width 120
-                lsp-ui-doc-max-height 15)
-        '';
+      init = ''(setq ispell-program-name "aspell")'';
+      config = "
+      (require 'pkg-info)
+      (global-flycheck-mode t)
+      ";
     };
 
-    lsp-ui-flycheck = {
+    lsp-headerline = {
       enable = true;
-      after = [ "flycheck" "lsp-ui" ];
+      command = [ "lsp-headerline-breadcrumb-mode" ];
     };
 
-    lsp-completion = {
+    lsp-modeline = {
       enable = true;
-      after = [ "lsp-mode" ];
-      config = ''
-          (setq lsp-completion-enable-additional-text-edit nil)
-        '';
-    };
-
-    lsp-diagnostics = {
-      enable = true;
-      after = [ "lsp-mode" ];
+      command = [ "lsp-modeline-workspace-status-mode " ];
     };
 
     lsp-mode = {
       enable = true;
-      command = [ "lsp" ];
+      command = [ "lsp" "lsp-deferred" ];
+      init = ''
+        (setq lsp-keymap-prefix "C-c l")
+      '';
       after = [ "company" "flycheck" ];
-      hook = [ "(lsp-mode . lsp-enable-which-key-integration)" ];
+      hook = [
+        "(lsp-mode . lsp-enable-which-key-integration)"
+        "(lsp-mode . lsp-lens-mode)"
+        "(scala-mode . lsp-deferred)"
+        "(haskell-mode . lsp-deferred)"
+        "(rust-mode . lsp-deferred)"
+        "(nix-mode . lsp)"
+      ];
+      config = ''
+        (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+        '';
       bindLocal = {
         lsp-mode-map = {
           "C-c r r" = "lsp-rename";
@@ -84,18 +80,57 @@
           "C-c f r" = "lsp-find-references";
         };
       };
-      config = ''
-        (setq lsp-diagnostics-provider :flycheck)
+      extraConfig = ''
+        :custom
+        (lsp-prefer-flymake t)
+        (lsp-diagnostics-provider :flycheck)
+        (lsp-prefer-flymake nil)
+        (lsp-file-watch-threshold 30000)
         '';
+    };
+
+    lsp-ui = {
+      enable = true;
+      command = [ "lsp-ui-mode" ];
+      bindLocal = {
+        lsp-mode-map = {
+          "C-c r d" = "lsp-ui-doc-glance";
+          "C-c f s" = "lsp-ui-find-workspace-symbol";
+        };
+      };
+      extraConfig = ''
+        :custom
+        (lsp-ui-doc-enable t)
+        (lsp-ui-doc-include-signture t)
+        (lsp-ui-doc-position 'top)
+        (lsp-ui-sideline-enable nil)
+        '';
+    };
+
+    lsp-ui-flycheck = {
+      enable = true;
+      after = [ "flycheck" "lsp-ui" ];
+    };
+
+    lsp-diagnostics = {
+      enable = true;
+      after = [ "lsp-mode" ];
+    };
+
+    lsp-completion = {
+      enable = true;
+      after = [ "lsp-mode" ];
     };
 
     lsp-treemacs = {
       enable = true;
+      after = [ "lsp-mode" ];
       command = ["lsp-treemacs-errors-list"];
     };
 
     company = {
       enable = true;
+      hook = [ "(after-init . global-company-mode)" ];
       extraConfig = ''
         :bind (("M-/" . company-complete)
                :map company-active-map
@@ -114,14 +149,20 @@
       '';
     };
 
+    company-capf = {
+      enable = true;
+      after = [ "company-mode" ];
+      command = [ "company-capf" ];
+    };
+
     company-lsp = {
       enable = true;
-      after = ["company-mode"];
+      after = [ "company-mode" "lsp-mode"];
       config = ''
-  (company-lsp-cache-candidates nil)
-  (company-lsp-async t)
-  (company-lsp-enable-recompletion t)
-'';
+        (company-lsp-cache-candidates nil)
+        (company-lsp-async t)
+        (company-lsp-enable-recompletion t)
+      '';
     };
 
     dap-mode = {

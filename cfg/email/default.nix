@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
-{
+let
+  gpgKey = "BC10F5DA684B5E5978B836CCB32204E4B8C00747";
+in {
   programs.mbsync = {
     enable = true;
   };
@@ -11,7 +13,7 @@
 
   accounts.email = {
     maildirBasePath = "Mail";
-    certificatesFile = "${builtins.getEnv "HOME"}/.nix-profile/etc/ssl/certs/ca-bundle.crt";
+    # certificatesFile = "${builtins.getEnv "HOME"}/.nix-profile/etc/ssl/certs/ca-bundle.crt";
 
     accounts = {
       pepegar = {
@@ -29,7 +31,7 @@
           };
         };
         gpg = {
-          key = "A67385A8096851A724F21B995C5CABCB80FE4C7F";
+          key = gpgKey;
           signByDefault = true;
         };
         mbsync = {
@@ -59,7 +61,7 @@
           };
         };
         gpg = {
-          key = "A67385A8096851A724F21B995C5CABCB80FE4C7F";
+          key = gpgKey;
           signByDefault = true;
         };
         mbsync = {

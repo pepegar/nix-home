@@ -28,6 +28,7 @@ in rec {
     ../services/polybar.nix
     ../services/dunst.nix
 
+    ../cfg/email
     ../cfg/git.nix
     ../cfg/ssh.nix
     ../cfg/xresources.nix

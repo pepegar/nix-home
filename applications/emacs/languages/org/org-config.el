@@ -19,7 +19,6 @@
  '((emacs-lisp . t)
    (shell . t)
    (python . t)
-   (jupyter . t)
    (restclient . t)))
 
 ;;; org-config.el ends here.
