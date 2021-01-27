@@ -8,5 +8,5 @@ jobs:
       with:
         submodules: true
     - uses: cachix/install-nix-action@v12
-    - run: nix-env -qaP home-manager -f '<nixpkgs>'
+    - run: nix-env -i home-manager -f '<nixpkgs>'
     - run: home-manager switch
