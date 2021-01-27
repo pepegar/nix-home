@@ -1,0 +1,18 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.3.4
+      with:
+        submodules: true
+    - uses: cachix/install-nix-action@v12
+    - run: nix-channel --add https://github.com/nix-community/home-manager/archive/release-20.09.tar.gz home-manager # install home manager
+    - run: nix-channel --update # install home manager
+    - run: nix-shell '<home-manager>' -A install # install home manager
+    - run: source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+    - run: mkdir -p ~/.config/nixpkgs
+    - run: cp -R * ~/.config/nixpkgs
+    - run: ln -s ~/.config/nixpkgs/machines/lisa.nix ~/.config/nixpkgs/home.nix
+    - run: home-manager switch
