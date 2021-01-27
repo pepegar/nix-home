@@ -1,0 +1,3 @@
+# nix-home
+
+This is @pepegar's home configuration using nix...
