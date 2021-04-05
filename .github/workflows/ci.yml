@@ -1,8 +1,12 @@
 name: CI
+
 on: [push]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
     steps:
     - uses: actions/checkout@v2.3.4
       with:
@@ -16,5 +20,8 @@ jobs:
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: mkdir -p ~/.config/nixpkgs
     - run: cp -R * ~/.config/nixpkgs
-    - run: ln -s ~/.config/nixpkgs/machines/lisa.nix ~/.config/nixpkgs/home.nix
+    - if: matrix.os == 'macOS-latest'
+      run: ln -s ~/.config/nixpkgs/machines/macbook.nix ~/.config/nixpkgs/home.nix
+    - if: matrix.os == 'ubuntu-latest'
+      run: ln -s ~/.config/nixpkgs/machines/lisa.nix ~/.config/nixpkgs/home.nix
     - run: nix-shell -p home-manager --command "home-manager switch"
