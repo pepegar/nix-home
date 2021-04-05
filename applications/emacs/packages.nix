@@ -118,6 +118,7 @@ with pkgs; {
           "~/projects/github.com/higherkindness/"
           "~/projects/github.com/pepegar/"
           "~/projects/github.com/app-2020/"
+          "~/projects/github.com/gsk-aiops/"
            "~/.config/"))
       '';
       bind = {
@@ -182,7 +183,7 @@ with pkgs; {
     doom-themes = {
       enable = true;
       config = ''
-        (load-theme 'tango)
+        (load-theme 'doom-Iosvkem t)
         (require 'doom-themes-ext-treemacs)
         (doom-themes-treemacs-config)
       '';
@@ -215,17 +216,6 @@ with pkgs; {
         (doom-modeline-bar-width 3)
         (doom-modeline-buffer-file-name-style 'truncate-with-project)
       '';
-    };
-
-    nyan-mode.enable = true;
-    nyan-mode.config = "(nyan-mode 1)";
-
-    hide-mode-line = {
-      enable = false;
-      hook = [
-        "(help-mode . hide-mode-line-mode)"
-        "(vterm-mode . hide-mode-line-mode)"
-      ];
     };
 
     mode-line-bell.enable = true;

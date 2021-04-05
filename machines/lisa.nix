@@ -1,14 +1,8 @@
-{ config, pkgs, ... }:
-
-with pkgs;
+{ ... }:
 
 let
-  python-packages = python-packages: with python-packages; [
-    flask
-    dash
-  ];
-  python-with-packages = pkgs.python3.withPackages python-packages;
-
+  sources = import ../nix/sources.nix;
+  pkgs = import sources.nixpkgs { };
 in rec {
   imports = [
     ../applications/fish
@@ -36,12 +30,12 @@ in rec {
     ../cfg/pandoc
   ];
 
-  nixpkgs.overlays =
-    let path = ../overlays; in with builtins;
-          map (n: import (path + ("/" + n)))
-            (filter (n: match ".*\\.nix" n != null ||
-                        pathExists (path + ("/" + n + "/default.nix")))
-              (attrNames (readDir path)));
+  nixpkgs.overlays = let path = ../overlays;
+  in with builtins;
+  map (n: import (path + ("/" + n))) (filter (n:
+    match ".*\\.nix" n != null
+    || pathExists (path + ("/" + n + "/default.nix")))
+    (attrNames (readDir path)));
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -68,11 +62,8 @@ in rec {
     pasystray
     pavucontrol
     prettyping
-    python-with-packages
-    haskellPackages.haskell-language-server
     rescuetime
     ripgrep-all
-    rnix-lsp
     robo3t
     rofi-vpn
     slack
@@ -80,10 +71,11 @@ in rec {
     sqlite
     vlc
     zotero
+    obsidian
   ];
 
   home.sessionVariables = {
     DISPLAY = ":0";
-    EDITOR = "nvim";
+    EDITOR = "emacs";
   };
 }

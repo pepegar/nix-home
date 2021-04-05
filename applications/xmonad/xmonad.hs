@@ -317,7 +317,7 @@ myLayout =
   avoidStruts
     . smartBorders
     . fullScreenToggle
-    . comLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
+    $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = gapSpaced 10 $ Tall nmaster delta ratio
@@ -336,9 +336,6 @@ myLayout =
      -- Gaps bewteen windows
      myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
      gapSpaced g = spacing g . myGaps g
-
-     -- Per workspace layout
-     comLayout = onWorkspace comWs full
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
@@ -379,7 +376,7 @@ nautilus = ClassApp "Org.gnome.Nautilus"   "nautilus"
 office   = ClassApp "libreoffice-draw"     "libreoffice-draw"
 pavuctrl = ClassApp "Pavucontrol"          "pavucontrol"
 scr      = ClassApp "SimpleScreenRecorder" "simplescreenrecorder"
-spotify  = ClassApp "Spotify"              "myspotify"
+spotify  = ClassApp "Spotify"              "spotifywm"
 vlc      = ClassApp "Vlc"                  "vlc"
 zenity   = ClassApp "Zenity"               "zenity --text-info --font=terminus"
 
@@ -436,13 +433,14 @@ scratchpads = scratchpadApp <$> [ btm, nautilus, scr, spotify ]
 -- Workspaces
 --
 webWs = "web"
+notesWs = "notes"
 devWs = "dev"
 comWs = "com"
 sysWs = "sys"
-etcWs = "etc"
+musicWs = "spotify"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, devWs, comWs, sysWs, etcWs]
+myWS = [webWs, devWs, comWs, notesWs, sysWs, musicWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -451,7 +449,7 @@ projects :: [Project]
 projects =
   [ Project { projectName      = webWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ spawn "firefox"
+            , projectStartHook = Just $ spawn "firefox" >> spawn "google-chrome-stable"
             }
   , Project { projectName      = devWs
             , projectDirectory = "~/"
@@ -459,15 +457,19 @@ projects =
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ spawn "slack"
+            , projectStartHook = Just $ spawn "slack" >> spawn "teams"
+            }
+  , Project { projectName      = notesWs
+            , projectDirectory = "~/"
+            , projectStartHook = Just $ spawn "obsidian"
             }
   , Project { projectName      = sysWs
             , projectDirectory = "/etc/nixos/"
             , projectStartHook = Just . spawn $ myTerminal <> " -e sudo su"
             }
-  , Project { projectName      = etcWs
+  , Project { projectName      = musicWs
             , projectDirectory = "~/"
-            , projectStartHook = Nothing
+            , projectStartHook = Just $ spawn "spotifywm"
             }
   ]
 

@@ -2,6 +2,7 @@
 
   imports = [
     ./haskell
+    ./html
     ./markdown
     ./nix
     ./org
@@ -9,6 +10,7 @@
     ./restclient
     ./rust
     ./scala
+    ./sparql
     ./yaml
   ];
 
@@ -25,7 +27,12 @@
     yasnippet = {
       enable = true;
       defer = true;
-      hook = [ "(prog-mode . yas-minor-mode)" ];
+      hook = [ "(after-init . yas-global-mode)" ];
+    };
+
+    yasnippet-snippets = {
+      enable = true;
+      after = [ "yasnippet" ];
     };
 
     flycheck = {
