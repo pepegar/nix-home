@@ -45,7 +45,6 @@ in rec {
     any-nix-shell
     bat
     clang
-    dunst
     exa
     ghq
     gnome3.nautilus
@@ -72,6 +71,7 @@ in rec {
     vlc
     zotero
     obsidian
+    nyxt
   ];
 
   home.sessionVariables = {
