@@ -30,13 +30,13 @@ in {
       (push '(tool-bar-lines . nil) default-frame-alist)
       (push '(vertical-scroll-bars . nil) default-frame-alist)
 
+      (setq exec-path (append exec-path '("/Users/pepe/.nix-profile/bin/")))
+
       ;; Set up fonts early.
       (set-face-attribute 'default
                           nil
-                          :height 120
+                          :height 170
                           :family "PragmataPro Mono Liga")
-
-      (global-set-key (kbd "C-c C-c") 'comment-or-uncomment-region)
       '';
 
       prelude = ''
