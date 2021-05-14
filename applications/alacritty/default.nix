@@ -24,7 +24,7 @@
         size = 11;
       };
       selection.save_to_clipboard = true;
-      shell.program = "${pkgs.fish}/bin/fish";
+      shell.program = "${pkgs.zsh}/bin/zsh";
       window = {
         decorations = "full";
         padding = {

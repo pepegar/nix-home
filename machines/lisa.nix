@@ -5,7 +5,6 @@ let
   pkgs = import sources.nixpkgs { };
 in rec {
   imports = [
-    ../applications/fish
     ../applications/fzf
     ../applications/zsh
     ../applications/neovim
@@ -16,6 +15,7 @@ in rec {
     ../applications/go
     ../applications/rofi
     ../applications/texlive
+    ../applications/starship
     ../applications/xmonad
 
     ../services/network-manager-applet.nix
