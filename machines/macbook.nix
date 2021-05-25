@@ -6,9 +6,12 @@ in  {
   imports = [
     ../applications/fzf
     ../applications/zsh
+    ../applications/starship
     ../applications/emacs
     ../applications/direnv
     ../applications/tmux
+    ../applications/neovim
+    ../applications/alacritty
 
     ../cfg/git.nix
     ../cfg/ssh.nix
@@ -36,6 +39,8 @@ in  {
     ghq
     mr
     graphviz
+    exa
+    jq
 
     # apps
     # Anki

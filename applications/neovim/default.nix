@@ -71,7 +71,6 @@ in {
       set ignorecase
       let mapleader=" "
       set mouse=a
-      colorscheme material
 
       set expandtab
 
