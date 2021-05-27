@@ -61,7 +61,6 @@ in {
     vimAlias = true;
     vimdiffAlias = true;
     withNodeJs = true;
-    withPython = true;
     withPython3 = true;
     plugins = myVimPlugins;
     package = pkgs.neovim-nightly;

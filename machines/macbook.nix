@@ -4,19 +4,20 @@ let
   all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
 in  {
   imports = [
-    ../applications/fzf
-    ../applications/zsh
-    ../applications/starship
-    ../applications/emacs
-    ../applications/direnv
-    ../applications/tmux
-    ../applications/neovim
     ../applications/alacritty
+    ../applications/direnv
+    ../applications/emacs
+    ../applications/fzf
+    ../applications/neovim
+    ../applications/starship
+    ../applications/tmux
+    ../applications/zsh
 
-    ../cfg/git.nix
-    ../cfg/ssh.nix
     ../cfg/email
+    ../cfg/git.nix
+    ../cfg/karabiner
     ../cfg/sbt
+    ../cfg/ssh.nix
   ];
 
   # Let Home Manager install and manage itself.
@@ -41,14 +42,11 @@ in  {
     graphviz
     exa
     jq
+    nodejs
 
     # apps
-    # Anki
-    # LunaDisplay
-    # Docker
-    # Dash
-    # iTerm2
-    # Tunnelblick
+    Dash
+    Rectangle
   ];
 
   programs.zsh.sessionVariables = {

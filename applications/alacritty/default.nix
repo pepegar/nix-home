@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
-{
+let
+  draculaYmlPath = ./dracula.yml;
+in {
   programs.alacritty = {
     enable = true;
     settings = {
@@ -8,12 +10,6 @@
         animation = "EaseOutExpo";
         duration = 5;
         color = "#ffffff";
-      };
-      colors = {
-        primary = {
-          background = "#040404";
-          foreground = "#c5c8c6";
-        };
       };
       font = {
         normal = {
@@ -30,6 +26,9 @@
           y = 5;
         };
       };
+      import = [
+        "${draculaYmlPath}"
+      ];
     };
   };
 }

@@ -47,21 +47,6 @@ self: super:
     homepage = https://lunadisplay.com/;
   };
 
-  Docker = self.installApplication rec {
-    name = "Docker";
-    version = "2.1.0.4";
-    sourceRoot = "Docker.app";
-    src = super.fetchurl {
-      url = https://download.docker.com/mac/stable/Docker.dmg;
-      sha256 = "06g3s7igf0rxsybwas13df78cphqkg4kflnr53y6gcj10vq7jlsl";
-    };
-    description = ''
-    Docker CE for Mac is an easy-to-install desktop app for building,
-    debugging, and testing Dockerized apps on a Mac
-  '';
-    homepage = https://store.docker.com/editions/community/docker-ce-desktop-mac;
-  };
-
   Dash = self.installApplication rec {
     name = "Dash";
     version = "4.6.7";
@@ -74,26 +59,13 @@ self: super:
     homepage = https://kapeli.com/dash;
   };
 
-  iTerm2 = self.installApplication rec {
-    name = "iTerm2";
-    appname = "iTerm";
-    version = "3.3.6";
-    sourceRoot = "iTerm.app";
+  Rectangle = self.installApplication rec {
+    name = "Rectangle";
+    version = "0.46";
+    sourceRoot = "Rectangle.app";
     src = super.fetchurl {
-      url = "https://iterm2.com/downloads/stable/iTerm2-3_3_6.zip";
-      sha256 = "0wsklsq0gasi58blzk4da3iii92rdhj4sz0jilcilxklk5961zii";
-    };
-    description = "iTerm2 is a replacement for Terminal and the successor to iTerm";
-    homepage = https://www.iterm2.com;
-  };
-
-  Tunnelblick = self.installApplication rec {
-    name = "Tunnelblick";
-    version = "3.8.1";
-    sourceRoot = "Tunnelblick.app";
-    src = super.fetchurl {
-      url = https://tunnelblick.net/release/Tunnelblick_3.8.1_build_5400.dmg;
-      sha256 = "a619a1c01a33a8618fc2489a43241e95c828dcdb7f7c56cfc883dcbb22644693";
+      url = "https://github.com/rxhanson/Rectangle/releases/download/v${version}/Rectangle${version}.dmg";
+      sha256 = "1cjj5pnzf463z20h0h8bzfvpix5sn4bxf3k9xqhl2h6xlzi2qwyk";
     };
     description = "free software for OpenVPN on macOS";
     homepage = https://tunnelblick.net;
