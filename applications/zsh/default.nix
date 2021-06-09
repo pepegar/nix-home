@@ -23,6 +23,7 @@
       cat = "bat";
       du = "ncdu --color dark -rr -x";
       g = "git";
+      gc = "git commit";
       gst = "git status";
       ls = "exa";
       ll = "ls -a";
