@@ -68,10 +68,13 @@ in {
       " basic config {{{
       set hidden
       set ignorecase
-      let mapleader=" "
       set mouse=a
-
+      set cursorline
+      set cursorcolumn
       set expandtab
+      let mapleader=" "
+
+      nnoremap ; :
 
       nnoremap <down> <C-W><C-J>
       nnoremap <up> <C-W><C-K>
@@ -101,8 +104,6 @@ in {
       set signcolumn=yes
 
       map <C-n> :NERDTreeToggle<CR>
-
-
 
       inoremap " ""<left>
       inoremap \' \'\'<left>
