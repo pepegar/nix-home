@@ -31,6 +31,7 @@ in  {
     (attrNames (readDir path)));
 
   home.packages = with pkgs; [
+    git-crypt
     bat
     gnupg
     prettyping
