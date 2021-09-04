@@ -14,7 +14,7 @@ self: super:
       mkdir -p "$out/Applications/${appName}.app"
       cp -pR * "$out/Applications/${appName}.app"
     '' + postInstall;
-      meta = with stdenv.lib; {
+      meta = with lib; {
         description = description;
         homepage = homepage;
         maintainers = with maintainers; [];

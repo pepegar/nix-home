@@ -70,7 +70,6 @@ in {
       set ignorecase
       set mouse=a
       set cursorline
-      set cursorcolumn
       set expandtab
       let mapleader=" "
 
@@ -104,15 +103,6 @@ in {
       set signcolumn=yes
 
       map <C-n> :NERDTreeToggle<CR>
-
-      inoremap " ""<left>
-      inoremap \' \'\'<left>
-      inoremap ` ``<left>
-      inoremap ( ()<left>
-      inoremap [ []<left>
-      inoremap { {}<left>
-      inoremap {<CR> {<CR>}<ESC>O
-      inoremap {;<CR> {<CR>};<ESC>O
       " }}}
       " fzf {{{
       nnoremap <C-p> :Files<cr>

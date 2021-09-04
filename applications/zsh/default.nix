@@ -18,6 +18,8 @@
     initExtra = ''
       export PATH=~/.nix-profile/bin:$PATH
       export PATH=/Users/pepe/Library/Python/3.7/bin:$PATH
+
+      source ~/.nix-profile/etc/profile.d/nix.sh
     '';
 
     shellAliases = {

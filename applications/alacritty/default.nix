@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  draculaYmlPath = ./dracula.yml;
+  colorscheme = ./colorschemes.yml;
 in {
   programs.alacritty = {
     enable = true;
@@ -27,7 +27,7 @@ in {
         };
       };
       import = [
-        "${draculaYmlPath}"
+        "${colorscheme}"
       ];
     };
   };
