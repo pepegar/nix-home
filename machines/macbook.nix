@@ -17,7 +17,6 @@ in  {
     ../cfg/git.nix
     ../cfg/karabiner
     ../cfg/sbt
-    ../cfg/ssh.nix
   ];
 
   # Let Home Manager install and manage itself.
