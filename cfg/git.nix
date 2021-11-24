@@ -23,6 +23,8 @@
       };
 
       ghq.root = "~/projects";
+
+      rerere.enabled = true;
     };
   };
 }
