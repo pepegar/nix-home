@@ -12,11 +12,4 @@ jobs:
       with:
         submodules: true
     - uses: cachix/install-nix-action@v15
-    - run: mkdir -p ~/.config/nixpkgs
-    - run: cp -R * ~/.config/nixpkgs
-    - if: matrix.os == 'macOS-latest'
-      run: ln -s ~/.config/nixpkgs/machines/macbook.nix ~/.config/nixpkgs/home.nix
-    - if: matrix.os == 'ubuntu-latest'
-      run: ln -s ~/.config/nixpkgs/machines/lisa.nix ~/.config/nixpkgs/home.nix
-    - run: nix-shell -p home-manager --command "home-manager switch"
     - run: nix flake check
