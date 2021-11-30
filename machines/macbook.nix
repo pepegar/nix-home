@@ -6,7 +6,7 @@ in  {
   imports = [
     ../applications/alacritty
     ../applications/direnv
-    # ../applications/emacs
+    ../applications/emacs
     ../applications/fzf
     ../applications/neovim
     ../applications/starship
