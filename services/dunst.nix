@@ -13,7 +13,9 @@
         font = "PragmataPro, Noto Color Emoji 8";
         markup = "yes";
         plain_text = "no";
-        format = "<b>%s</b> %p\n%b";
+        format = ''
+          <b>%s</b> %p
+          %b'';
         sort = "no";
         indicate_hidden = "yes";
         alignment = "center";
@@ -39,9 +41,10 @@
         browser = "/usr/bin/firefox -new-tab";
         icon_position = "left";
         max_icon_size = 48;
-        icon_folders = "${pkgs.gnome3.adwaita-icon-theme}/48x48/emblems/:${pkgs.gnome3.adwaita-icon-theme}/48x48/mimetypes/:${pkgs.gnome3.adwaita-icon-theme}/48x48/status/:${pkgs.gnome3.adwaita-icon-theme}/48x48/devices/:${pkgs.gnome3.adwaita-icon-theme}/48x48/apps/";
+        icon_folders =
+          "${pkgs.gnome3.adwaita-icon-theme}/48x48/emblems/:${pkgs.gnome3.adwaita-icon-theme}/48x48/mimetypes/:${pkgs.gnome3.adwaita-icon-theme}/48x48/status/:${pkgs.gnome3.adwaita-icon-theme}/48x48/devices/:${pkgs.gnome3.adwaita-icon-theme}/48x48/apps/";
         frame_width = 3;
-        frame_color = "#000000"    ;
+        frame_color = "#000000";
       };
 
       shortcuts = {

@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  inherit (pkgs) lorri;
+let inherit (pkgs) lorri;
 
 in {
   environment.systemPackages = [ lorri ];

@@ -1,8 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
-in  {
+  all-hies =
+    import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master")
+    { };
+in {
   imports = [
     ../applications/alacritty
     ../applications/direnv

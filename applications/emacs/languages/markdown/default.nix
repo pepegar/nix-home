@@ -1,8 +1,6 @@
 { pkgs, ... }:
-let
-  font = "PragmataPro Mono Liga";
-in
-{
+let font = "PragmataPro Mono Liga";
+in {
   programs.emacs.init.usePackage = {
     markdown-mode = {
       enable = true;
@@ -23,7 +21,7 @@ in
         (setq
            markdown-command "${pkgs.pandoc}/bin/pandoc"
            markdown-fontify-code-blocks-natively t)
-        '';
+      '';
     };
 
     pandoc-mode = {

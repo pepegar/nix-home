@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
-let
-  colorscheme = ./colorschemes.yml;
+let colorscheme = ./colorschemes.yml;
 in {
   programs.alacritty = {
     enable = true;
@@ -12,9 +11,7 @@ in {
         color = "#ffffff";
       };
       font = {
-        normal = {
-          family = "PragmataPro Mono Liga";
-        };
+        normal = { family = "PragmataPro Mono Liga"; };
         size = 17;
       };
       selection.save_to_clipboard = true;
@@ -26,9 +23,7 @@ in {
           y = 5;
         };
       };
-      import = [
-        "${colorscheme}"
-      ];
+      import = [ "${colorscheme}" ];
     };
   };
 }

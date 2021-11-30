@@ -14,9 +14,7 @@ in {
     ./tools
   ];
 
-  nixpkgs.overlays = [
-    (import sources.emacs-overlay)
-  ];
+  nixpkgs.overlays = [ (import sources.emacs-overlay) ];
 
   programs.emacs = {
     enable = true;
@@ -24,19 +22,19 @@ in {
       enable = true;
       recommendedGcSettings = true;
       earlyInit = ''
-      ;; Disable some GUI distractions. We set these manually to avoid starting
-      ;; the corresponding minor modes.
-      (push '(menu-bar-lines . 0) default-frame-alist)
-      (push '(tool-bar-lines . nil) default-frame-alist)
-      (push '(vertical-scroll-bars . nil) default-frame-alist)
+        ;; Disable some GUI distractions. We set these manually to avoid starting
+        ;; the corresponding minor modes.
+        (push '(menu-bar-lines . 0) default-frame-alist)
+        (push '(tool-bar-lines . nil) default-frame-alist)
+        (push '(vertical-scroll-bars . nil) default-frame-alist)
 
-      (setq exec-path (append exec-path '("/Users/pepe/.nix-profile/bin/")))
+        (setq exec-path (append exec-path '("/Users/pepe/.nix-profile/bin/")))
 
-      ;; Set up fonts early.
-      (set-face-attribute 'default
-                          nil
-                          :height 170
-                          :family "PragmataPro Mono Liga")
+        ;; Set up fonts early.
+        (set-face-attribute 'default
+                            nil
+                            :height 170
+                            :family "PragmataPro Mono Liga")
       '';
 
       prelude = ''
@@ -90,7 +88,7 @@ in {
         (global-set-key (kbd "M-g C") "Χ")
         (global-set-key (kbd "M-g Y") "Ψ")
         (global-set-key (kbd "M-g W") "Ω")
-        '';
+      '';
     };
   };
 }

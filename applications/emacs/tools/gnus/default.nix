@@ -1,6 +1,1 @@
-{ ... }:
-{
-  programs.emacs.init.usePackage = {
-    gnus.enable = true;
-  };
-}
+{ ... }: { programs.emacs.init.usePackage = { gnus.enable = true; }; }

@@ -6,7 +6,5 @@
     enableZshIntegration = true;
   };
 
-  programs.zsh = {
-    initExtra = builtins.readFile ./zshrc;
-  };
+  programs.zsh = { initExtra = builtins.readFile ./zshrc; };
 }

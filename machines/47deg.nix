@@ -31,7 +31,7 @@
     pkgs.dunst
     pkgs.sbt
     pkgs.libreoffice
-    /**pkgs.neovim */
+    # *pkgs.neovim
     pkgs.stack
   ];
 }

@@ -7,23 +7,20 @@
 {
   nixpkgs.config.allowUnfree = true;
 
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      # ./jupyter.nix  # currently installed in userland...
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    # ./jupyter.nix  # currently installed in userland...
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices = [
-    {
-      name = "root";
-      device = "/dev/nvme0n1p2";
-      preLVM = true;
-    }
-  ];
+  boot.initrd.luks.devices = [{
+    name = "root";
+    device = "/dev/nvme0n1p2";
+    preLVM = true;
+  }];
 
   networking.hostName = "lisa";
   networking.networkmanager.enable = true;
@@ -72,11 +69,8 @@
   # List services that you want to enable:
 
   services.bloop = {
-    extraOptions = [
-      "-J-Xmx6G"
-      "-J-XX:MaxInlineLevel=20"
-      "-J-XX:+UseParallelGC"
-    ];
+    extraOptions =
+      [ "-J-Xmx6G" "-J-XX:MaxInlineLevel=20" "-J-XX:+UseParallelGC" ];
     install = true;
   };
 
@@ -120,15 +114,14 @@
     createHome = true;
     home = "/home/pepe";
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "disk" "docker"]; # Enable ‘sudo’ for the user.
+    extraGroups =
+      [ "wheel" "video" "audio" "disk" "docker" ]; # Enable ‘sudo’ for the user.
     group = "users";
     uid = 1000;
     shell = "/run/current-system/sw/bin/zsh";
   };
 
-  nix = {
-    trustedUsers = ["root" "pepe"];
-  };
+  nix = { trustedUsers = [ "root" "pepe" ]; };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

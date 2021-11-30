@@ -1,15 +1,10 @@
 { pkgs, ... }:
 
-let
-  gpgKey = "BC10F5DA684B5E5978B836CCB32204E4B8C00747";
+let gpgKey = "BC10F5DA684B5E5978B836CCB32204E4B8C00747";
 in {
-  programs.mbsync = {
-    enable = true;
-  };
+  programs.mbsync = { enable = true; };
 
-  programs.msmtp = {
-    enable = true;
-  };
+  programs.msmtp = { enable = true; };
 
   accounts.email = {
     maildirBasePath = "Mail";
@@ -20,15 +15,11 @@ in {
         address = "pepe@pepegar.com";
         imap = {
           host = "mail.messagingengine.com";
-          tls = {
-            enable = true;
-          };
+          tls = { enable = true; };
         };
         smtp = {
           host = "mail.messagingengine.com";
-          tls = {
-            enable = true;
-          };
+          tls = { enable = true; };
         };
         gpg = {
           key = gpgKey;
@@ -50,16 +41,8 @@ in {
       fortysevendeg = {
         address = "pepe.garcia@47deg.com";
         flavor = "gmail.com";
-        imap = {
-          tls = {
-            enable = true;
-          };
-        };
-        smtp = {
-          tls = {
-            enable = true;
-          };
-        };
+        imap = { tls = { enable = true; }; };
+        smtp = { tls = { enable = true; }; };
         gpg = {
           key = gpgKey;
           signByDefault = true;

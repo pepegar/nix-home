@@ -1,4 +1,4 @@
-{...}:
+{ ... }:
 
 {
   programs.emacs.init.usePackage = {
@@ -22,12 +22,12 @@
         "M-<mouse-1>" = "mc/add-cursor-on-click";
       };
 
-      init= ''
-      (global-unset-key (kbd "M-<down-mouse-1>"))
+      init = ''
+        (global-unset-key (kbd "M-<down-mouse-1>"))
       '';
 
       config = ''
-      (require 'mc-extras)
+        (require 'mc-extras)
       '';
 
     };
@@ -42,21 +42,19 @@
         "mc/remove-duplicated-cursors"
       ];
       config = ''
-  (progn
-    (bind-keys :map mc/keymap
-               ("C-. C-d" . mc/remove-current-cursor)
-               ("C-. d" . mc/remove-duplicated-cursors)
-               ("C-. =" . mc/compare-chars))
-    (eval-after-load 'cua-base
-      '(bind-key "C-. C-," 'mc/cua-rectangle-to-multiple-cursors cua--rectangle-keymap)))
-'';
+        (progn
+          (bind-keys :map mc/keymap
+                     ("C-. C-d" . mc/remove-current-cursor)
+                     ("C-. d" . mc/remove-duplicated-cursors)
+                     ("C-. =" . mc/compare-chars))
+          (eval-after-load 'cua-base
+            '(bind-key "C-. C-," 'mc/cua-rectangle-to-multiple-cursors cua--rectangle-keymap)))
+      '';
     };
 
     expand-region = {
       enable = true;
-      bind = {
-        "C-@" = "er/expand-region";
-      };
+      bind = { "C-@" = "er/expand-region"; };
     };
 
     move-text = {
