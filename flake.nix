@@ -9,7 +9,7 @@
       checks = {
         pre-commit-check = pre-commit-hooks.lib.${system}.run {
           src = ./.;
-          hooks = { nixpkgs-fmt.enable = true; };
+          hooks = { nixfmt.enable = true; };
         };
       };
       devShell = nixpkgs.legacyPackages.${system}.mkShell {
