@@ -25,3 +25,4 @@ jobs:
     - if: matrix.os == 'ubuntu-latest'
       run: ln -s ~/.config/nixpkgs/machines/lisa.nix ~/.config/nixpkgs/home.nix
     - run: nix-shell -p home-manager --command "home-manager switch"
+    - run: nix flake check
