@@ -63,7 +63,6 @@ in {
     withNodeJs = true;
     withPython3 = true;
     plugins = myVimPlugins;
-    package = pkgs.neovim-nightly;
     extraConfig = ''
       " basic config {{{
       set hidden

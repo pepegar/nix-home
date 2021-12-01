@@ -47,6 +47,7 @@ in {
     exa
     jq
     nodejs
+    rnix-lsp
 
     # apps
     Dash
