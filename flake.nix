@@ -5,15 +5,22 @@
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.neovim-nightly-overlay.url =
+    "github:nix-community/neovim-nightly-overlay";
 
-  outputs = { self, nixpkgs, pre-commit-hooks, flake-utils, home-manager }:
-    {
+  outputs = { self, nixpkgs, pre-commit-hooks, flake-utils, home-manager
+    , neovim-nightly-overlay }:
+    let overlays = [ neovim-nightly-overlay.overlay ];
+    in {
       homeConfigurations = {
         pepe = home-manager.lib.homeManagerConfiguration {
           system = "x86_64-darwin";
           homeDirectory = "/Users/pepe";
           username = "pepe";
-          configuration.imports = [ ./machines/macbook.nix ];
+          configuration = {
+            nixpkgs.overlays = overlays;
+            imports = [ ./machines/macbook.nix ];
+          };
         };
       };
     } // flake-utils.lib.eachSystem [ "x86_64-linux" "x86_64-darwin" ]

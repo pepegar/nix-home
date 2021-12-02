@@ -12,22 +12,26 @@ let
   myVimPlugins = with plugins;
     [
       asyncrun-vim # run async commands, show result in quickfix window
-      coc-metals # Scala LSP client for CoC
-      coc-nvim # LSP client + autocompletion plugin
-      coc-yank # yank plugin for CoC
+      cmp-buffer
+      cmp-cmdline
+      cmp-nvim-lsp
+      cmp-path
+      cmp-vsnip
       ctrlsf-vim # edit file in place after searching with ripgrep
       dhall-vim # Syntax highlighting for Dhall lang
       emmet-vim
       fzf-hoogle # search hoogle with fzf
       fzf-vim # fuzzy finder
       ghcid # ghcid for Haskell
-      lightline-vim # configurable status line (can be used by coc)
       multiple-cursors # Multiple cursors selection, etc
       neomake # run programs asynchronously and highlight errors
       nerdcommenter # code commenter
       nerdtree # tree explorer
+      nvim-cmp
+      nvim-lspconfig
       quickfix-reflector-vim # make modifications right in the quickfix window
       rainbow_parentheses-vim # for nested parentheses
+      tabular
       tender-vim # a clean dark theme
       vim-airline # bottom status bar
       vim-airline-themes
@@ -38,6 +42,7 @@ let
       vim-fish # fish shell highlighting
       vim-fugitive # git plugin
       vim-javascript
+      vim-markdown
       vim-nix # nix support (highlighting, etc)
       vim-repeat # repeat plugin commands with (.)
       vim-rhubarb
@@ -45,15 +50,12 @@ let
       vim-sensible
       vim-surround # quickly edit surroundings (brackets, html tags, etc)
       vim-tmux # syntax highlighting for tmux conf file and more
-      vim-markdown
-      tabular
+      vim-vsnip
     ] ++ overriddenPlugins;
 
   baseConfig = builtins.readFile ./config.vim;
-  cocConfig = builtins.readFile ./coc.vim;
-  cocSettings = builtins.toJSON (import ./coc-settings.nix);
   pluginsConfig = builtins.readFile ./plugins.vim;
-  vimConfig = baseConfig + pluginsConfig + cocConfig;
+  vimConfig = baseConfig + pluginsConfig;
 in {
   programs.neovim = {
     enable = true;
@@ -79,7 +81,6 @@ in {
       nnoremap <right> <C-W><C-L>
       nnoremap <left> <C-W><C-H>
 
-      nnoremap <leader>ev :vsplit ~/.config/nvim/init.vim<cr>
       nnoremap <leader>ag :Ag<cr>
 
       nnoremap <C-p> :FZF<cr>
@@ -127,116 +128,6 @@ in {
       " Markdown {{{
       au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
       " }}}
-      " coc.nvim {{{
-
-      " Use tab for trigger completion with characters ahead and navigate.
-      " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-      inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-      inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-      function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~# '\s'
-      endfunction
-
-      " Use <c-space> to trigger completion.
-      inoremap <silent><expr> <c-space> coc#refresh()
-
-      " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-      " Coc only does snippet and additional edit on confirm.
-      inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-      " Use `[g` and `]g` to navigate diagnostics
-      nmap <silent> [g <Plug>(coc-diagnostic-prev)
-      nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-      " Remap keys for gotos
-      nmap <silent> gd <Plug>(coc-definition)
-      nmap <silent> gy <Plug>(coc-type-definition)
-      nmap <silent> gi <Plug>(coc-implementation)
-      nmap <silent> gr <Plug>(coc-references)
-
-      " Use K to show documentation in preview window
-      nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-      function! s:show_documentation()
-        if (index(['vim','help'], &filetype) >= 0)
-          execute 'h '.expand('<cword>')
-        else
-          call CocAction('doHover')
-        endif
-      endfunction
-
-      " Highlight symbol under cursor on CursorHold
-      autocmd CursorHold * silent call CocActionAsync('highlight')
-
-      " Remap for rename current word
-      nmap <leader>rn <Plug>(coc-rename)
-
-      " Remap for format selected region
-      xmap <leader>f  <Plug>(coc-format-selected)
-      nmap <leader>f  <Plug>(coc-format-selected)
-
-      augroup mygroup
-        autocmd!
-        " Setup formatexpr specified filetype(s).
-        autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-        " Update signature help on jump placeholder
-        autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-      augroup end
-
-      " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-      xmap <leader>a  <Plug>(coc-codeaction-selected)
-      nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-      " Remap for do codeAction of current line
-      nmap <leader>ac  <Plug>(coc-codeaction)
-      " Fix autofix problem of current line
-      nmap <leader>qf  <Plug>(coc-fix-current)
-
-      " Create mappings for function text object, requires document symbols feature of languageserver.
-      xmap if <Plug>(coc-funcobj-i)
-      xmap af <Plug>(coc-funcobj-a)
-      omap if <Plug>(coc-funcobj-i)
-      omap af <Plug>(coc-funcobj-a)
-
-      " Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-      nmap <silent> <C-d> <Plug>(coc-range-select)
-      xmap <silent> <C-d> <Plug>(coc-range-select)
-
-      " Use `:Format` to format current buffer
-      command! -nargs=0 Format :call CocAction('format')
-
-      " Use `:Fold` to fold current buffer
-      command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-      " use `:OR` for organize import of current buffer
-      command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-      " Add status line support, for integration with other plugin, checkout `:h coc-status`
-      set statusline^=%{coc#status()}%{get(b:,'coc_current_function',\'\')}
-
-      " Using CocList
-      " Show all diagnostics
-      nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-      " Manage extensions
-      nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-      " Show commands
-      nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-      " Find symbol of current document
-      nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-      " Search workspace symbols
-      nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-      " Do default action for next item.
-      nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-      " Do default action for previous item.
-      nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-      " Resume latest coc list
-      nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-      " }}}
       " js {{{
       augroup javascript_folding
           au!
@@ -253,8 +144,94 @@ in {
       " Scala {{{
       au BufRead,BufNewFile *.sbt set filetype=scala
       " }}}
+      " Nvim-lspconfig {{{
+      lua << EOF
+      require'lspconfig'.pyright.setup{}
+      require'lspconfig'.metals.setup{}
+      require'lspconfig'.rls.setup{}
+      require'lspconfig'.rnix.setup{}
+      EOF
+
+
+      nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+      nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+      nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+      nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+      nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+      nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+      " }}}
+      " completions {{{
+      set completeopt=menu,menuone,noselect
+
+      lua <<EOF
+        -- Setup nvim-cmp.
+        local cmp = require'cmp'
+
+        cmp.setup({
+          snippet = {
+            -- REQUIRED - you must specify a snippet engine
+            expand = function(args)
+              vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+              -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+              -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+              -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+            end,
+          },
+          mapping = {
+            ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+            ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+            ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+            ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+            ['<C-e>'] = cmp.mapping({
+              i = cmp.mapping.abort(),
+              c = cmp.mapping.close(),
+            }),
+            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          },
+          sources = cmp.config.sources({
+            { name = 'nvim_lsp' },
+            { name = 'vsnip' }, -- For vsnip users.
+            -- { name = 'luasnip' }, -- For luasnip users.
+            -- { name = 'ultisnips' }, -- For ultisnips users.
+            -- { name = 'snippy' }, -- For snippy users.
+          }, {
+            { name = 'buffer' },
+          })
+        })
+
+        -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+        cmp.setup.cmdline('/', {
+          sources = {
+            { name = 'buffer' }
+          }
+        })
+
+        -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+        cmp.setup.cmdline(':', {
+          sources = cmp.config.sources({
+            { name = 'path' }
+          }, {
+            { name = 'cmdline' }
+          })
+        })
+
+        -- Setup lspconfig.
+        local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+        require('lspconfig')['pyright'].setup{
+          capabilities = capabilities
+        }
+        require('lspconfig')['metals'].setup{
+          capabilities = capabilities
+        }
+        require('lspconfig')['rls'].setup{
+          capabilities = capabilities
+        }
+        require('lspconfig')['rnix'].setup{
+          capabilities = capabilities
+        }
+      EOF
+      " }}}
     '';
   };
-
-  xdg.configFile = { "nvim/coc-settings.json".text = cocSettings; };
 }
