@@ -27,6 +27,7 @@ let
       neomake # run programs asynchronously and highlight errors
       nerdcommenter # code commenter
       nerdtree # tree explorer
+      nord-vim
       nvim-cmp
       nvim-lspconfig
       quickfix-reflector-vim # make modifications right in the quickfix window
@@ -110,14 +111,14 @@ in {
       nnoremap <C-g> :Commits<cr>
       " }}}
       " appearance {{{
+      set termguicolors
       set encoding=UTF-8
-
       set foldmethod=marker
+      set relativenumber
 
-      let g:airline_theme='deus'
       syntax on
 
-      set relativenumber
+      lua vim.cmd('colorscheme nord')
       " }}}
       " folding {{{
       nnoremap <tab> za
@@ -169,12 +170,8 @@ in {
 
         cmp.setup({
           snippet = {
-            -- REQUIRED - you must specify a snippet engine
             expand = function(args)
               vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-              -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-              -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-              -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
             end,
           },
           mapping = {
