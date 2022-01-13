@@ -48,6 +48,8 @@ in {
     jq
     nodejs
     rnix-lsp
+    bazelisk
+    buildifier
 
     # apps
     Dash
