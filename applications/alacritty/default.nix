@@ -11,7 +11,7 @@ in {
         color = "#ffffff";
       };
       font = {
-        normal = { family = "PragmataPro Mono Liga"; };
+        normal = { family = "Iosevka Nerd Font"; };
         size = 17;
       };
       selection.save_to_clipboard = true;
