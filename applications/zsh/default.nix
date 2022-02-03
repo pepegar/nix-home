@@ -18,8 +18,12 @@
     initExtra = ''
       export PATH=~/.nix-profile/bin:$PATH
       export PATH=/Users/pepe/Library/Python/3.7/bin:$PATH
+      export PATH=/Users/pepe/bin:$PATH
+      export PATH=/usr/local/bin:$PATH
+      export PATH=/Library/TeX/texbin:$PATH
 
       source ~/.nix-profile/etc/profile.d/nix.sh
+      source "$HOME/.sdkman/bin/sdkman-init.sh"
     '';
 
     shellAliases = {
@@ -34,6 +38,7 @@
       vix = "cd ~/.config/nixpkgs & nvim applications/xmonad/xmonad.hs";
       ".." = "cd ..";
       ping = "prettyping";
+      bazel = "bazelisk";
     };
 
     plugins = [{
