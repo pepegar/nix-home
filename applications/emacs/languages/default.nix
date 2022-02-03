@@ -3,6 +3,7 @@
   imports = [
     ./haskell
     ./html
+    ./kotlin
     ./markdown
     ./nix
     ./org
