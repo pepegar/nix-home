@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 let
+  sources = import ../nix/sources.nix;
+  pkgs = import sources.nixpkgs { };
+  nur = import sources.nur { inherit pkgs; };
   all-hies =
     import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master")
     { };
@@ -52,6 +55,8 @@ in {
     buildifier
     yarn
     sops
+
+    nur.repos.zachcoyle.kotlin-language-server
 
     # apps
     Dash
