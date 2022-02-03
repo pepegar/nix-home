@@ -70,6 +70,7 @@
         "(scala-mode . lsp-deferred)"
         "(haskell-mode . lsp-deferred)"
         "(rust-mode . lsp-deferred)"
+        "(kotlin-mode . lsp-deferred)"
         "(nix-mode . lsp)"
       ];
       config = ''

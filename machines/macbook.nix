@@ -50,6 +50,8 @@ in {
     rnix-lsp
     bazelisk
     buildifier
+    yarn
+    sops
 
     # apps
     Dash
