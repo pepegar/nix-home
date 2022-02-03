@@ -33,8 +33,8 @@ in {
         ;; Set up fonts early.
         (set-face-attribute 'default
                             nil
-                            :height 170
-                            :family "PragmataPro Mono Liga")
+                            :height 180
+                            :family "Iosevka Nerd Font")
       '';
 
       prelude = ''

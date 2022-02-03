@@ -183,38 +183,13 @@ with pkgs; {
     doom-themes = {
       enable = true;
       config = ''
-        (load-theme 'doom-Iosvkem t)
+        (load-theme 'doom-challenger-deep t)
         (require 'doom-themes-ext-treemacs)
         (doom-themes-treemacs-config)
       '';
       extraConfig = ''
         :custom
         (doom-themes-treemacs-theme "doom-colors")
-      '';
-    };
-
-    doom-modeline = {
-      enable = true;
-      config = ''
-        (doom-modeline-def-modeline 'my/main
-          '(bar window-number parrot matches buffer-info " " buffer-position)
-          '(misc-info process checker repl lsp vcs indent-info buffer-encoding "   "))
-        (defun doom-modeline-set-my/main-modeline ()
-          (doom-modeline-set-modeline 'my/main t))
-        (add-hook 'doom-modeline-mode-hook 'doom-modeline-set-my/main-modeline)
-        (doom-modeline-mode 1)
-        (defun my/configure-face-attributes ()
-          (progn
-            (set-face-attribute 'mode-line nil :family "Cica" :height 120)
-            (set-face-attribute 'mode-line-inactive nil :family "Cica" :height 120)))
-        (add-hook 'after-init-hook 'my/configure-face-attributes)
-      '';
-      extraConfig = ''
-        :custom
-        (all-the-icons-scale-factor 1.1)
-        (doom-modeline-height 1)
-        (doom-modeline-bar-width 3)
-        (doom-modeline-buffer-file-name-style 'truncate-with-project)
       '';
     };
 
