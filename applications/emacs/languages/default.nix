@@ -133,6 +133,11 @@
       command = [ "lsp-treemacs-errors-list" ];
     };
 
+    swift-mode = {
+      enable = true;
+      mode = [ ''("\\.swift\\'" . swift-mode)'' ];
+    };
+
     company = {
       enable = true;
       hook = [ "(after-init . global-company-mode)" ];

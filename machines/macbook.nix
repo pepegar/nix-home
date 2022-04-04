@@ -49,11 +49,9 @@ in {
     graphviz
     exa
     jq
-    nodejs
     rnix-lsp
     bazelisk
     buildifier
-    yarn
     sops
 
     nur.repos.zachcoyle.kotlin-language-server

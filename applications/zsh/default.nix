@@ -24,6 +24,14 @@
 
       source ~/.nix-profile/etc/profile.d/nix.sh
       source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+      # Wasienv
+      export WASIENV_DIR="/Users/pepe/.wasienv"
+      [ -s "$WASIENV_DIR/wasienv.sh" ] && source "$WASIENV_DIR/wasienv.sh"
+
+      # Wasmer
+      export WASMER_DIR="/Users/pepe/.wasmer"
+      [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
     '';
 
     shellAliases = {

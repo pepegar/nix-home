@@ -118,7 +118,8 @@ with pkgs; {
           "~/projects/github.com/higherkindness/"
           "~/projects/github.com/pepegar/"
           "~/projects/github.com/app-2020/"
-          "~/projects/github.com/gsk-aiops/"
+          "~/projects/github.com/GoodNotes/"
+          "~/projects/github.com/ie-web-programming-2022/"
            "~/.config/"))
       '';
       bind = {
@@ -203,5 +204,11 @@ with pkgs; {
 
     ebib.enable = true;
     ebib.command = [ "ebib" ];
+
+    git-link = {
+      enable = true;
+
+      bind = { "C-c g l" = "git-link"; };
+    };
   };
 }

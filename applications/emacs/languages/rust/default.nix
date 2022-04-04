@@ -11,5 +11,10 @@
       hook = [ "(rust-mode . lsp-deferred)" ];
     };
 
+    pest-mode = {
+      enable = true;
+      mode = [ ''("\\.pest\\'" . pest-mode)'' ];
+    };
+
   };
 }

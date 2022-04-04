@@ -31,6 +31,7 @@
         (tab-always-indent nil)
         (indent-tabs-mode nil)
         (show-paren-mode t)
+        (global-linum-mode t)
         (electric-pair-mode t)
         (delete-selection-mode t)
         (global-auto-revert-mode t)
