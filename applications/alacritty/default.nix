@@ -11,11 +11,11 @@ in {
         color = "#ffffff";
       };
       font = {
-        normal = { family = "Iosevka Nerd Font"; };
+        normal = { family = "Iosevka"; };
         size = 17;
       };
       selection.save_to_clipboard = true;
-      shell.program = "${pkgs.zsh}/bin/zsh";
+      # shell.program = "${pkgs.zsh}/bin/zsh";
       window = {
         decorations = "full";
         padding = {

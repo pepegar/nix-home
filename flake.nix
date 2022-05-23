@@ -13,9 +13,9 @@
     let overlays = [ neovim-nightly-overlay.overlay ];
     in {
       homeConfigurations = {
-        pepe = home-manager.lib.homeManagerConfiguration {
+        pepegarcia = home-manager.lib.homeManagerConfiguration {
           system = "x86_64-darwin";
-          homeDirectory = "/Users/pepe";
+          homeDirectory = "/Users/pepegarcia";
           username = "pepe";
           configuration = {
             nixpkgs.overlays = overlays;

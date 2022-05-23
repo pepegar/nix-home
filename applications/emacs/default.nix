@@ -44,7 +44,7 @@ in {
         (set-face-attribute 'default
                             nil
                             :height 180
-                            :family "Iosevka Nerd Font")
+                            :family "Iosevka")
       '';
 
       prelude = ''

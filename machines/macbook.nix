@@ -11,7 +11,7 @@ in {
   imports = [
     ../applications/alacritty
     ../applications/direnv
-    ../applications/emacs
+    #../applications/emacs
     ../applications/fzf
     ../applications/neovim
     ../applications/starship
@@ -53,6 +53,9 @@ in {
     bazelisk
     buildifier
     sops
+    adoptopenjdk-hotspot-bin-11
+    cocoapods
+    python39
 
     nur.repos.zachcoyle.kotlin-language-server
 

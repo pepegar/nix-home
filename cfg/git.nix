@@ -7,11 +7,11 @@
     userName = "Pepe García";
     userEmail = "pepe@pepegar.com";
 
-    signing = {
-      gpgPath = "${pkgs.gnupg}/bin/gpg";
-      key = "B32204E4B8C00747";
-      signByDefault = true;
-    };
+    #signing = {
+    #gpgPath = "${pkgs.gnupg}/bin/gpg";
+    #key = "B32204E4B8C00747";
+    #signByDefault = true;
+    #};
 
     extraConfig = {
       github = { user = "pepegar"; };

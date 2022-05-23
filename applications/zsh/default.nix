@@ -17,8 +17,8 @@
 
     initExtra = ''
       export PATH=~/.nix-profile/bin:$PATH
-      export PATH=/Users/pepe/Library/Python/3.7/bin:$PATH
-      export PATH=/Users/pepe/bin:$PATH
+      export PATH=/Users/pepegarcia/Library/Python/3.7/bin:$PATH
+      export PATH=/Users/pepegarcia/bin:$PATH
       export PATH=/usr/local/bin:$PATH
       export PATH=/Library/TeX/texbin:$PATH
 
@@ -26,11 +26,11 @@
       source "$HOME/.sdkman/bin/sdkman-init.sh"
 
       # Wasienv
-      export WASIENV_DIR="/Users/pepe/.wasienv"
+      export WASIENV_DIR="/Users/pepegarcia/.wasienv"
       [ -s "$WASIENV_DIR/wasienv.sh" ] && source "$WASIENV_DIR/wasienv.sh"
 
       # Wasmer
-      export WASMER_DIR="/Users/pepe/.wasmer"
+      export WASMER_DIR="/Users/pepegarcia/.wasmer"
       [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
     '';
 
