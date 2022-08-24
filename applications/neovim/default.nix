@@ -22,7 +22,6 @@ let
       emmet-vim
       fzf-hoogle # search hoogle with fzf
       fzf-vim # fuzzy finder
-      ghcid # ghcid for Haskell
       multiple-cursors # Multiple cursors selection, etc
       neomake # run programs asynchronously and highlight errors
       nerdcommenter # code commenter
@@ -124,7 +123,7 @@ in {
       nnoremap <tab> za
       " }}}
       " Git {{{
-      nnoremap <leader>gs :Gstatus<cr>
+      nnoremap <leader>gs :Git<cr>
       " }}}
       " Markdown {{{
       au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>

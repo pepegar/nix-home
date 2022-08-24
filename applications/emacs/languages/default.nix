@@ -6,7 +6,6 @@
     ./kotlin
     ./markdown
     ./nix
-    ./org
     ./python
     ./restclient
     ./rust
@@ -198,6 +197,19 @@
         (dap-tooltip-mode t)
       '';
     };
+
+    jsonnet-mode = {
+      enable = true;
+      mode = [ ''("\\.jsonnet\\'" . jsonnet-mode)'' ];
+    };
+
+    go-mode = {
+      enable = true;
+      mode = [ ''"\\.go\\'"'' ];
+      hook = [ "(go-mode . lsp-deferred)" ];
+    };
+
+    dap-go.enable = true;
 
   };
 }

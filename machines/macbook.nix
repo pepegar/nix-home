@@ -1,23 +1,14 @@
-{ config, pkgs, ... }:
-
-let
-  sources = import ../nix/sources.nix;
-  pkgs = import sources.nixpkgs { };
-  nur = import sources.nur { inherit pkgs; };
-  all-hies =
-    import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master")
-    { };
-in {
+{ config, pkgs, ... }: {
   imports = [
     ../applications/alacritty
+    ../applications/go
     ../applications/direnv
-    #../applications/emacs
     ../applications/fzf
     ../applications/neovim
     ../applications/starship
     ../applications/tmux
     ../applications/zsh
-
+    ../applications/emacs
     ../cfg/email
     ../cfg/git.nix
     ../cfg/karabiner
@@ -41,27 +32,19 @@ in {
     prettyping
     pass
     htop
-    openvpn
     ag
-    metals-emacs
     ghq
-    mr
+    gh
     graphviz
-    exa
+    #exa
     jq
     rnix-lsp
     bazelisk
     buildifier
     sops
-    adoptopenjdk-hotspot-bin-11
     cocoapods
-    python39
-
-    nur.repos.zachcoyle.kotlin-language-server
-
-    # apps
-    Dash
-    Rectangle
+    ncdu
+    #nur.repos.zachcoyle.kotlin-language-server
   ];
 
   programs.zsh.sessionVariables = {

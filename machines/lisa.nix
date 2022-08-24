@@ -44,7 +44,6 @@ in rec {
     ag
     any-nix-shell
     bat
-    clang
     exa
     ghq
     gnome3.nautilus

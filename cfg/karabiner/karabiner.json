@@ -192,6 +192,16 @@
                             "key_code": "caps_lock"
                         }
                     ]
+                },
+                {
+                    "from": {
+                        "key_code": "non_us_backslash"
+                    },
+                    "to": [
+                        {
+                            "key_code": "grave_accent_and_tilde"
+                        }
+                    ]
                 }
             ],
             "virtual_hid_keyboard": {

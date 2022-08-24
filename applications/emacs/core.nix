@@ -31,7 +31,6 @@
         (tab-always-indent nil)
         (indent-tabs-mode nil)
         (show-paren-mode t)
-        (global-linum-mode t)
         (electric-pair-mode t)
         (delete-selection-mode t)
         (global-auto-revert-mode t)
@@ -60,6 +59,44 @@
       config = ''
         (column-number-mode t)
         (global-visual-line-mode t)
+      '';
+    };
+
+    dashboard = {
+      enable = true;
+      config = ''
+        (dashboard-setup-startup-hook)
+        (setq dashboard-center-content t)
+        (setq dashboard-show-shortcuts nil)
+        (setq dashboard-items '((recents . 5)
+	        (bookmarks .  5)
+	        (projects . 5)
+	        (agenda . 5)
+	        (registers . 5)))
+        (setq dashboard-startup-banner 'logo)
+        (setq dashboard-set-navigator t)
+        (setq dashboard-set-heading-icons t)
+        (setq dashboard-set-file-icons t)
+        (setq dashboard-set-navigator t)
+        ;;(setq dashboard-set-navigator t)
+        ;;(setq dashboard-navigator-buttons '(icon title help action face prefix suffix))
+        (setq dashboard-set-init-info t)
+        (setq dashboard-week-agenda t)
+        (setq dashboard-filter-agenda-entry 'dashboard-no-filter-agenda)
+      '';
+    };
+
+    doom-modeline = {
+      enable = true;
+      hook = [ "(after-init . doom-modeline-mode)" ];
+    };
+
+    page-break-lines = {
+      enable = true;
+      config = ''
+        (set-fontset-font "fontset-default"
+                    (cons page-break-lines-char page-break-lines-char)
+                    (face-attribute 'default :family))
       '';
     };
   };

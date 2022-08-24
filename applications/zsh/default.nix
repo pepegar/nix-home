@@ -19,19 +19,15 @@
       export PATH=~/.nix-profile/bin:$PATH
       export PATH=/Users/pepegarcia/Library/Python/3.7/bin:$PATH
       export PATH=/Users/pepegarcia/bin:$PATH
+      export PATH=/Users/pepegarcia/go/bin:$PATH
       export PATH=/usr/local/bin:$PATH
       export PATH=/Library/TeX/texbin:$PATH
+      export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH
+      export PATH=/opt/homebrew/bin:$PATH
+      export PATH=/opt/homebrew/opt/postgresql@12/bin:$PATH
 
       source ~/.nix-profile/etc/profile.d/nix.sh
       source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-      # Wasienv
-      export WASIENV_DIR="/Users/pepegarcia/.wasienv"
-      [ -s "$WASIENV_DIR/wasienv.sh" ] && source "$WASIENV_DIR/wasienv.sh"
-
-      # Wasmer
-      export WASMER_DIR="/Users/pepegarcia/.wasmer"
-      [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
     '';
 
     shellAliases = {
@@ -47,6 +43,7 @@
       ".." = "cd ..";
       ping = "prettyping";
       bazel = "bazelisk";
+      k = "kubectl";
     };
 
     plugins = [{

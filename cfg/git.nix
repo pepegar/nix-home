@@ -23,6 +23,8 @@
 
       ghq.root = "~/projects";
 
+      init.defaultBranch = "main";
+
       rerere.enabled = true;
     };
   };

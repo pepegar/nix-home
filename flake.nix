@@ -14,26 +14,24 @@
     in {
       homeConfigurations = {
         pepegarcia = home-manager.lib.homeManagerConfiguration {
-          system = "x86_64-darwin";
+          system = "aarch64-darwin";
           homeDirectory = "/Users/pepegarcia";
-          username = "pepe";
+          username = "pepegarcia";
           configuration = {
             nixpkgs.overlays = overlays;
             imports = [ ./machines/macbook.nix ];
           };
         };
       };
-    } // flake-utils.lib.eachSystem [ "x86_64-linux" "x86_64-darwin" ]
+    } // flake-utils.lib.eachSystem [ "aarch64-darwin" ]
     (system: {
-      checks = {
-        pre-commit-check = pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = { nixfmt.enable = true; };
-        };
-      };
+      #checks = {
+      #  pre-commit-check = pre-commit-hooks.lib.${system}.run {
+      #    src = ./.;
+      #    hooks = { nixfmt.enable = true; };
+      #  };
+      #};
       devShell = nixpkgs.legacyPackages.${system}.mkShell {
-        inherit (self.checks.${system}.pre-commit-check) shellHook;
-
         nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
           git
           nix

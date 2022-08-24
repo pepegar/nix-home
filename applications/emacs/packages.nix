@@ -3,17 +3,7 @@
 with pkgs; {
   programs.emacs.init.usePackage = {
 
-    use-package = {
-      enable = true;
-      package = epkgs:
-        epkgs.use-package.overrideAttrs (drv: {
-          src = fetchGit {
-            url = "git://github.com/jwiegley/use-package.git";
-            rev = "caa92f1d64fc25480551757d854b4b49981dfa6b";
-          };
-        });
-    };
-
+    use-package.enable = true;
     macrostep.enable = true;
     general.enable = true;
     hydra.enable = true;
@@ -21,9 +11,6 @@ with pkgs; {
 
     restart-emacs.enable = true;
     restart-emacs.command = [ "restart-emacs" ];
-
-    git-gutter.enable = true;
-    git-gutter.config = "(global-git-gutter-mode t)";
 
     undo-fu.enable = true;
     undo-fu-session.enable = true;

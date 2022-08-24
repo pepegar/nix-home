@@ -18,16 +18,8 @@ in {
         ; (md-reset-face 'markdown-pre-face)
 
         (setq
-           markdown-command "${pkgs.pandoc}/bin/pandoc"
            markdown-fontify-code-blocks-natively t)
       '';
     };
-
-    pandoc-mode = {
-      enable = true;
-      after = [ "markdown-mode" ];
-    };
-
   };
-
 }
