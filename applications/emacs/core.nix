@@ -99,5 +99,15 @@
                     (face-attribute 'default :family))
       '';
     };
+
+    vterm = {
+      enable = true;
+    };
+
+    golden-ratio = {
+      enable = true;
+      diminish = [ "golden-ratio-mode" ];
+      hook = [ "(after-init . golden-ratio-mode)" ];
+    };
   };
 }

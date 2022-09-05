@@ -111,6 +111,7 @@ with pkgs; {
       '';
       bind = {
         "C-c p h" = "projectile-find-file";
+        "C-c p t" = "projectile-run-vterm";
         "C-c p r" = "projectile-replace";
         "C-c p v" = "projectile-vc";
         "C-c p p" = "projectile-switch-project";
@@ -171,7 +172,7 @@ with pkgs; {
     doom-themes = {
       enable = true;
       config = ''
-        (load-theme 'doom-challenger-deep t)
+        (load-theme 'doom-nord-light t)
         (require 'doom-themes-ext-treemacs)
         (doom-themes-treemacs-config)
       '';

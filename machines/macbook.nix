@@ -36,15 +36,14 @@
     ghq
     gh
     graphviz
-    #exa
     jq
+    ruby
     rnix-lsp
     bazelisk
     buildifier
     sops
     cocoapods
     ncdu
-    #nur.repos.zachcoyle.kotlin-language-server
   ];
 
   programs.zsh.sessionVariables = {
@@ -52,4 +51,20 @@
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
   };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "lisa" = {
+        hostname = "lisa";
+        user = "pepe";
+        identityFile = [ "~/.ssh/local" ];
+      };
+      "*".extraOptions = {
+        AddKeysToAgent = "yes";
+        IdentityAgent = "\"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock\"";
+      };
+    };
+  };
+
 }
