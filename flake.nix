@@ -47,15 +47,17 @@
           };
         };
       };
-    } // flake-utils.lib.eachSystem [ "aarch64-darwin" ]
+    } // flake-utils.lib.eachDefaultSystem
       (system: {
-        #checks = {
-        #  pre-commit-check = pre-commit-hooks.lib.${system}.run {
-        #    src = ./.;
-        #    hooks = { nixfmt.enable = true; };
-        #  };
-        #};
+        checks = {
+          pre-commit-check = pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = { nixfmt.enable = true; };
+          };
+        };
         devShell = nixpkgs.legacyPackages.${system}.mkShell {
+          inherit (self.checks.${system}.pre-commit-check) shellHook;
+
           nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
             git
             nix
