@@ -32,7 +32,7 @@
     prettyping
     pass
     htop
-    ag
+    silver-searcher
     ghq
     gh
     graphviz

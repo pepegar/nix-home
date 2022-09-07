@@ -1,20 +1,13 @@
 { pkgs, ... }:
 
-let
-  sources = import ../../nix/sources.nix;
-  nurNoPkgs = import sources.nur { };
-in {
-
+{
   imports = [
-    nurNoPkgs.repos.rycee.hmModules.emacs-init
     ./core.nix
     ./packages.nix
     ./editing.nix
     ./languages
     ./tools
   ];
-
-  nixpkgs.overlays = [ (import sources.emacs-overlay) ];
 
   programs.emacs = {
     enable = true;
