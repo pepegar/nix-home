@@ -26,9 +26,23 @@
     in {
       nixosConfigurations.lisa = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./configuration.nix ];
+        modules = [ ./machines/lisa/configuration.nix ];
       };
       homeConfigurations = {
+        pepe = home-manager.lib.homeManagerConfiguration {
+          system = "x86_64-linux";
+          homeDirectory = "/Users/pepe";
+          username = "pepe";
+          configuration = {
+
+            nixpkgs.overlays =
+              [ neovim-nightly-overlay.overlay emacs-overlay.overlay ];
+            imports = [
+              ./machines/lisa.nix
+              nurNoPkgs.repos.rycee.hmModules.emacs-init
+            ];
+          };
+        };
         pepegarcia = home-manager.lib.homeManagerConfiguration {
           system = "aarch64-darwin";
           homeDirectory = "/Users/pepegarcia";
