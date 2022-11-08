@@ -178,10 +178,6 @@ in {
           method = "left";
         }
       ];
-      spotify = {
-        client_id = "d6753734b8164c989df54bcb4b85aa05";
-        client_secret = "888289dfe620493699678516724efe10";
-      };
     };
   };
 
