@@ -12,4 +12,4 @@ jobs:
       with:
         submodules: true
     - uses: cachix/install-nix-action@v15
-    - run: nix flake check
+    - run: nix flake check --impure
