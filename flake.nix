@@ -24,6 +24,10 @@
         nurpkgs = inputs.nixpkgs.legacyPackages."aarch64-darwin";
       };
     in {
+      nixosConfigurations.lisa = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./configuration.nix ];
+      };
       homeConfigurations = {
         pepegarcia = home-manager.lib.homeManagerConfiguration {
           system = "aarch64-darwin";

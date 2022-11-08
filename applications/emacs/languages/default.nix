@@ -28,6 +28,8 @@
       enable = true;
       defer = true;
       hook = [ "(after-init . yas-global-mode)" ];
+      bindLocal = { yas-minor-mode-map = { "C-c y" = "company-yasnippet"; }; };
+
     };
 
     yasnippet-snippets = {
@@ -210,6 +212,8 @@
     };
 
     dap-go.enable = true;
+
+    bazel.enable = true;
 
   };
 }

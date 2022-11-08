@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [
     ../applications/alacritty
     ../applications/go
@@ -44,6 +44,8 @@
     sops
     cocoapods
     ncdu
+    aws-vault
+    yq
   ];
 
   programs.zsh.sessionVariables = {
@@ -55,6 +57,10 @@
   programs.ssh = {
     enable = true;
     matchBlocks = {
+      "marge" = {
+        hostname = "marge";
+        user = "pepe";
+      };
       "lisa" = {
         hostname = "lisa";
         user = "pepe";
@@ -62,7 +68,8 @@
       };
       "*".extraOptions = {
         AddKeysToAgent = "yes";
-        IdentityAgent = "\"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock\"";
+        IdentityAgent = ''
+          "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"'';
       };
     };
   };
