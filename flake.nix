@@ -24,9 +24,15 @@
         nurpkgs = inputs.nixpkgs.legacyPackages."aarch64-darwin";
       };
     in {
-      nixosConfigurations.lisa = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./machines/lisa/configuration.nix ];
+      nixosConfigurations = {
+        lisa = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./machines/lisa/configuration.nix ];
+        };
+        marge = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./machines/marge/configuration.nix ];
+        };
       };
       homeConfigurations = {
         pepe = home-manager.lib.homeManagerConfiguration {
