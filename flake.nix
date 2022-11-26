@@ -11,7 +11,6 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nur.url =
       "github:nix-community/nur?rev61559589a9bb4f2e2301d9e4a59f3f1fac4cec59";
-    nur.inputs.nixpkgs.follows = "nixpkgs";
     emacs-overlay.url =
       "github:nix-community/emacs-overlay?rev=ae5528c72a1e1afbbcb7be7e813f4b3598f919ed";
     emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";

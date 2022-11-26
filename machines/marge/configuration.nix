@@ -11,9 +11,9 @@
     ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "marge"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -98,6 +98,7 @@
     git
     tailscale
     htop
+    glances
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -138,8 +139,20 @@
       fi
   
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey tskey-auth-kGGrbb4CNTRL-P1c8zqVFnGHcY4oh2XU4JHLaDBsaAh1K
+      ${tailscale}/bin/tailscale up -authkey tskey-auth-kwwBCe4CNTRL-YGV2GY85vR4VeJ1qM1SDT4VTmnPFSMxVA
     '';
+  };
+
+  systemd.services.glances = {
+    enable = true;
+    description = "glances";
+    unitConfig = {
+      Type = "simple";
+    };
+    serviceConfig = {
+      ExecStart = "${pkgs.glances}/bin/glances -w";
+    };
+    wantedBy = ["multi-user.target"];
   };
 
   services.home-assistant = {
@@ -157,11 +170,10 @@
         "radio_browser"
         "sonos"
         "spotify"
+        "homekit"
+        "glances"
       ];
       extraPackages = py: with py; [
-        # Are you using a database server for your recorder?
-        # https://www.home-assistant.io/integrations/recorder/
-        #mysqlclient
         psycopg2
         getmac
       ];
@@ -176,6 +188,8 @@
       };
       recorder.db_url = "postgresql://@/hass";
       default_config = {};
+      "automation manual" = [];
+      "automation ui" = "!include automations.yaml";
       template = [
        { 
          unique_id = "sensor.grid_import_power";
@@ -218,10 +232,6 @@
           method = "left";
         }
       ];
-      spotify = {
-        client_id = "d6753734b8164c989df54bcb4b85aa05";
-        client_secret = "888289dfe620493699678516724efe10";
-      };
     };
   };
 
