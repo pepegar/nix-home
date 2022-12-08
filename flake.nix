@@ -5,14 +5,11 @@
     nixpkgs.url = "github:nixos/nixpkgs";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
     flake-utils.url = "github:numtide/flake-utils";
-    home-manager.url =
-      "github:nix-community/home-manager?rev=ac2287df5a2d6f0a44bbcbd11701dbbf6ec43675";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    nur.url =
-      "github:nix-community/nur?rev61559589a9bb4f2e2301d9e4a59f3f1fac4cec59";
-    emacs-overlay.url =
-      "github:nix-community/emacs-overlay?rev=ae5528c72a1e1afbbcb7be7e813f4b3598f919ed";
+    nur.url = "github:nix-community/nur";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
     emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -30,7 +27,10 @@
         };
         marge = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./machines/marge/configuration.nix ];
+          modules = [
+            ./machines/marge/configuration.nix
+            home-manager.nixosModules.home-manager
+          ];
         };
       };
       homeConfigurations = {

@@ -1,14 +1,9 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -85,6 +80,46 @@
     isNormalUser = true;
     description = "pepe";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = "/home/pepe/.nix-profile/bin/zsh";
+  };
+
+  home-manager.users.pepe = { pkgs, ... }: {
+    home.stateVersion = "22.05";
+    imports = [
+      ../../applications/go
+      ../../applications/direnv
+      ../../applications/fzf
+      ../../applications/neovim
+      ../../applications/starship
+      ../../applications/tmux
+      ../../applications/zsh
+      ../../cfg/email
+      ../../cfg/git.nix
+    ];
+
+    # Let Home Manager install and manage itself.
+    programs.home-manager.enable = true;
+
+    home.packages = with pkgs; [
+      git-crypt
+      bat
+      gnupg
+      prettyping
+      pass
+      htop
+      rnix-lsp
+      exa
+      silver-searcher
+      ghq
+      gh
+      jq
+    ];
+
+    programs.zsh.sessionVariables = {
+      NIX_PATH = "$HOME/.nix-defexpr/channels\${NIX_PATH:+:}$NIX_PATH";
+      LANG = "en_US.UTF-8";
+      LC_ALL = "en_US.UTF-8";
+    };
   };
 
   # Allow unfree packages
@@ -93,13 +128,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-    tailscale
-    htop
-    glances
-  ];
+  environment.systemPackages = with pkgs; [ vim git tailscale htop glances ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -118,26 +147,26 @@
 
   systemd.services.tailscale-autoconnect = {
     description = "Automatic connection to Tailscale";
-  
+
     # make sure tailscale is running before trying to connect to tailscale
     after = [ "network-pre.target" "tailscale.service" ];
     wants = [ "network-pre.target" "tailscale.service" ];
     wantedBy = [ "multi-user.target" ];
-  
+
     # set this service as a oneshot job
     serviceConfig.Type = "oneshot";
-  
+
     # have the job run this shell script
     script = with pkgs; ''
       # wait for tailscaled to settle
       sleep 2
-  
+
       # check if we are already authenticated to tailscale
       status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
       if [ $status = "Running" ]; then # if so, then do nothing
         exit 0
       fi
-  
+
       # otherwise authenticate with tailscale
       ${tailscale}/bin/tailscale up -authkey tskey-auth-kwwBCe4CNTRL-YGV2GY85vR4VeJ1qM1SDT4VTmnPFSMxVA
     '';
@@ -146,13 +175,9 @@
   systemd.services.glances = {
     enable = true;
     description = "glances";
-    unitConfig = {
-      Type = "simple";
-    };
-    serviceConfig = {
-      ExecStart = "${pkgs.glances}/bin/glances -w";
-    };
-    wantedBy = ["multi-user.target"];
+    unitConfig = { Type = "simple"; };
+    serviceConfig = { ExecStart = "${pkgs.glances}/bin/glances -w"; };
+    wantedBy = [ "multi-user.target" ];
   };
 
   services.home-assistant = {
@@ -165,6 +190,7 @@
         "aemet"
         "backup"
         "shelly"
+        "webostv"
         "enphase_envoy"
         "roomba"
         "radio_browser"
@@ -173,46 +199,45 @@
         "homekit"
         "glances"
       ];
-      extraPackages = py: with py; [
-        psycopg2
-        getmac
-      ];
-    }).overrideAttrs (oldAttrs: {
+      extraPackages = py: with py; [ psycopg2 getmac ];
+    }).overrideAttrs (_: {
       # Don't run package tests, they take a long time
       doInstallCheck = false;
     });
     config = {
       homeassistant = {
         latitude = 29.051456;
-        longitude = -13.644630;
+        longitude = -13.64463;
       };
       recorder.db_url = "postgresql://@/hass";
-      default_config = {};
-      "automation manual" = [];
+      default_config = { };
+      "automation manual" = [ ];
       "automation ui" = "!include automations.yaml";
       template = [
-       { 
-         unique_id = "sensor.grid_import_power";
-         sensor = {
-           name = "Grid Import Power";
-           state_class = "measurement";
-           icon = "mdi:transmission-tower";
-           unit_of_measurement = "W";
-           device_class = "power";
-           state = "{{ [0, states('sensor.envoy_122203094420_current_power_consumption') | int - states('sensor.envoy_122203094420_current_power_production') | int ] | max }}";
-         };
-       }
-       { 
-         unique_id = "sensor.grid_export_power";
-         sensor = {
-           name = "Grid Export Power";
-           state_class = "measurement";
-           icon = "mdi:transmission-tower";
-           unit_of_measurement = "W";
-           device_class = "power";
-           state = "{{ [0, states('sensor.envoy_122203094420_current_power_production') | int - states('sensor.envoy_122203094420_current_power_consumption') | int ] | max }}";
-         };
-       }
+        {
+          unique_id = "sensor.grid_import_power";
+          sensor = {
+            name = "Grid Import Power";
+            state_class = "measurement";
+            icon = "mdi:transmission-tower";
+            unit_of_measurement = "W";
+            device_class = "power";
+            state =
+              "{{ [0, states('sensor.envoy_122203094420_current_power_consumption') | int - states('sensor.envoy_122203094420_current_power_production') | int ] | max }}";
+          };
+        }
+        {
+          unique_id = "sensor.grid_export_power";
+          sensor = {
+            name = "Grid Export Power";
+            state_class = "measurement";
+            icon = "mdi:transmission-tower";
+            unit_of_measurement = "W";
+            device_class = "power";
+            state =
+              "{{ [0, states('sensor.envoy_122203094420_current_power_production') | int - states('sensor.envoy_122203094420_current_power_consumption') | int ] | max }}";
+          };
+        }
       ];
       sensor = [
         {
@@ -232,6 +257,13 @@
           method = "left";
         }
       ];
+      securitas = {
+        username = "!secret securitas_direct_username";
+        password = "!secret securitas_direct_password";
+        code = "!secret securitas_direct_code";
+        country = "ES";
+        check_alarm_panel = false;
+      };
     };
   };
 
@@ -240,9 +272,7 @@
     ensureDatabases = [ "hass" ];
     ensureUsers = [{
       name = "hass";
-      ensurePermissions = {
-        "DATABASE hass" = "ALL PRIVILEGES";
-      };
+      ensurePermissions = { "DATABASE hass" = "ALL PRIVILEGES"; };
     }];
   };
 
