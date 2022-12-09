@@ -29,9 +29,6 @@
       export PATH=~/.ghcup/bin:$PATH
       export PATH=~/.cargo/bin:$PATH
 
-      source ~/.nix-profile/etc/profile.d/nix.sh
-      source "$HOME/.sdkman/bin/sdkman-init.sh"
-
       vterm_printf(){
           if [ -n "$TMUX" ] && ([ "$\{TERM%%-*\}" = "tmux" ] || [ "$\{TERM%%-*\}" = "screen" ] ); then
               # Tell tmux to pass the escape sequences through
