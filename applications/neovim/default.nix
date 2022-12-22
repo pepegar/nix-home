@@ -12,6 +12,8 @@ let
   myVimPlugins = with plugins;
     [
       asyncrun-vim # run async commands, show result in quickfix window
+      nvim-treesitter
+      rose-pine
       cmp-buffer
       cmp-cmdline
       cmp-nvim-lsp
@@ -113,7 +115,7 @@ in {
 
       syntax on
 
-      lua vim.cmd('colorscheme nord')
+      lua vim.cmd('colorscheme rose-pine')
       " }}}
       " folding {{{
       nnoremap <tab> za
@@ -146,6 +148,7 @@ in {
       require'lspconfig'.metals.setup{}
       require'lspconfig'.rls.setup{}
       require'lspconfig'.rnix.setup{}
+      require'lspconfig'.hls.setup{}
       EOF
 
 
@@ -206,6 +209,34 @@ in {
             { name = 'cmdline' }
           })
         })
+      EOF
+      " }}}
+      " treesitter {{{
+      lua << EOF
+      require'nvim-treesitter.configs'.setup {
+        -- A list of parser names, or "all"
+        ensure_installed = { "help", "javascript", "typescript", "kotlin", "lua", "rust", "nix", "haskell" },
+        parser_install_dir = "~/.config/nvim-treesitter",
+
+        -- Install parsers synchronously (only applied to `ensure_installed`)
+        sync_install = false,
+
+        -- Automatically install missing parsers when entering buffer
+        -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+        auto_install = true,
+
+        highlight = {
+          -- `false` will disable the whole extension
+          enable = true,
+
+          -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+          -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+          -- Using this option may slow down your editor, and you may see some duplicate highlights.
+          -- Instead of true it can also be a list of languages
+          additional_vim_regex_highlighting = false,
+        },
+      }
+      vim.opt.runtimepath:append("~/.config/nvim-treesitter")
       EOF
       " }}}
     '';

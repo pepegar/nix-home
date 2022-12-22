@@ -54,11 +54,6 @@
         in home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
 
-          #nixpkgs.overlays = [
-          #neovim-nightly-overlay.overlay
-          #emacs-overlay.overlay
-          #];
-
           modules = [
             ./machines/macbook.nix
             nurNoPkgs.repos.rycee.hmModules.emacs-init
