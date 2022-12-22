@@ -8,6 +8,7 @@
     ../applications/starship
     ../applications/tmux
     ../applications/zsh
+    ../applications/fish
     ../applications/emacs
     ../cfg/email
     ../cfg/git.nix
@@ -17,6 +18,9 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  home.stateVersion = "22.11";
+  home.username = "pepegarcia";
+  home.homeDirectory = "/Users/pepegarcia";
 
   nixpkgs.overlays = let path = ../overlays;
   in with builtins;
@@ -43,7 +47,6 @@
     buildifier
     sops
     cocoapods
-    ncdu
     aws-vault
     yq
   ];

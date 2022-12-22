@@ -1,10 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
-    enableFishIntegration = true;
     nix-direnv.enable = true;
   };
 
@@ -14,5 +13,5 @@
       watch_file flake.lock
       eval "$(nix print-dev-env --profile "$(direnv_layout_dir)/flake-profile")"
     }
-      '';
+  '';
 }

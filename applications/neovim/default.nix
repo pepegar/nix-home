@@ -52,10 +52,6 @@ let
       vim-tmux # syntax highlighting for tmux conf file and more
       vim-vsnip
     ] ++ overriddenPlugins;
-
-  baseConfig = builtins.readFile ./config.vim;
-  pluginsConfig = builtins.readFile ./plugins.vim;
-  vimConfig = baseConfig + pluginsConfig;
 in {
   programs.neovim = {
     enable = true;
@@ -210,22 +206,6 @@ in {
             { name = 'cmdline' }
           })
         })
-
-        -- Setup lspconfig.
-        local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-        require('lspconfig')['pyright'].setup{
-          capabilities = capabilities
-        }
-        require('lspconfig')['metals'].setup{
-          capabilities = capabilities
-        }
-        require('lspconfig')['rls'].setup{
-          capabilities = capabilities
-        }
-        require('lspconfig')['rnix'].setup{
-          capabilities = capabilities
-        }
       EOF
       " }}}
     '';

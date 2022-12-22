@@ -48,19 +48,21 @@
             ];
           };
         };
-        pepegarcia = home-manager.lib.homeManagerConfiguration {
+        pepegarcia = let
           system = "aarch64-darwin";
-          homeDirectory = "/Users/pepegarcia";
-          username = "pepegarcia";
-          configuration = {
+          pkgs = nixpkgs.legacyPackages.${system};
+        in home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
 
-            nixpkgs.overlays =
-              [ neovim-nightly-overlay.overlay emacs-overlay.overlay ];
-            imports = [
-              ./machines/macbook.nix
-              nurNoPkgs.repos.rycee.hmModules.emacs-init
-            ];
-          };
+          #nixpkgs.overlays = [
+          #neovim-nightly-overlay.overlay
+          #emacs-overlay.overlay
+          #];
+
+          modules = [
+            ./machines/macbook.nix
+            nurNoPkgs.repos.rycee.hmModules.emacs-init
+          ];
         };
       };
     } // flake-utils.lib.eachDefaultSystem (system: {

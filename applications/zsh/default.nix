@@ -44,7 +44,6 @@
 
     shellAliases = {
       cat = "bat";
-      du = "ncdu --color dark -rr -x";
       g = "git";
       gc = "git commit";
       gst = "git status";
@@ -56,6 +55,7 @@
       ping = "prettyping";
       bazel = "bazelisk";
       k = "kubectl";
+      tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
     };
 
     plugins = [{
