@@ -20,6 +20,12 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 vim.g.mapleader = " "
+
+vim.keymap.set("n", "<left>", "<C-W><C-H>")
+vim.keymap.set("n", "<right>", "<C-W><C-L>")
+vim.keymap.set("n", "<down>", "<C-W><C-J>")
+vim.keymap.set("n", "<up>", "<C-W><C-K>")
+
 require("rose-pine").setup({
 	disable_background = true,
 })

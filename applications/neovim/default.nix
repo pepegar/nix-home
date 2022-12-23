@@ -1,35 +1,26 @@
 { pkgs, ... }:
 
 let
-  custom-plugins = pkgs.callPackage ./custom-plugins.nix {
-    inherit (pkgs.vimUtils) buildVimPlugin;
-    inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
-    inherit pkgs;
-  };
+  #custom-plugins = pkgs.callPackage ./custom-plugins.nix {
+  #inherit (pkgs.vimUtils) buildVimPlugin;
+  #inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
+  #inherit pkgs;
+  #};
 
   myVimPlugins = [
-    custom-plugins.LuaSnip
-    custom-plugins.lsp-zero
-    custom-plugins.mason-lspconfig-nvim
-    custom-plugins.mason-nvim
-    pkgs.vimPlugins.cmp-buffer
-    pkgs.vimPlugins.cmp-nvim-lsp
-    pkgs.vimPlugins.cmp-nvim-lua
-    pkgs.vimPlugins.cmp-path
-    pkgs.vimPlugins.cmp_luasnip
     pkgs.vimPlugins.dhall-vim
     pkgs.vimPlugins.emmet-vim
-    pkgs.vimPlugins.friendly-snippets
     pkgs.vimPlugins.multiple-cursors
     pkgs.vimPlugins.nerdcommenter
     pkgs.vimPlugins.nerdtree
-    pkgs.vimPlugins.nvim-cmp
-    pkgs.vimPlugins.nvim-lspconfig
     pkgs.vimPlugins.nvim-treesitter
     pkgs.vimPlugins.rainbow_parentheses-vim
     pkgs.vimPlugins.rose-pine
     pkgs.vimPlugins.tabular
     pkgs.vimPlugins.telescope-nvim
+    pkgs.vimPlugins.lualine-nvim
+    pkgs.vimPlugins.lualine-lsp-progress
+    pkgs.vimPlugins.nvim-web-devicons
     pkgs.vimPlugins.vim-css-color
     pkgs.vimPlugins.vim-devicons
     pkgs.vimPlugins.vim-easy-align
@@ -53,7 +44,8 @@ let
   '';
 
   treesitterConfig = wrapLuaConfig (builtins.readFile ./treesitter.lua);
-  lspZeroConfig = wrapLuaConfig (builtins.readFile ./lsp-zero.lua);
+  lualineConfig = wrapLuaConfig (builtins.readFile ./lualine.lua);
+  lspConfig = wrapLuaConfig (builtins.readFile ./lsp.lua);
   telescopeConfig = wrapLuaConfig (builtins.readFile ./telescope.lua);
   basicsConfig = wrapLuaConfig (builtins.readFile ./basics.lua);
   fugitiveConfig = wrapLuaConfig (builtins.readFile ./fugitive.lua);
@@ -67,6 +59,6 @@ in {
     withPython3 = true;
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
-      + lspZeroConfig + fugitiveConfig;
+      + fugitiveConfig + lualineConfig + lspConfig;
   };
 }
