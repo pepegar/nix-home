@@ -25,6 +25,7 @@
       export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH
       export PATH=/opt/homebrew/bin:$PATH
       export PATH=/opt/homebrew/opt/postgresql@12/bin:$PATH
+      export PATH=~/.ghcup/bin:$PATH
 
       source ~/.nix-profile/etc/profile.d/nix.sh
       source "$HOME/.sdkman/bin/sdkman-init.sh"
