@@ -1,15 +1,17 @@
-require'nvim-treesitter.configs'.setup {
-        ensure_installed = { "help", "javascript", "typescript", "kotlin", "lua", "rust", "nix", "haskell" },
-        parser_install_dir = "~/.config/nvim-treesitter",
+require("nvim-treesitter.configs").setup({
 
-        sync_install = false,
+	ensure_installed = { "help", "javascript", "typescript", "kotlin", "lua", "rust", "nix", "haskell" },
+	parser_install_dir = "~/.config/nvim-treesitter",
 
-        auto_install = true,
+	sync_install = false,
 
-        highlight = {
-                enable = true,
+	auto_install = true,
 
-                additional_vim_regex_highlighting = false,
-        },
-}
+	highlight = {
+		enable = true,
+
+		additional_vim_regex_highlighting = false,
+	},
+})
+
 vim.opt.runtimepath:append("~/.config/nvim-treesitter")

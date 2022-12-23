@@ -2,29 +2,16 @@
 
 let
   myVimPlugins = with pkgs.vimPlugins; [
-    asyncrun-vim # run async commands, show result in quickfix window
     telescope-nvim
     nvim-treesitter
     rose-pine
-    cmp-buffer
-    cmp-cmdline
-    cmp-nvim-lsp
-    cmp-path
-    cmp-vsnip
     dhall-vim # Syntax highlighting for Dhall lang
     emmet-vim
-    fzf-vim # fuzzy finder
     multiple-cursors # Multiple cursors selection, etc
-    neomake # run programs asynchronously and highlight errors
     nerdcommenter # code commenter
     nerdtree # tree explorer
-    nord-vim
-    nvim-cmp
-    nvim-lspconfig
-    quickfix-reflector-vim # make modifications right in the quickfix window
     rainbow_parentheses-vim # for nested parentheses
     tabular
-    tender-vim # a clean dark theme
     vim-css-color # preview css colors
     vim-devicons # dev icons shown in the tree explorer
     vim-easy-align # alignment plugin
@@ -40,7 +27,6 @@ let
     vim-sensible
     vim-surround # quickly edit surroundings (brackets, html tags, etc)
     vim-tmux # syntax highlighting for tmux conf file and more
-    vim-vsnip
   ];
 
   wrapLuaConfig = str: ''
