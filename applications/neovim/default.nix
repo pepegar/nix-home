@@ -1,11 +1,11 @@
 { pkgs, ... }:
 
 let
-  #custom-plugins = pkgs.callPackage ./custom-plugins.nix {
-  #inherit (pkgs.vimUtils) buildVimPlugin;
-  #inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
-  #inherit pkgs;
-  #};
+  custom-plugins = pkgs.callPackage ./custom-plugins.nix {
+    inherit (pkgs.vimUtils) buildVimPlugin;
+    inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
+    inherit pkgs;
+  };
 
   myVimPlugins = [
     pkgs.vimPlugins.dhall-vim
@@ -13,11 +13,25 @@ let
     pkgs.vimPlugins.multiple-cursors
     pkgs.vimPlugins.nerdcommenter
     pkgs.vimPlugins.nerdtree
-    pkgs.vimPlugins.nvim-treesitter
+    (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
+      with plugins; [
+        haskell
+        help
+        javascript
+        kotlin
+        lua
+        nix
+        python
+        rust
+        typescript
+        yaml
+      ]))
     pkgs.vimPlugins.rainbow_parentheses-vim
     pkgs.vimPlugins.rose-pine
     pkgs.vimPlugins.tabular
     pkgs.vimPlugins.telescope-nvim
+    custom-plugins.telescope-ghq
+    pkgs.vimPlugins.telescope-frecency-nvim
     pkgs.vimPlugins.lualine-nvim
     pkgs.vimPlugins.lualine-lsp-progress
     pkgs.vimPlugins.nvim-web-devicons
@@ -35,6 +49,19 @@ let
     pkgs.vimPlugins.vim-rhubarb
     pkgs.vimPlugins.vim-sensible
     pkgs.vimPlugins.vim-surround
+
+    custom-plugins.lsp-zero
+    pkgs.vimPlugins.nvim-lspconfig
+    custom-plugins.mason-nvim
+    custom-plugins.mason-lspconfig-nvim
+    pkgs.vimPlugins.nvim-cmp
+    pkgs.vimPlugins.cmp-buffer
+    pkgs.vimPlugins.cmp-path
+    pkgs.vimPlugins.cmp_luasnip
+    pkgs.vimPlugins.cmp-nvim-lsp
+    pkgs.vimPlugins.cmp-nvim-lua
+    custom-plugins.LuaSnip
+    pkgs.vimPlugins.friendly-snippets
   ];
 
   wrapLuaConfig = str: ''

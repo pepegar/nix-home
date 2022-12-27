@@ -1,4 +1,15 @@
-local lsp = require("lsp-zero")
+require("lsp-zero").setup({
+	lsp.preset("recommended"),
+})
 
-lsp.preset("recommended")
-lsp.setup()
+require("mason").setup({
+	ui = {
+		icons = {
+			package_installed = "✓",
+			package_pending = "➜",
+			package_uninstalled = "✗",
+		},
+	},
+
+	install_root_dir = "~/.config/nvim/",
+})
