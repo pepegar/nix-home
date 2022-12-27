@@ -1,3 +1,4 @@
+local lsp = require("lsp-zero")
 require("lsp-zero").setup({
 	lsp.preset("recommended"),
 })

@@ -32,6 +32,7 @@ let
     pkgs.vimPlugins.telescope-nvim
     custom-plugins.telescope-ghq
     pkgs.vimPlugins.telescope-frecency-nvim
+    pkgs.vimPlugins.telescope-fzy-native-nvim
     pkgs.vimPlugins.lualine-nvim
     pkgs.vimPlugins.lualine-lsp-progress
     pkgs.vimPlugins.nvim-web-devicons
@@ -62,6 +63,7 @@ let
     pkgs.vimPlugins.cmp-nvim-lua
     custom-plugins.LuaSnip
     pkgs.vimPlugins.friendly-snippets
+    pkgs.vimPlugins.indent-blankline-nvim
   ];
 
   wrapLuaConfig = str: ''
@@ -76,6 +78,7 @@ let
   telescopeConfig = wrapLuaConfig (builtins.readFile ./telescope.lua);
   basicsConfig = wrapLuaConfig (builtins.readFile ./basics.lua);
   fugitiveConfig = wrapLuaConfig (builtins.readFile ./fugitive.lua);
+  indentConfig = wrapLuaConfig (builtins.readFile ./indent.lua);
 in {
   programs.neovim = {
     enable = true;
@@ -86,6 +89,6 @@ in {
     withPython3 = true;
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
-      + fugitiveConfig + lualineConfig + lspConfig;
+      + fugitiveConfig + lualineConfig + lspConfig + indentConfig;
   };
 }

@@ -19,6 +19,9 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
 vim.g.mapleader = " "
 
 vim.keymap.set("n", "<left>", "<C-W><C-H>")
@@ -29,6 +32,7 @@ vim.keymap.set("n", "<up>", "<C-W><C-K>")
 require("rose-pine").setup({
 	disable_background = true,
 })
+
 vim.cmd.colorscheme("rose-pine")
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
