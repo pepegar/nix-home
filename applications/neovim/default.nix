@@ -13,11 +13,13 @@ let
     pkgs.vimPlugins.multiple-cursors
     pkgs.vimPlugins.nerdcommenter
     pkgs.vimPlugins.nerdtree
+    pkgs.vimPlugins.nvim-autopairs
     (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
       with plugins; [
         haskell
         help
         javascript
+        jsonnet
         kotlin
         lua
         nix
@@ -26,7 +28,6 @@ let
         typescript
         yaml
       ]))
-    pkgs.vimPlugins.rainbow_parentheses-vim
     pkgs.vimPlugins.rose-pine
     pkgs.vimPlugins.tabular
     pkgs.vimPlugins.telescope-nvim
@@ -36,6 +37,7 @@ let
     pkgs.vimPlugins.lualine-nvim
     pkgs.vimPlugins.lualine-lsp-progress
     pkgs.vimPlugins.nvim-web-devicons
+    pkgs.vimPlugins.nvim-ts-rainbow
     pkgs.vimPlugins.vim-css-color
     pkgs.vimPlugins.vim-devicons
     pkgs.vimPlugins.vim-easy-align
@@ -79,6 +81,7 @@ let
   basicsConfig = wrapLuaConfig (builtins.readFile ./basics.lua);
   fugitiveConfig = wrapLuaConfig (builtins.readFile ./fugitive.lua);
   indentConfig = wrapLuaConfig (builtins.readFile ./indent.lua);
+  autopairsConfig = wrapLuaConfig (builtins.readFile ./autopairs.lua);
 in {
   programs.neovim = {
     enable = true;
@@ -89,6 +92,7 @@ in {
     withPython3 = true;
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
-      + fugitiveConfig + lualineConfig + lspConfig + indentConfig;
+      + fugitiveConfig + lualineConfig + lspConfig + indentConfig
+      + autopairsConfig;
   };
 }

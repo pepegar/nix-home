@@ -12,5 +12,5 @@ require("mason").setup({
 		},
 	},
 
-	install_root_dir = "~/.config/nvim/",
+	install_root_dir = "/Users/pepegarcia/.config/nvim/",
 })

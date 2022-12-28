@@ -7,7 +7,7 @@
 
     settings = {
       format =
-        "$battery$username$hostname$directory$git_branch$git_status$git_state$aws$cmd_duration$line_break$character";
+        "$battery$username$hostname$jobs$directory$git_branch$git_status$git_state$aws$kubernetes$cmd_duration$line_break$character";
 
       directory.read_only = " ";
       battery = {

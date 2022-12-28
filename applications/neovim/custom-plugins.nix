@@ -66,4 +66,18 @@
     meta.homepage = "https://github.com/nvim-telescope/telescope-ghq.nvim";
   };
 
+  nvim-ts-rainbow = buildVimPluginFrom2Nix {
+    pname = "nvim-ts-rainbow";
+    version = "2022-12-28";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "p00f";
+      repo = "nvim-ts-rainbow";
+      rev = "064fd6c0a15fae7f876c2c6dd4524ca3fad96750";
+      sha256 = "Uct+2jg9qZD7V3eSnICLNu2jpaQLc3ugW8qunPiAynM=";
+    };
+
+    meta.homepage = "https://github.com/p00f/nvim-ts-rainbow";
+  };
+
 }
