@@ -34,6 +34,8 @@ let
     custom-plugins.telescope-ghq
     pkgs.vimPlugins.telescope-frecency-nvim
     pkgs.vimPlugins.telescope-fzy-native-nvim
+    pkgs.vimPlugins.trouble-nvim
+    pkgs.vimPlugins.gitsigns-nvim
     pkgs.vimPlugins.lualine-nvim
     pkgs.vimPlugins.lualine-lsp-progress
     pkgs.vimPlugins.nvim-web-devicons
@@ -44,7 +46,6 @@ let
     pkgs.vimPlugins.vim-easymotion
     pkgs.vimPlugins.vim-fish
     pkgs.vimPlugins.vim-fugitive
-    pkgs.vimPlugins.vim-gitgutter
     pkgs.vimPlugins.vim-javascript
     pkgs.vimPlugins.vim-markdown
     pkgs.vimPlugins.vim-nix
@@ -82,6 +83,7 @@ let
   fugitiveConfig = wrapLuaConfig (builtins.readFile ./fugitive.lua);
   indentConfig = wrapLuaConfig (builtins.readFile ./indent.lua);
   autopairsConfig = wrapLuaConfig (builtins.readFile ./autopairs.lua);
+  gitsignsConfig = wrapLuaConfig (builtins.readFile ./gitsigns.lua);
 in {
   programs.neovim = {
     enable = true;
@@ -93,6 +95,6 @@ in {
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
       + fugitiveConfig + lualineConfig + lspConfig + indentConfig
-      + autopairsConfig;
+      + autopairsConfig + gitsignsConfig;
   };
 }
