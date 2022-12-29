@@ -22,6 +22,18 @@
       init.defaultBranch = "main";
 
       rerere.enabled = true;
+
+      user.signingkey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOQcERc9nlqCFCr5qTufWYBeAmkSKdnlf0ZdmKqFNAvX";
+
+      gpg.format = "ssh";
+
+      "gpg \"ssh\"" = {
+        program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+      };
+
+      commit.gpgsign = true;
+
     };
   };
 }
