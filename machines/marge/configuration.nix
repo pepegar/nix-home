@@ -115,6 +115,7 @@
       ghq
       gh
       jq
+      pinentry-curses
     ];
 
     programs.zsh.sessionVariables = {
@@ -144,6 +145,11 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "curses";
+    enableSSHSupport = true;
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

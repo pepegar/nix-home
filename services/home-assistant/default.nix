@@ -35,6 +35,7 @@
         "spotify"
         "homekit"
         "glances"
+        "apple_tv"
       ];
       extraPackages = py: with py; [ psycopg2 getmac ];
     }).overrideAttrs (_: {
@@ -100,6 +101,23 @@
         code = "!secret securitas_direct_code";
         country = "ES";
         check_alarm_panel = false;
+      };
+      lovelace = {
+        mode = "yaml";
+        resources = [
+          {
+            url = "/local/mini-graph-card-bundle.js";
+            type = "module";
+          }
+          {
+            url = "/local/stack-in-card.js";
+            type = "module";
+          }
+          {
+            url = "/local/mushroom.js";
+            type = "module";
+          }
+        ];
       };
     };
   };
