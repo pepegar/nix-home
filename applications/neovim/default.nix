@@ -8,7 +8,6 @@ let
   };
 
   myVimPlugins = [
-    pkgs.vimPlugins.dhall-vim
     pkgs.vimPlugins.emmet-vim
     pkgs.vimPlugins.multiple-cursors
     pkgs.vimPlugins.nerdcommenter
@@ -27,6 +26,8 @@ let
         rust
         typescript
         yaml
+        markdown
+        html
       ]))
     pkgs.vimPlugins.rose-pine
     pkgs.vimPlugins.tabular
@@ -40,14 +41,13 @@ let
     pkgs.vimPlugins.lualine-lsp-progress
     pkgs.vimPlugins.nvim-web-devicons
     pkgs.vimPlugins.nvim-ts-rainbow
+    pkgs.vimPlugins.undotree
     pkgs.vimPlugins.vim-css-color
-    pkgs.vimPlugins.vim-devicons
+    pkgs.vimPlugins.vim-css-color
     pkgs.vimPlugins.vim-easy-align
     pkgs.vimPlugins.vim-easymotion
     pkgs.vimPlugins.vim-fish
     pkgs.vimPlugins.vim-fugitive
-    pkgs.vimPlugins.vim-javascript
-    pkgs.vimPlugins.vim-markdown
     pkgs.vimPlugins.vim-nix
     pkgs.vimPlugins.vim-repeat
     pkgs.vimPlugins.vim-rhubarb
@@ -84,6 +84,8 @@ let
   indentConfig = wrapLuaConfig (builtins.readFile ./indent.lua);
   autopairsConfig = wrapLuaConfig (builtins.readFile ./autopairs.lua);
   gitsignsConfig = wrapLuaConfig (builtins.readFile ./gitsigns.lua);
+  troubleConfig = wrapLuaConfig (builtins.readFile ./trouble.lua);
+  undotreeConfig = wrapLuaConfig (builtins.readFile ./undotree.lua);
 in {
   programs.neovim = {
     enable = true;
@@ -95,6 +97,6 @@ in {
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
       + fugitiveConfig + lualineConfig + lspConfig + indentConfig
-      + autopairsConfig + gitsignsConfig;
+      + autopairsConfig + gitsignsConfig + troubleConfig + undotreeConfig;
   };
 }

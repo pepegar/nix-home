@@ -43,6 +43,7 @@
     jq
     ruby
     rnix-lsp
+    cargo
     bazelisk
     buildifier
     sops
@@ -69,11 +70,8 @@
         user = "pepe";
         identityFile = [ "~/.ssh/local" ];
       };
-      "*".extraOptions = {
-        AddKeysToAgent = "yes";
-        IdentityAgent = ''
-          "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"'';
-      };
+      "*".extraOptions = { AddKeysToAgent = "yes"; };
+      "*.github.com".extraOptions = { IdentityFile = "~/.ssh/id_ed25519"; };
     };
   };
 
