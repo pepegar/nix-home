@@ -180,6 +180,14 @@
     wantedBy = [ "multi-user.target" ];
   };
 
+  systemd.services.esphome = {
+    enable = true;
+    description = "esphome";
+    unitConfig = { Type = "simple"; };
+    serviceConfig = { ExecStart = "${pkgs.esphome}/bin/esphome -w"; };
+    wantedBy = [ "multi-user.target" ];
+  };
+
   services.home-assistant = {
     enable = true;
     package = (pkgs.home-assistant.override {

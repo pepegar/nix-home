@@ -28,6 +28,8 @@ vim.keymap.set("n", "<left>", "<C-W><C-H>")
 vim.keymap.set("n", "<right>", "<C-W><C-L>")
 vim.keymap.set("n", "<down>", "<C-W><C-J>")
 vim.keymap.set("n", "<up>", "<C-W><C-K>")
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 require("rose-pine").setup({
 	disable_background = true,

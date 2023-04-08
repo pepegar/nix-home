@@ -14,24 +14,24 @@
 
   mason-nvim = buildVimPluginFrom2Nix {
     pname = "mason.nvim";
-    version = "2022-07-31";
+    version = "2023-01-09";
 
     src = pkgs.fetchFromGitHub {
       owner = "williamboman";
       repo = "mason.nvim";
-      rev = "5676d6d63850ca63fe468a578387fed9eb0f69a3";
+      rev = "8a1a49b9e8147b4c1a3314739720357c0ba1ed1a";
       sha256 = "06b594lv8akxmd54sa18g5w18z1blcvs8zk2p9dnczx9107099yx";
     };
   };
 
   mason-lspconfig-nvim = buildVimPluginFrom2Nix {
     pname = "mason-lspconfig.nvim";
-    version = "2022-07-31";
+    version = "2023-01-09";
 
     src = pkgs.fetchFromGitHub {
       owner = "williamboman";
       repo = "mason-lspconfig.nvim";
-      rev = "f87c5796603aa3436d9cb1d36dbe5b2e579e4034";
+      rev = "3751eb5c56c67b51e68a1f4a0da28ae74ab771c1";
       sha256 = "01d4y5qlsl3faxq3a03p7d1cqfclfrhy42m5yyrbzg3q2wmpgvqq";
     };
 
@@ -78,6 +78,20 @@
     };
 
     meta.homepage = "https://github.com/p00f/nvim-ts-rainbow";
+  };
+
+  golden-size = buildVimPluginFrom2Nix {
+    pname = "golden_size";
+    version = "2022-12-28";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "dm1try";
+      repo = "golden_size";
+      rev = "301907c3bd877912ca3d4125c602a23f8c4a7c95";
+      sha256 = "NJF8uVudwAU3xEPGDjDjjuxbj4V35n5igdA9CQ2q2AU=";
+    };
+
+    meta.homepage = "https://github.com/dm1try/golden_size";
   };
 
 }

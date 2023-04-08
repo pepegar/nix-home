@@ -25,6 +25,7 @@
       export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH
       export PATH=/opt/homebrew/bin:$PATH
       export PATH=/opt/homebrew/opt/postgresql@12/bin:$PATH
+      export PATH=/Users/pepegarcia/.local/share/gem/ruby/2.7.0/bin:$PATH
       export PATH=~/.ghcup/bin:$PATH
 
       source ~/.nix-profile/etc/profile.d/nix.sh
@@ -40,7 +41,11 @@
           else
               printf "\e]%s\e\\" "$1"
           fi
-      }
+        }
+
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+      [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
     '';
 
     shellAliases = {

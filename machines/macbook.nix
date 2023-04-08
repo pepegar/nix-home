@@ -30,6 +30,7 @@
     (attrNames (readDir path)));
 
   home.packages = with pkgs; [
+    minio-client
     git-crypt
     bat
     gnupg

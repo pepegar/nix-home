@@ -8,6 +8,7 @@ let
   };
 
   myVimPlugins = [
+    pkgs.vimPlugins.octo-nvim
     pkgs.vimPlugins.emmet-vim
     pkgs.vimPlugins.multiple-cursors
     pkgs.vimPlugins.nerdcommenter
@@ -24,11 +25,13 @@ let
         nix
         python
         rust
+        swift
         typescript
         yaml
         markdown
         html
       ]))
+    custom-plugins.golden-size
     pkgs.vimPlugins.rose-pine
     pkgs.vimPlugins.tabular
     pkgs.vimPlugins.telescope-nvim
@@ -86,6 +89,8 @@ let
   gitsignsConfig = wrapLuaConfig (builtins.readFile ./gitsigns.lua);
   troubleConfig = wrapLuaConfig (builtins.readFile ./trouble.lua);
   undotreeConfig = wrapLuaConfig (builtins.readFile ./undotree.lua);
+  goldenSizeConfig = wrapLuaConfig (builtins.readFile ./golden-size.lua);
+  octoConfig = wrapLuaConfig (builtins.readFile ./octo.lua);
 in {
   programs.neovim = {
     enable = true;
@@ -97,6 +102,7 @@ in {
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
       + fugitiveConfig + lualineConfig + lspConfig + indentConfig
-      + autopairsConfig + gitsignsConfig + troubleConfig + undotreeConfig;
+      + autopairsConfig + gitsignsConfig + troubleConfig + undotreeConfig
+      + goldenSizeConfig + octoConfig;
   };
 }
