@@ -1,4 +1,5 @@
 require("nvim-treesitter.configs").setup({
+	parser_install_dir = "~/.config/nvim/",
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,

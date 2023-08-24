@@ -27,6 +27,7 @@
       export PATH=/opt/homebrew/opt/postgresql@12/bin:$PATH
       export PATH=/Users/pepegarcia/.local/share/gem/ruby/2.7.0/bin:$PATH
       export PATH=~/.ghcup/bin:$PATH
+      export PATH=~/.cargo/bin:$PATH
 
       source ~/.nix-profile/etc/profile.d/nix.sh
       source "$HOME/.sdkman/bin/sdkman-init.sh"

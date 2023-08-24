@@ -93,5 +93,4 @@
 
     meta.homepage = "https://github.com/dm1try/golden_size";
   };
-
 }

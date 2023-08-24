@@ -6,9 +6,7 @@
     enableZshIntegration = true;
 
     settings = {
-      format =
-        "$battery$username$hostname$jobs$directory$git_branch$git_status$git_state$aws$kubernetes$cmd_duration$line_break$character";
-
+      command_timeout = 1000;
       directory.read_only = " ";
       battery = {
         full_symbol = "•";
