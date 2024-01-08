@@ -1,4 +1,4 @@
-{ pkgs, buildVimPlugin, buildVimPluginFrom2Nix }:
+{ pkgs, buildVimPlugin }:
 
 {
   lsp-zero = buildVimPlugin rec {
@@ -12,7 +12,7 @@
     };
   };
 
-  mason-nvim = buildVimPluginFrom2Nix {
+  mason-nvim = buildVimPlugin {
     pname = "mason.nvim";
     version = "2023-01-09";
 
@@ -24,7 +24,7 @@
     };
   };
 
-  mason-lspconfig-nvim = buildVimPluginFrom2Nix {
+  mason-lspconfig-nvim = buildVimPlugin {
     pname = "mason-lspconfig.nvim";
     version = "2023-01-09";
 
@@ -38,7 +38,7 @@
     meta.homepage = "https://github.com/williamboman/mason-lspconfig.nvim";
   };
 
-  LuaSnip = buildVimPluginFrom2Nix {
+  LuaSnip = buildVimPlugin {
     pname = "LuaSnip";
     version = "2022-07-31";
 
@@ -52,7 +52,7 @@
     meta.homepage = "https://github.com/L3MON4D3/LuaSnip";
   };
 
-  telescope-ghq = buildVimPluginFrom2Nix {
+  telescope-ghq = buildVimPlugin {
     pname = "telescope-ghq";
     version = "2022-12-23";
 
@@ -66,7 +66,7 @@
     meta.homepage = "https://github.com/nvim-telescope/telescope-ghq.nvim";
   };
 
-  nvim-ts-rainbow = buildVimPluginFrom2Nix {
+  nvim-ts-rainbow = buildVimPlugin {
     pname = "nvim-ts-rainbow";
     version = "2022-12-28";
 
@@ -80,7 +80,7 @@
     meta.homepage = "https://github.com/p00f/nvim-ts-rainbow";
   };
 
-  golden-size = buildVimPluginFrom2Nix {
+  golden-size = buildVimPlugin {
     pname = "golden_size";
     version = "2022-12-28";
 

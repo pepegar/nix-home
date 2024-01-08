@@ -3,7 +3,6 @@
 let
   custom-plugins = pkgs.callPackage ./custom-plugins.nix {
     inherit (pkgs.vimUtils) buildVimPlugin;
-    inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
     inherit pkgs;
   };
 
