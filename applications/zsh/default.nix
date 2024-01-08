@@ -60,7 +60,6 @@
       vix = "cd ~/.config/nixpkgs & nvim applications/xmonad/xmonad.hs";
       ".." = "cd ..";
       ping = "prettyping";
-      bazel = "bazelisk";
       k = "kubectl";
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
     };

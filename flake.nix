@@ -67,7 +67,6 @@
           hooks = {
             nixfmt.enable = true;
             deadnix.enable = true;
-            nix-linter.enable = true;
             stylua.enable = true;
           };
         };

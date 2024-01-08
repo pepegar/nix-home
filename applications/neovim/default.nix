@@ -17,14 +17,12 @@ let
     (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
       with plugins; [
         haskell
-        help
         javascript
         jsonnet
         kotlin
         lua
         nix
         python
-        rust
         swift
         typescript
         yaml
@@ -43,7 +41,7 @@ let
     pkgs.vimPlugins.lualine-nvim
     pkgs.vimPlugins.lualine-lsp-progress
     pkgs.vimPlugins.nvim-web-devicons
-    pkgs.vimPlugins.nvim-ts-rainbow
+    pkgs.vimPlugins.rainbow-delimiters-nvim
     pkgs.vimPlugins.undotree
     pkgs.vimPlugins.vim-css-color
     pkgs.vimPlugins.vim-css-color

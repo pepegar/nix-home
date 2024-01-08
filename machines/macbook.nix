@@ -30,6 +30,7 @@
     (attrNames (readDir path)));
 
   home.packages = with pkgs; [
+    cargo
     minio-client
     git-crypt
     bat
@@ -44,7 +45,6 @@
     jq
     ruby
     rnix-lsp
-    cargo
     bazelisk
     buildifier
     sops
