@@ -20,7 +20,7 @@
       owner = "williamboman";
       repo = "mason.nvim";
       rev = "8a1a49b9e8147b4c1a3314739720357c0ba1ed1a";
-      sha256 = "06b594lv8akxmd54sa18g5w18z1blcvs8zk2p9dnczx9107099yx";
+      sha256 = "sha256-/B7W9w//Hu1NGkImfAimT/vGM+JYik7dFo1QAqFckIs=";
     };
   };
 
@@ -32,7 +32,7 @@
       owner = "williamboman";
       repo = "mason-lspconfig.nvim";
       rev = "3751eb5c56c67b51e68a1f4a0da28ae74ab771c1";
-      sha256 = "01d4y5qlsl3faxq3a03p7d1cqfclfrhy42m5yyrbzg3q2wmpgvqq";
+      sha256 = "sha256-wEqFUCXN9QLoWXQsbUySeDNBmFH2wW8sSCKrpvR89xw=";
     };
 
     meta.homepage = "https://github.com/williamboman/mason-lspconfig.nvim";
