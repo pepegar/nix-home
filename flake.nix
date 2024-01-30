@@ -7,18 +7,25 @@
     flake-utils.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nur.url = "github:nix-community/nur";
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-    emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
-
-  outputs = { self, nixpkgs, pre-commit-hooks, flake-utils, home-manager
-    , neovim-nightly-overlay, nur, emacs-overlay }@inputs:
+  outputs =
+    { self, nixpkgs, pre-commit-hooks, flake-utils, home-manager, nur }@inputs:
     let
-      nurNoPkgs = import nur {
-        nurpkgs = inputs.nixpkgs.legacyPackages."aarch64-darwin";
-      };
+      nurNoPkgs = system:
+        import nur { nurpkgs = inputs.nixpkgs.legacyPackages.${system}; };
+
+      mkHomeConfig = machineModule: system:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs { inherit system; };
+
+          modules = [
+            (nurNoPkgs system).repos.rycee.hmModules.emacs-init
+            machineModule
+          ];
+
+          extraSpecialArgs = { inherit inputs system; };
+        };
     in {
       nixosConfigurations = {
         lisa = nixpkgs.lib.nixosSystem {
@@ -34,31 +41,9 @@
         };
       };
       homeConfigurations = {
-        pepe = home-manager.lib.homeManagerConfiguration {
-          system = "x86_64-linux";
-          homeDirectory = "/Users/pepe";
-          username = "pepe";
-          configuration = {
-
-            nixpkgs.overlays =
-              [ neovim-nightly-overlay.overlay emacs-overlay.overlay ];
-            imports = [
-              ./machines/lisa.nix
-              nurNoPkgs.repos.rycee.hmModules.emacs-init
-            ];
-          };
-        };
-        pepegarcia = let
-          system = "aarch64-darwin";
-          pkgs = nixpkgs.legacyPackages.${system};
-        in home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-
-          modules = [
-            ./machines/macbook.nix
-            nurNoPkgs.repos.rycee.hmModules.emacs-init
-          ];
-        };
+        "pepe@bart" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
+        "pepe@lisa" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
+        "pepe@marge" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
       };
     } // flake-utils.lib.eachDefaultSystem (system: {
       checks = {

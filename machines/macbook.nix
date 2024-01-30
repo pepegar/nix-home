@@ -19,8 +19,8 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   home.stateVersion = "22.11";
-  home.username = "pepegarcia";
-  home.homeDirectory = "/Users/pepegarcia";
+  home.username = "pepe";
+  home.homeDirectory = "/Users/pepe";
 
   nixpkgs.overlays = let path = ../overlays;
   in with builtins;
@@ -51,6 +51,7 @@
     cocoapods
     aws-vault
     yq
+    eza
   ];
 
   programs.zsh.sessionVariables = {
