@@ -1,5 +1,5 @@
 require("mason").setup({
-	install_root_dir = "/Users/pepegarcia/.config/nvim/",
+	install_root_dir = "/Users/pepe/.config/nvim/",
 })
 
 require("lspconfig").zls.setup({})

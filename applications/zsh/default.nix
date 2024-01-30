@@ -17,9 +17,9 @@
 
     initExtra = ''
       export PATH=~/.nix-profile/bin:$PATH
-      export PATH=/Users/pepegarcia/Library/Python/3.7/bin:$PATH
-      export PATH=/Users/pepegarcia/bin:$PATH
-      export PATH=/Users/pepegarcia/go/bin:$PATH
+      export PATH=/Users/pepe/Library/Python/3.7/bin:$PATH
+      export PATH=/Users/pepe/bin:$PATH
+      export PATH=/Users/pepe/go/bin:$PATH
       export PATH=/usr/local/bin:$PATH
       export PATH=/Library/TeX/texbin:$PATH
       export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH
