@@ -52,6 +52,7 @@
     aws-vault
     yq
     eza
+    hub
   ];
 
   programs.zsh.sessionVariables = {
