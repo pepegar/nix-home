@@ -28,5 +28,10 @@
 
       push.autoSetupRemote = true;
     };
+
+    signing = {
+      key = "BC10F5DA684B5E5978B836CCB32204E4B8C00747";
+      signByDefault = true;
+    };
   };
 }
