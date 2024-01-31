@@ -66,7 +66,6 @@ let
     pkgs.vimPlugins.cmp-nvim-lua
     custom-plugins.LuaSnip
     pkgs.vimPlugins.friendly-snippets
-    pkgs.vimPlugins.indent-blankline-nvim
   ];
 
   wrapLuaConfig = str: ''
