@@ -10,6 +10,7 @@
     ../applications/zsh
     ../applications/fish
     ../applications/emacs
+    ../cfg/email
     ../cfg/git.nix
     ../cfg/karabiner
     ../cfg/sbt
