@@ -6,6 +6,7 @@
     enable = true;
     userName = "Pepe García";
     userEmail = "pepe@pepegar.com";
+    difftastic.enable = true;
 
     extraConfig = {
       github = { user = "pepegar"; };
