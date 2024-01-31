@@ -44,7 +44,7 @@ in rec {
     ag
     any-nix-shell
     bat
-    exa
+    eza
     ghq
     gnome3.nautilus
     gnupg

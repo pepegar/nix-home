@@ -110,7 +110,7 @@
       pass
       htop
       rnix-lsp
-      exa
+      eza
       silver-searcher
       ghq
       gh
