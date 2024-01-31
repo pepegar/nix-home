@@ -42,6 +42,7 @@
       };
       homeConfigurations = {
         "pepe@bart" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
+        "pepe@homer" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
         "pepe@lisa" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
         "pepe@marge" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
       };
