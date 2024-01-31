@@ -80,7 +80,7 @@ let
   telescopeConfig = wrapLuaConfig (builtins.readFile ./telescope.lua);
   basicsConfig = wrapLuaConfig (builtins.readFile ./basics.lua);
   fugitiveConfig = wrapLuaConfig (builtins.readFile ./fugitive.lua);
-  indentConfig = wrapLuaConfig (builtins.readFile ./indent.lua);
+  #indentConfig = wrapLuaConfig (builtins.readFile ./indent.lua);
   autopairsConfig = wrapLuaConfig (builtins.readFile ./autopairs.lua);
   gitsignsConfig = wrapLuaConfig (builtins.readFile ./gitsigns.lua);
   troubleConfig = wrapLuaConfig (builtins.readFile ./trouble.lua);
@@ -97,8 +97,8 @@ in {
     withPython3 = true;
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
-      + fugitiveConfig + lualineConfig + lspConfig + indentConfig
-      + autopairsConfig + gitsignsConfig + troubleConfig + undotreeConfig
-      + goldenSizeConfig + octoConfig;
+      + fugitiveConfig + lualineConfig + lspConfig + autopairsConfig
+      + gitsignsConfig + troubleConfig + undotreeConfig + goldenSizeConfig
+      + octoConfig;
   };
 }
