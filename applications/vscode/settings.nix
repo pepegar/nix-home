@@ -5,9 +5,9 @@ let
     "editor.bracketPairColorization.independentColorPoolPerBracketType" = true;
     "editor.cursorBlinking" = "smooth";
     "editor.cursorSmoothCaretAnimation" = "on";
-    "editor.fontFamily" = "'Fira Code', 'Material Design Icons'";
+    "editor.fontFamily" = "'PragmataPro'";
     "editor.fontLigatures" = true;
-    "editor.fontSize" = 13;
+    "editor.fontSize" = 14;
     "editor.fontWeight" = "500";
     "editor.formatOnSave" = true;
     "editor.guides.bracketPairs" = true;
@@ -15,7 +15,6 @@ let
     "editor.inlineSuggest.enabled" = true;
     "editor.linkedEditing" = true;
     "editor.lineHeight" = 22;
-    "editor.lineNumbers" = "relative";
     "editor.minimap.enabled" = false;
     "editor.renderLineHighlight" = "all";
     "editor.scrollbar.horizontal" = "hidden";
@@ -24,7 +23,7 @@ let
     "editor.showUnused" = true;
     "editor.smoothScrolling" = true;
     "editor.tabCompletion" = "on";
-    "editor.tabSize" = 2;
+    "editor.tabSize" = 4;
     "editor.trimAutoWhitespace" = true;
   };
 
@@ -70,8 +69,8 @@ let
   };
 
   github = {
-    "github.copilot.enable" = { "*" = true; };
-    "github.copilot.editor.enableAutoCompletions" = true;
+    "github.copilot.enable" = { "*" = false; };
+    "github.copilot.editor.enableAutoCompletions" = false;
   };
 
   path-intellisense = {
