@@ -10,6 +10,7 @@
     ../applications/zsh
     ../applications/fish
     ../applications/emacs
+    ../applications/vscode
     ../cfg/email
     ../cfg/git.nix
     ../cfg/karabiner
@@ -75,6 +76,13 @@
       };
       "*".extraOptions = { AddKeysToAgent = "yes"; };
       "*.github.com".extraOptions = { IdentityFile = "~/.ssh/id_ed25519"; };
+    };
+  };
+
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
     };
   };
 
