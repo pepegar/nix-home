@@ -101,12 +101,8 @@ with pkgs; {
         (projectile-sort-order 'recentf-active)
         (projectile-enable-caching t)
         (projectile-project-search-path '(
-          "~/projects/github.com/47deg/"
-          "~/projects/github.com/higherkindness/"
           "~/projects/github.com/pepegar/"
-          "~/projects/github.com/app-2020/"
           "~/projects/github.com/GoodNotes/"
-          "~/projects/github.com/ie-web-programming-2022/"
            "~/.config/"))
       '';
       bind = {

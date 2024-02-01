@@ -3,8 +3,6 @@
  user-full-name "Pepe García"
  gnus-select-method
  '(nnmaildir "pepegar" (directory "~/Mail/pepegar/"))
- gnus-secondary-select-methods
- '((nnmaildir "47deg" (directory "~/Mail/47deg/"))))
 
 
 (setq-default

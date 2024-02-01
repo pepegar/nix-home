@@ -37,28 +37,6 @@ in {
         passwordCommand = "${pkgs.pass}/bin/pass email/fastmail";
         userName = "pepe@pepegar.com";
       };
-
-      fortysevendeg = {
-        address = "pepe.garcia@47deg.com";
-        flavor = "gmail.com";
-        imap = { tls = { enable = true; }; };
-        smtp = { tls = { enable = true; }; };
-        gpg = {
-          key = gpgKey;
-          signByDefault = true;
-        };
-        mbsync = {
-          enable = true;
-          create = "maildir";
-        };
-        maildir.path = "47deg";
-        msmtp.enable = true;
-        notmuch.enable = true;
-        primary = false;
-        realName = "Pepe García";
-        passwordCommand = "${pkgs.pass}/bin/pass email/47deg";
-        userName = "pepe.garcia@47deg.com";
-      };
     };
   };
 
