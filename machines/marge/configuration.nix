@@ -44,11 +44,12 @@
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "es";
-    xkbVariant = "nodeadkeys";
+    variant = "nodeadkeys";
   };
 
   # Configure console keymap
