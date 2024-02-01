@@ -1,6 +1,13 @@
 {
   description = "pepegar's nix home";
 
+  nixConfig = {
+    substituters = [ "https://cache.nixos.org" ];
+
+    trusted-public-keys =
+      [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
@@ -8,10 +15,14 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/nur";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
-  outputs =
-    { self, nixpkgs, pre-commit-hooks, flake-utils, home-manager, nur }@inputs:
+  outputs = { self, nixpkgs, pre-commit-hooks, flake-utils, home-manager, nur
+    , nix-darwin, nix-homebrew }@inputs:
     let
+      user = "pepe";
       nurNoPkgs = system:
         import nur { nurpkgs = inputs.nixpkgs.legacyPackages.${system}; };
 
@@ -41,10 +52,30 @@
         };
       };
       homeConfigurations = {
-        "pepe@bart" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
-        "pepe@homer" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
-        "pepe@lisa" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
-        "pepe@marge" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
+        "${user}@bart" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
+        "${user}@homer" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
+        "${user}@lisa" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
+        "${user}@marge" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
+      };
+      darwinConfigurations = {
+        bart = nix-darwin.lib.darwinSystem {
+          modules = [
+            ./darwin-configuration.nix
+            ./homebrew.nix
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                enableRosetta = true;
+                user = "${user}";
+                autoMigrate = true;
+              };
+            }
+          ];
+        };
+        homer = nix-darwin.lib.darwinSystem {
+          modules = [ ./darwin-configuration.nix ];
+        };
       };
     } // flake-utils.lib.eachDefaultSystem (system: {
       checks = {

@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [ ];
+  imports = [ ./homebrew.nix ];
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -9,7 +9,8 @@
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
-  environment.darwinConfig = "$HOME/.config/nixpkgs/darwin-configuration.nix";
+  environment.darwinConfig =
+    "$HOME/.config/home-manager/darwin-configuration.nix";
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
   # Auto upgrade nix package and the daemon service.
@@ -27,8 +28,10 @@
 
   # You should generally set this to the total number of logical cores in your system.
   # $ sysctl -n hw.ncpu
-  nix.maxJobs = 4;
-  nix.buildCores = 4;
+  nix.settings.max-jobs = 8;
+  nix.settings.cores = 8;
+  nix.settings.trusted-users = [ "root" "pepe" ];
   nix.useDaemon = true;
   services.activate-system.enable = true;
+  nixpkgs.hostPlatform = "aarch64-darwin";
 }
