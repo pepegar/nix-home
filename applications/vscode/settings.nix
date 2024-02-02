@@ -61,6 +61,7 @@ let
     "[python]"."editor.defaultFormatter" = "ms-python.black-formatter";
     "[scss]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
     "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+    "[haskell]"."editor.defaultFormatter" = "haskell.haskell";
   };
 
   git = {

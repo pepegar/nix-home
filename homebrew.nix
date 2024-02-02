@@ -19,6 +19,7 @@
       "flycut"
       "intellij-idea"
       "iterm2"
+      "karabiner-elements"
       "keymapp"
       "notion"
       "quip"
@@ -28,6 +29,7 @@
       "spotify"
       "tailscale"
       "webex"
+      "whatsapp"
       "zoom"
     ];
 

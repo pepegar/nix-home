@@ -4,8 +4,8 @@
     extensions = (with pkgs.vscode-extensions; [
       github.vscode-github-actions
       github.vscode-pull-request-github
-      #])
-      #++ (with pkgs.vscode-marketplace; [
+      mkhl.direnv
+      haskell.haskell
       antfu.icons-carbon
       bradlc.vscode-tailwindcss
       catppuccin.catppuccin-vsc-icons
