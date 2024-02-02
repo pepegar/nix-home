@@ -19,6 +19,7 @@
       "flycut"
       "intellij-idea"
       "iterm2"
+      "keymapp"
       "notion"
       "quip"
       "raycast"
