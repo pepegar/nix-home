@@ -31,6 +31,7 @@
       "webex"
       "whatsapp"
       "zoom"
+      "home-assistant"
     ];
 
     # name = id
