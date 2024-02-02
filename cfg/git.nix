@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  home.packages = with pkgs; [ gh ghq git-stack difftastic ];
+
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
     enable = true;
@@ -19,6 +21,13 @@
 
         br =
           "branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate";
+
+        next = "stack next";
+        prev = "stack previous";
+        reword = "stack reword";
+        amend = "stack amend";
+        sync = "stack sync";
+        run = "stack run";
       };
 
       ghq.root = "~/projects";
