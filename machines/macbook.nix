@@ -54,6 +54,7 @@
     yq
     eza
     hub
+    xcodes
   ];
 
   programs.zsh.sessionVariables = {
