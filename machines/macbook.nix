@@ -11,6 +11,7 @@
     ../applications/fish
     ../applications/emacs
     ../applications/vscode
+    ../applications/intellij-idea
     ../cfg/email
     ../cfg/git.nix
     ../cfg/karabiner
