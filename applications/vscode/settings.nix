@@ -24,6 +24,7 @@ let
     "editor.smoothScrolling" = true;
     "editor.tabCompletion" = "on";
     "editor.tabSize" = 4;
+    "editor.codeLens" = false;
     "editor.trimAutoWhitespace" = true;
   };
 
@@ -46,7 +47,6 @@ let
   window = {
     "window.autoDetectColorScheme" = true;
     "window.dialogStyle" = "native";
-    "window.menuBarVisibility" = "toggle";
     "window.titleBarStyle" = "custom";
   };
 
