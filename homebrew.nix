@@ -32,6 +32,9 @@
       "whatsapp"
       "zoom"
       "home-assistant"
+      "steam"
+      "loom"
+      "anaconda"
     ];
 
     # name = id
