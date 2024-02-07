@@ -18,9 +18,10 @@
           "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
         ignore =
           "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
-
         br =
           "branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate";
+
+        co = "checkout";
 
         next = "stack next";
         prev = "stack previous";
