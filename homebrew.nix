@@ -35,6 +35,7 @@
       "steam"
       "loom"
       "anaconda"
+      "cold-turkey-blocker"
     ];
 
     # name = id
