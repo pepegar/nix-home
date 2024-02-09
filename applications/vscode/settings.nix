@@ -109,11 +109,22 @@ let
     "python.defaultInterpreterPath" = "${pkgs.python3}/bin/python";
     "python.languageServer" = "Pylance";
   };
+
+  workbench = {
+    "workbench.iconTheme" = "rose-pine-icons";
+    "workbench.productIconTheme" = "icons-carbon";
+    "workbench.colorTheme" = "Rosé Pine";
+    "workbench.preferredDarkColorTheme" = "Rosé Pine";
+    "workbench.preferredLightColorTheme" = "Rosé Pine Dawn";
+  };
+
+  vim = { "vim.smartRelativeLine" = true; };
 in {
   programs.vscode.userSettings = {
     "extensions.autoCheckUpdates" = false;
     "extensions.ignoreRecommendations" = true;
     "update.mode" = "none";
-  } // editor // explorer // files // terminal // window // defaultFormatter
-    // git // github // path-intellisense // telemetry // java // nix // python;
+  } // editor // explorer // files // terminal // window // workbench
+    // defaultFormatter // git // github // path-intellisense // telemetry
+    // java // nix // python // vim;
 }

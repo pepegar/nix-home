@@ -2,6 +2,9 @@
   programs.vscode = {
     mutableExtensionsDir = true;
     extensions = (with pkgs.vscode-extensions; [
+      vscodevim.vim
+      mvllow.rose-pine
+      alefragnani.project-manager
       github.vscode-github-actions
       github.vscode-pull-request-github
       mkhl.direnv
