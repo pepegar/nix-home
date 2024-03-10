@@ -26,6 +26,7 @@ let
     "editor.tabSize" = 4;
     "editor.codeLens" = false;
     "editor.trimAutoWhitespace" = true;
+    "emmet.includeLanguages" = { "django-html" = "html"; };
   };
 
   explorer = {
@@ -36,6 +37,7 @@ let
   files = {
     "files.insertFinalNewline" = true;
     "files.trimTrailingWhitespace" = true;
+    "files.autosave" = "afterDelay";
   };
 
   terminal = {
@@ -52,7 +54,6 @@ let
 
   defaultFormatter = {
     "[css]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
-    "[html]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
     "[java]"."editor.defaultFormatter" = "redhat.java";
     "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
     "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
@@ -108,6 +109,7 @@ let
     "pylint.enabled" = true;
     "python.defaultInterpreterPath" = "${pkgs.python3}/bin/python";
     "python.languageServer" = "Pylance";
+    #"python.analysis.typeCheckingMode" = "basic";
   };
 
   workbench = {

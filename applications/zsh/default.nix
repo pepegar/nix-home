@@ -22,9 +22,7 @@
       export PATH=/Users/pepe/go/bin:$PATH
       export PATH=/usr/local/bin:$PATH
       export PATH=/Library/TeX/texbin:$PATH
-      export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH
       export PATH=/opt/homebrew/bin:$PATH
-      export PATH=/opt/homebrew/opt/postgresql@12/bin:$PATH
       export PATH=/Users/pepegarcia/.local/share/gem/ruby/2.7.0/bin:$PATH
       export PATH=~/.ghcup/bin:$PATH
       export PATH=~/.cargo/bin:$PATH

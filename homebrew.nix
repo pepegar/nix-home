@@ -22,6 +22,7 @@
       "karabiner-elements"
       "keymapp"
       "notion"
+      "ngrok"
       "quip"
       "raycast"
       "rectangle"
@@ -31,11 +32,11 @@
       "webex"
       "whatsapp"
       "zoom"
-      "home-assistant"
       "steam"
       "loom"
       "anaconda"
       "cold-turkey-blocker"
+      "obsidian"
     ];
 
     # name = id

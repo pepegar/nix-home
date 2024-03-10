@@ -40,6 +40,7 @@
       redhat.vscode-yaml
       usernamehw.errorlens
       yzhang.markdown-all-in-one
+      batisteo.vscode-django
     ]);
   };
 }
