@@ -36,7 +36,7 @@
       init.defaultBranch = "main";
 
       rerere.enabled = true;
-
+      rebase.updateRefsa = true;
       push.autoSetupRemote = true;
     };
 
