@@ -71,8 +71,11 @@ let
   };
 
   github = {
-    "github.copilot.enable" = { "*" = false; };
-    "github.copilot.editor.enableAutoCompletions" = false;
+    "github.copilot.enable" = {
+      "*" = true;
+      "markdown" = true;
+    };
+    "github.copilot.editor.enableAutoCompletions" = true;
   };
 
   path-intellisense = {

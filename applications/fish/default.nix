@@ -4,7 +4,7 @@
   programs.fish = {
     enable = true;
     shellAliases = {
-      cat = "bat";
+      cat = "bat -p";
       g = "git";
       gst = "git status";
       ls = "exa";

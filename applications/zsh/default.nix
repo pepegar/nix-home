@@ -45,14 +45,14 @@
     '';
 
     shellAliases = {
-      cat = "bat";
+      cat = "bat -p";
       g = "git";
       gc = "git commit";
       gst = "git status";
+      gswitch = ''
+        git branch | grep -v "^*" | fzf --height=20% --reverse --info=inline | xargs git checkout'';
       ls = "exa";
       ll = "ls -a";
-      vin = "cd ~/.config/nixpkgs & nvim";
-      vix = "cd ~/.config/nixpkgs & nvim applications/xmonad/xmonad.hs";
       ".." = "cd ..";
       ping = "prettyping";
       k = "kubectl";
