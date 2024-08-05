@@ -1,6 +1,22 @@
 { ... }:
-
-{
+let
+  remapHold = from: to: {
+    type = "basic";
+    from = { key_code = from; };
+    to_if_alone = [{
+      halt = true;
+      key_code = from;
+    }];
+    to_delayed_action = {
+      to_if_invoked = [{ key_code = "vk_none"; }];
+      to_if_canceled = [{ key_code = from; }];
+    };
+    to_if_held_down = [{
+      halt = true;
+      key_code = to;
+    }];
+  };
+in {
   home.file.karabiner = {
     target = ".config/karabiner/assets/complex_modifications/nix.json";
     text = builtins.toJSON {
@@ -19,108 +35,12 @@
             }];
             to_if_alone = [{ key_code = "escape"; }];
           }
-          {
-            type = "basic";
-            from = { key_code = "s"; };
-            to_if_alone = [{
-              halt = true;
-              key_code = "s";
-            }];
-            to_delayed_action = {
-              to_if_invoked = [{ key_code = "vk_none"; }];
-              to_if_canceled = [{ key_code = "s"; }];
-            };
-            to_if_held_down = [{
-              halt = true;
-              key_code = "left_option";
-            }];
-          }
-          {
-            type = "basic";
-            from = { key_code = "d"; };
-            to_if_alone = [{
-              halt = true;
-              key_code = "d";
-            }];
-            to_delayed_action = {
-              to_if_invoked = [{ key_code = "vk_none"; }];
-              to_if_canceled = [{ key_code = "d"; }];
-            };
-            to_if_held_down = [{
-              halt = true;
-              key_code = "left_control";
-            }];
-          }
-          {
-            type = "basic";
-            from = { key_code = "f"; };
-            to_if_alone = [{
-              halt = true;
-              key_code = "f";
-            }];
-            to_delayed_action = {
-              to_if_invoked = [{ key_code = "vk_none"; }];
-              to_if_canceled = [{
-                halt = true;
-                key_code = "f";
-              }];
-            };
-            to_if_held_down = [{
-              halt = true;
-              key_code = "right_option";
-            }];
-          }
-          {
-            type = "basic";
-            from = { key_code = "l"; };
-            to_if_alone = [{
-              halt = true;
-              key_code = "l";
-            }];
-            to_delayed_action = {
-              to_if_invoked = [{ key_code = "vk_none"; }];
-              to_if_canceled = [{ key_code = "l"; }];
-            };
-            to_if_held_down = [{
-              halt = true;
-              key_code = "right_option";
-            }];
-          }
-          {
-            type = "basic";
-            from = { key_code = "k"; };
-            to_if_alone = [{
-              halt = true;
-              key_code = "k";
-            }];
-            to_delayed_action = {
-              to_if_invoked = [{ key_code = "vk_none"; }];
-              to_if_canceled = [{ key_code = "k"; }];
-            };
-            to_if_held_down = [{
-              halt = true;
-              key_code = "left_control";
-            }];
-          }
-          {
-            type = "basic";
-            from = { key_code = "j"; };
-            to_if_alone = [{
-              halt = true;
-              key_code = "j";
-            }];
-            to_delayed_action = {
-              to_if_invoked = [{ key_code = "vk_none"; }];
-              to_if_canceled = [{
-                halt = true;
-                key_code = "j";
-              }];
-            };
-            to_if_held_down = [{
-              halt = true;
-              key_code = "right_command";
-            }];
-          }
+          (remapHold "s" "left_option")
+          (remapHold "d" "left_control")
+          (remapHold "f" "left_command")
+          (remapHold "l" "right_option")
+          (remapHold "k" "rigth_control")
+          (remapHold "j" "right_command")
         ];
       }];
     };
