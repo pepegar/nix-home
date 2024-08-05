@@ -1,20 +1,21 @@
 { pkgs, ... }: {
   imports = [
     ../applications/alacritty
+    ../applications/kitty
+    ../applications/karabiner
     ../applications/go
     ../applications/direnv
     ../applications/fzf
     ../applications/neovim
     ../applications/starship
     ../applications/tmux
+    ../applications/zellij
     ../applications/zsh
     ../applications/fish
-    ../applications/emacs
     ../applications/vscode
     ../applications/intellij-idea
     ../cfg/email
     ../cfg/git.nix
-    ../cfg/karabiner
     ../cfg/sbt
   ];
 
@@ -56,6 +57,9 @@
     eza
     hub
     xcodes
+    fd
+    ripgrep
+    kotlin-language-server
   ];
 
   programs.zsh.sessionVariables = {
