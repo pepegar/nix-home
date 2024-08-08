@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   imports = [
     ../applications/alacritty
-    ../applications/kitty
     ../applications/karabiner
     ../applications/go
     ../applications/direnv
@@ -9,7 +8,6 @@
     ../applications/neovim
     ../applications/starship
     ../applications/tmux
-    ../applications/zellij
     ../applications/zsh
     ../applications/fish
     ../applications/vscode
