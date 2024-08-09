@@ -67,7 +67,7 @@
     NIX_PATH = "$HOME/.nix-defexpr/channels\${NIX_PATH:+:}$NIX_PATH";
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
-    EDITOR = "emacs -nw";
+    EDITOR = "nvim";
   };
 
   programs.ssh = {
