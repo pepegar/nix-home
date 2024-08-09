@@ -10,6 +10,7 @@
     ../applications/tmux
     ../applications/zsh
     ../applications/fish
+    ../applications/emacs
     ../applications/vscode
     ../applications/intellij-idea
     ../cfg/email
@@ -64,7 +65,7 @@
     NIX_PATH = "$HOME/.nix-defexpr/channels\${NIX_PATH:+:}$NIX_PATH";
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
-    EDITOR = "nvim";
+    EDITOR = "emacs -nw";
   };
 
   programs.ssh = {
