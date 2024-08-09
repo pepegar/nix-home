@@ -22,13 +22,12 @@ let
         lua
         nix
         python
-        swift
         typescript
         yaml
         markdown
         html
       ]))
-    custom-plugins.golden-size
+    pkgs.vimPlugins.golden-ratio
     pkgs.vimPlugins.rose-pine
     pkgs.vimPlugins.tabular
     pkgs.vimPlugins.telescope-nvim
@@ -54,17 +53,17 @@ let
     pkgs.vimPlugins.vim-sensible
     pkgs.vimPlugins.vim-surround
 
-    custom-plugins.lsp-zero
+    pkgs.vimPlugins.lsp-zero-nvim
     pkgs.vimPlugins.nvim-lspconfig
-    custom-plugins.mason-nvim
-    custom-plugins.mason-lspconfig-nvim
+    pkgs.vimPlugins.mason-nvim
+    pkgs.vimPlugins.mason-lspconfig-nvim
     pkgs.vimPlugins.nvim-cmp
     pkgs.vimPlugins.cmp-buffer
     pkgs.vimPlugins.cmp-path
     pkgs.vimPlugins.cmp_luasnip
     pkgs.vimPlugins.cmp-nvim-lsp
     pkgs.vimPlugins.cmp-nvim-lua
-    custom-plugins.LuaSnip
+    pkgs.vimPlugins.luasnip
     pkgs.vimPlugins.friendly-snippets
   ];
 
@@ -80,12 +79,10 @@ let
   telescopeConfig = wrapLuaConfig (builtins.readFile ./telescope.lua);
   basicsConfig = wrapLuaConfig (builtins.readFile ./basics.lua);
   fugitiveConfig = wrapLuaConfig (builtins.readFile ./fugitive.lua);
-  #indentConfig = wrapLuaConfig (builtins.readFile ./indent.lua);
   autopairsConfig = wrapLuaConfig (builtins.readFile ./autopairs.lua);
   gitsignsConfig = wrapLuaConfig (builtins.readFile ./gitsigns.lua);
   troubleConfig = wrapLuaConfig (builtins.readFile ./trouble.lua);
   undotreeConfig = wrapLuaConfig (builtins.readFile ./undotree.lua);
-  goldenSizeConfig = wrapLuaConfig (builtins.readFile ./golden-size.lua);
   octoConfig = wrapLuaConfig (builtins.readFile ./octo.lua);
 in {
   programs.neovim = {
@@ -98,7 +95,6 @@ in {
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
       + fugitiveConfig + lualineConfig + lspConfig + autopairsConfig
-      + gitsignsConfig + troubleConfig + undotreeConfig + goldenSizeConfig
-      + octoConfig;
+      + gitsignsConfig + troubleConfig + undotreeConfig + octoConfig;
   };
 }

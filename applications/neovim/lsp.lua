@@ -2,17 +2,9 @@ require("mason").setup({
 	install_root_dir = "/Users/pepe/.config/nvim/",
 })
 
-require("lspconfig").zls.setup({})
-
 local lsp = require("lsp-zero")
 
-lsp.ensure_installed({
-	"zls",
-	"rust_analyzer",
-})
-
 lsp.preset("recommended")
-lsp.nvim_workspace()
 
 lsp.on_attach(function(client, bufnr)
 	local opts = { buffer = bufnr, remap = false }
