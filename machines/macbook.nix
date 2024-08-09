@@ -12,6 +12,7 @@
     ../applications/fish
     ../applications/emacs
     ../applications/vscode
+    ../applications/wezterm
     ../applications/intellij-idea
     ../cfg/email
     ../cfg/git.nix
