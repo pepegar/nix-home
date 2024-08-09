@@ -13,6 +13,7 @@
     ../applications/emacs
     ../applications/vscode
     ../applications/wezterm
+    ../applications/zellij
     ../applications/intellij-idea
     ../cfg/email
     ../cfg/git.nix
