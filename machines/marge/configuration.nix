@@ -110,7 +110,6 @@
       prettyping
       pass
       htop
-      rnix-lsp
       eza
       silver-searcher
       ghq

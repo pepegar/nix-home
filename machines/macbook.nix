@@ -48,7 +48,6 @@
     graphviz
     jq
     ruby
-    rnix-lsp
     bazelisk
     buildifier
     sops
@@ -61,6 +60,7 @@
     fd
     ripgrep
     kotlin-language-server
+    nix-tree
   ];
 
   programs.zsh.sessionVariables = {
