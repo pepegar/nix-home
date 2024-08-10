@@ -12,5 +12,9 @@ config.color_scheme = "Nord"
 config.font = wezterm.font("PragmataPro Mono")
 config.font_size = 18
 
+config.enable_tab_bar = false
+config.send_composed_key_when_right_alt_is_pressed = false
+config.window_decorations = "RESIZE"
+
 -- and finally, return the configuration to wezterm
 return config
