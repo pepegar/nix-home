@@ -35,32 +35,32 @@
     (attrNames (readDir path)));
 
   home.packages = with pkgs; [
-    cargo
-    minio-client
-    git-crypt
+    aws-vault
     bat
-    gnupg
-    prettyping
-    pass
-    htop
-    silver-searcher
-    gh
-    graphviz
-    jq
-    ruby
     bazelisk
     buildifier
-    sops
+    cargo
     cocoapods
-    aws-vault
-    yq
     eza
-    hub
-    xcodes
     fd
-    ripgrep
+    gh
+    git-crypt
+    gnupg
+    graphviz
+    htop
+    hub
+    jq
     kotlin-language-server
+    minio-client
     nix-tree
+    pass
+    prettyping
+    ripgrep
+    ruby
+    silver-searcher
+    sops
+    xcodes
+    yq
   ];
 
   programs.zsh.sessionVariables = {
