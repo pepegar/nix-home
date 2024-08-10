@@ -7,7 +7,6 @@ let
   };
 
   myVimPlugins = [
-    pkgs.vimPlugins.octo-nvim
     pkgs.vimPlugins.emmet-vim
     pkgs.vimPlugins.multiple-cursors
     pkgs.vimPlugins.nerdcommenter
@@ -26,12 +25,12 @@ let
         yaml
         markdown
         html
+        kdl
       ]))
     pkgs.vimPlugins.golden-ratio
     pkgs.vimPlugins.rose-pine
     pkgs.vimPlugins.tabular
     pkgs.vimPlugins.telescope-nvim
-    custom-plugins.telescope-ghq
     pkgs.vimPlugins.telescope-frecency-nvim
     pkgs.vimPlugins.telescope-fzy-native-nvim
     pkgs.vimPlugins.trouble-nvim
@@ -52,11 +51,8 @@ let
     pkgs.vimPlugins.vim-rhubarb
     pkgs.vimPlugins.vim-sensible
     pkgs.vimPlugins.vim-surround
-
     pkgs.vimPlugins.lsp-zero-nvim
     pkgs.vimPlugins.nvim-lspconfig
-    pkgs.vimPlugins.mason-nvim
-    pkgs.vimPlugins.mason-lspconfig-nvim
     pkgs.vimPlugins.nvim-cmp
     pkgs.vimPlugins.cmp-buffer
     pkgs.vimPlugins.cmp-path
@@ -65,6 +61,9 @@ let
     pkgs.vimPlugins.cmp-nvim-lua
     pkgs.vimPlugins.luasnip
     pkgs.vimPlugins.friendly-snippets
+
+    custom-plugins.telescope-ghq
+    custom-plugins.kdl
   ];
 
   wrapLuaConfig = str: ''
@@ -83,7 +82,6 @@ let
   gitsignsConfig = wrapLuaConfig (builtins.readFile ./gitsigns.lua);
   troubleConfig = wrapLuaConfig (builtins.readFile ./trouble.lua);
   undotreeConfig = wrapLuaConfig (builtins.readFile ./undotree.lua);
-  octoConfig = wrapLuaConfig (builtins.readFile ./octo.lua);
 in {
   programs.neovim = {
     enable = true;
@@ -95,6 +93,6 @@ in {
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
       + fugitiveConfig + lualineConfig + lspConfig + autopairsConfig
-      + gitsignsConfig + troubleConfig + undotreeConfig + octoConfig;
+      + gitsignsConfig + troubleConfig + undotreeConfig;
   };
 }
