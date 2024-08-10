@@ -4,9 +4,7 @@
   programs.zellij = {
     enable = true;
     enableZshIntegration = true;
-    settings = {
-      theme = "nord";
-      default_layout = "compact";
-    };
   };
+
+  home.file.".config/zellij/config.kdl".source = ./config.kdl;
 }
