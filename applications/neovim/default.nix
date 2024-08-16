@@ -11,7 +11,6 @@ let
     pkgs.vimPlugins.multiple-cursors
     pkgs.vimPlugins.nerdcommenter
     pkgs.vimPlugins.nerdtree
-    pkgs.vimPlugins.nvim-autopairs
     (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
       with plugins; [
         haskell
@@ -61,6 +60,11 @@ let
     pkgs.vimPlugins.cmp-nvim-lua
     pkgs.vimPlugins.luasnip
     pkgs.vimPlugins.friendly-snippets
+    pkgs.vimPlugins.nvim-spectre
+    pkgs.vimPlugins.neoformat
+    pkgs.vimPlugins.oil-nvim
+    pkgs.vimPlugins.autoclose-nvim
+    pkgs.vimPlugins.nvim-ts-autotag
 
     custom-plugins.telescope-ghq
     custom-plugins.kdl
@@ -78,10 +82,12 @@ let
   telescopeConfig = wrapLuaConfig (builtins.readFile ./telescope.lua);
   basicsConfig = wrapLuaConfig (builtins.readFile ./basics.lua);
   fugitiveConfig = wrapLuaConfig (builtins.readFile ./fugitive.lua);
-  autopairsConfig = wrapLuaConfig (builtins.readFile ./autopairs.lua);
   gitsignsConfig = wrapLuaConfig (builtins.readFile ./gitsigns.lua);
   troubleConfig = wrapLuaConfig (builtins.readFile ./trouble.lua);
   undotreeConfig = wrapLuaConfig (builtins.readFile ./undotree.lua);
+  neoformatConfig = wrapLuaConfig (builtins.readFile ./neoformat.lua);
+  oilConfig = wrapLuaConfig (builtins.readFile ./oil.lua);
+  autotagConfig = wrapLuaConfig (builtins.readFile ./autotag.lua);
 in {
   programs.neovim = {
     enable = true;
@@ -92,7 +98,8 @@ in {
     withPython3 = true;
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
-      + fugitiveConfig + lualineConfig + lspConfig + autopairsConfig
-      + gitsignsConfig + troubleConfig + undotreeConfig;
+      + fugitiveConfig + lualineConfig + lspConfig + gitsignsConfig
+      + troubleConfig + undotreeConfig + neoformatConfig + oilConfig
+      + autotagConfig;
   };
 }
