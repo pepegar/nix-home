@@ -11,21 +11,7 @@ let
     pkgs.vimPlugins.multiple-cursors
     pkgs.vimPlugins.nerdcommenter
     pkgs.vimPlugins.nerdtree
-    (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
-      with plugins; [
-        haskell
-        javascript
-        jsonnet
-        kotlin
-        lua
-        nix
-        python
-        typescript
-        yaml
-        markdown
-        html
-        kdl
-      ]))
+    pkgs.vimPlugins.nvim-treesitter.withAllGrammars
     pkgs.vimPlugins.golden-ratio
     pkgs.vimPlugins.rose-pine
     pkgs.vimPlugins.tabular
@@ -44,7 +30,6 @@ let
     pkgs.vimPlugins.vim-easy-align
     pkgs.vimPlugins.vim-easymotion
     pkgs.vimPlugins.vim-fish
-    pkgs.vimPlugins.vim-fugitive
     pkgs.vimPlugins.vim-nix
     pkgs.vimPlugins.vim-repeat
     pkgs.vimPlugins.vim-rhubarb
@@ -65,6 +50,7 @@ let
     pkgs.vimPlugins.oil-nvim
     pkgs.vimPlugins.autoclose-nvim
     pkgs.vimPlugins.nvim-ts-autotag
+    pkgs.vimPlugins.neogit
 
     custom-plugins.telescope-ghq
     custom-plugins.kdl
@@ -81,13 +67,14 @@ let
   lspConfig = wrapLuaConfig (builtins.readFile ./lsp.lua);
   telescopeConfig = wrapLuaConfig (builtins.readFile ./telescope.lua);
   basicsConfig = wrapLuaConfig (builtins.readFile ./basics.lua);
-  fugitiveConfig = wrapLuaConfig (builtins.readFile ./fugitive.lua);
   gitsignsConfig = wrapLuaConfig (builtins.readFile ./gitsigns.lua);
   troubleConfig = wrapLuaConfig (builtins.readFile ./trouble.lua);
   undotreeConfig = wrapLuaConfig (builtins.readFile ./undotree.lua);
   neoformatConfig = wrapLuaConfig (builtins.readFile ./neoformat.lua);
   oilConfig = wrapLuaConfig (builtins.readFile ./oil.lua);
   autotagConfig = wrapLuaConfig (builtins.readFile ./autotag.lua);
+  autocloseConfig = wrapLuaConfig (builtins.readFile ./autoclose.lua);
+  neogitConfig = wrapLuaConfig (builtins.readFile ./neogit.lua);
 in {
   programs.neovim = {
     enable = true;
@@ -98,8 +85,8 @@ in {
     withPython3 = true;
     plugins = myVimPlugins;
     extraConfig = basicsConfig + treesitterConfig + telescopeConfig
-      + fugitiveConfig + lualineConfig + lspConfig + gitsignsConfig
-      + troubleConfig + undotreeConfig + neoformatConfig + oilConfig
-      + autotagConfig;
+      + lualineConfig + lspConfig + gitsignsConfig + troubleConfig
+      + undotreeConfig + neoformatConfig + oilConfig + autotagConfig
+      + autocloseConfig + neogitConfig;
   };
 }

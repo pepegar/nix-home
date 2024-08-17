@@ -26,3 +26,10 @@ lsp.hls.setup({ capabilities = capabilities })
 lsp.rust_analyzer.setup({ capabilities = capabilities })
 lsp.pyright.setup({ capabilities = capabilities })
 lsp.tsserver.setup({ capabilities = capabilities })
+lsp.ruff.setup({
+	init_options = {
+		settings = {
+			args = {},
+		},
+	},
+})
