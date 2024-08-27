@@ -33,5 +33,6 @@
   nix.settings.trusted-users = [ "root" "pepe" ];
   nix.useDaemon = true;
   services.activate-system.enable = true;
+  services.emacs.enable = true;
   nixpkgs.hostPlatform = "aarch64-darwin";
 }

@@ -61,6 +61,7 @@
     sops
     xcodes
     yq
+    jira-cli-go
   ];
 
   programs.zsh.sessionVariables = {

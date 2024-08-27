@@ -37,6 +37,7 @@
         format = "[$duration]($style) ";
         style = "yellow";
       };
+      kubernetes = { disabled = false; };
     };
   };
 }

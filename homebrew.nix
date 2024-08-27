@@ -11,6 +11,8 @@
       cleanup = "zap";
     };
 
+    brews = [ "git-lfs" ];
+
     casks = [
       "1password"
       "1password-cli"
