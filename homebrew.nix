@@ -11,7 +11,7 @@
       cleanup = "zap";
     };
 
-    brews = [ "git-lfs" ];
+    brews = [ "git-lfs" "lua-language-server" "stylua" ];
 
     casks = [
       "1password"
