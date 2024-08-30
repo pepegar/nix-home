@@ -10,13 +10,11 @@ end)
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
--- This is where you actually apply your config choices
-
 -- For example, changing the color scheme:
 config.color_scheme = "Nord"
 
 config.font = wezterm.font("PragmataPro Mono")
-config.font_size = 18
+config.font_size = 20
 
 config.enable_tab_bar = false
 config.send_composed_key_when_right_alt_is_pressed = false
