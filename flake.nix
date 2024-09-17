@@ -2,10 +2,9 @@
   description = "pepegar's nix home";
 
   nixConfig = {
-    substituters = [ "https://cache.nixos.org" ];
+    substituters = ["https://cache.nixos.org"];
 
-    trusted-public-keys =
-      [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+    trusted-public-keys = ["cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="];
   };
 
   inputs = {
@@ -19,29 +18,37 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
-  outputs = { self, nixpkgs, pre-commit-hooks, flake-utils, home-manager, nur
-    , nix-darwin, nix-homebrew }@inputs:
-    let
-      user = "pepe";
-      nurNoPkgs = system:
-        import nur { nurpkgs = inputs.nixpkgs.legacyPackages.${system}; };
+  outputs = {
+    self,
+    nixpkgs,
+    pre-commit-hooks,
+    flake-utils,
+    home-manager,
+    nur,
+    nix-darwin,
+    nix-homebrew,
+  } @ inputs: let
+    user = "pepe";
+    nurNoPkgs = system:
+      import nur {nurpkgs = inputs.nixpkgs.legacyPackages.${system};};
 
-      mkHomeConfig = machineModule: system:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs { inherit system; };
+    mkHomeConfig = machineModule: system:
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {inherit system;};
 
-          modules = [
-            (nurNoPkgs system).repos.rycee.hmModules.emacs-init
-            machineModule
-          ];
+        modules = [
+          (nurNoPkgs system).repos.rycee.hmModules.emacs-init
+          machineModule
+        ];
 
-          extraSpecialArgs = { inherit inputs system; };
-        };
-    in {
+        extraSpecialArgs = {inherit inputs system;};
+      };
+  in
+    {
       nixosConfigurations = {
         lisa = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./machines/lisa/configuration.nix ];
+          modules = [./machines/lisa/configuration.nix];
         };
         marge = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -53,9 +60,9 @@
       };
       homeConfigurations = {
         "${user}@bart" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
-        "${user}@homer" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
         "${user}@lisa" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
         "${user}@marge" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
+        "pepe" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
       };
       darwinConfigurations = {
         bart = nix-darwin.lib.darwinSystem {
@@ -74,15 +81,16 @@
           ];
         };
         homer = nix-darwin.lib.darwinSystem {
-          modules = [ ./darwin-configuration.nix ];
+          modules = [./darwin-configuration.nix];
         };
       };
-    } // flake-utils.lib.eachDefaultSystem (system: {
+    }
+    // flake-utils.lib.eachDefaultSystem (system: {
       checks = {
         pre-commit-check = pre-commit-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
-            nixfmt.enable = true;
+            alejandra.enable = true;
             deadnix.enable = true;
             stylua.enable = true;
           };
@@ -94,7 +102,6 @@
         nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
           git
           nix
-          nixfmt
         ];
       };
     });

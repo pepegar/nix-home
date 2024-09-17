@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.zsh = {
     enable = true;
 
@@ -56,20 +54,25 @@
       ls = "exa";
       ll = "ls -a";
       ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
       ping = "prettyping";
       k = "kubectl";
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
+      vf = "fd --type f | fzf --preview 'bat --style=numbers --color=always {}' | xargs -r vi";
     };
 
-    plugins = [{
-      name = "z";
-      file = "z.sh";
-      src = pkgs.fetchFromGitHub {
-        owner = "rupa";
-        repo = "z";
-        rev = "v1.9";
-        sha256 = "1h0yk0sbv9d571sfkg97wi5q06cpxnhnvh745dlpazpgqi1vb1a8";
-      };
-    }];
+    plugins = [
+      {
+        name = "z";
+        file = "z.sh";
+        src = pkgs.fetchFromGitHub {
+          owner = "rupa";
+          repo = "z";
+          rev = "v1.9";
+          sha256 = "1h0yk0sbv9d571sfkg97wi5q06cpxnhnvh745dlpazpgqi1vb1a8";
+        };
+      }
+    ];
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   imports = [
     ../applications/alacritty
     ../applications/karabiner
@@ -27,12 +27,15 @@
   home.username = "pepe";
   home.homeDirectory = "/Users/pepe";
 
-  nixpkgs.overlays = let path = ../overlays;
-  in with builtins;
-  map (n: import (path + ("/" + n))) (filter (n:
-    match ".*\\.nix" n != null
-    || pathExists (path + ("/" + n + "/default.nix")))
-    (attrNames (readDir path)));
+  nixpkgs.overlays = let
+    path = ../overlays;
+  in
+    with builtins;
+      map (n: import (path + ("/" + n))) (filter (n:
+        match ".*\\.nix" n
+        != null
+        || pathExists (path + ("/" + n + "/default.nix")))
+      (attrNames (readDir path)));
 
   home.packages = with pkgs; [
     aws-vault
@@ -45,12 +48,14 @@
     fd
     gh
     git-crypt
+    git-town
     gnupg
     graphviz
     htop
     hub
     jq
     kotlin-language-server
+    alejandra
     minio-client
     nix-tree
     pass
@@ -81,18 +86,17 @@
       "lisa" = {
         hostname = "lisa";
         user = "pepe";
-        identityFile = [ "~/.ssh/local" ];
+        identityFile = ["~/.ssh/local"];
       };
-      "*".extraOptions = { AddKeysToAgent = "yes"; };
-      "*.github.com".extraOptions = { IdentityFile = "~/.ssh/id_ed25519"; };
+      "*".extraOptions = {AddKeysToAgent = "yes";};
+      "*.github.com".extraOptions = {IdentityFile = "~/.ssh/id_ed25519";};
     };
   };
 
   nixpkgs = {
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = (_: true);
+      allowUnfreePredicate = _: true;
     };
   };
-
 }
