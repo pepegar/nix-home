@@ -4,6 +4,7 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../services/home-assistant
+    ../../services/nextcloud
     ../../services/tailscale
   ];
 

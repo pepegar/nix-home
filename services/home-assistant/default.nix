@@ -37,7 +37,7 @@
         "glances"
         "apple_tv"
       ];
-      extraPackages = py: with py; [ psycopg2 getmac ];
+      extraPackages = py: with py; [ psycopg2 getmac zeroconf ];
     }).overrideAttrs (_: {
       # Don't run package tests, they take a long time
       doInstallCheck = false;
@@ -95,13 +95,6 @@
           method = "left";
         }
       ];
-      securitas = {
-        username = "!secret securitas_direct_username";
-        password = "!secret securitas_direct_password";
-        code = "!secret securitas_direct_code";
-        country = "ES";
-        check_alarm_panel = false;
-      };
       lovelace = {
         mode = "yaml";
         resources = [

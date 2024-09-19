@@ -54,7 +54,7 @@ in {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ wget vim ];
+  environment.systemPackages = with pkgs; [ wget vim samba ];
 
   virtualisation.docker.enable = true;
 
