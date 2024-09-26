@@ -67,6 +67,7 @@
     xcodes
     yq
     jira-cli-go
+    tree-sitter
   ];
 
   programs.zsh.sessionVariables = {
