@@ -49,8 +49,6 @@
       g = "git";
       gc = "git commit";
       gst = "git status";
-      gswitch = ''
-        git branch | grep -v "^*" | fzf --height=20% --reverse --info=inline | xargs git checkout'';
       ls = "exa";
       ll = "ls -a";
       ".." = "cd ..";

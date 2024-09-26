@@ -21,6 +21,8 @@
 
         addm = "!git ls-files --deleted --modified --other --exclude-standard | fzf -0 -m --preview 'git diff --color=always {-1}' | xargs -r git add";
         addmp = "!git ls-files --deleted --modified --exclude-standard | fzf -0 -m --preview 'git diff --color=always {-1}' | xargs -r -o git add -p";
+        sb = "!bash ~/bin/gswitch";
+        gbd = "!git config get branch.$(git rev-parse --abbrev-ref HEAD).description";
         cb = "!git branch --all | grep -v '^[*+]' | awk '{print $1}' | fzf -0 --preview 'git show --color=always {-1}' | sed 's/remotes\\/origin\\///g' | xargs -r git checkout";
         cs = "!git stash list | fzf -0 --preview 'git show --pretty=oneline --color=always --patch \"$(echo {} | cut -d: -f1)\"' | cut -d: -f1 | xargs -r git stash pop";
         db = "!git branch | grep -v '^[*+]' | awk '{print $1}' | fzf -0 --multi --preview 'git show --color=always {-1}' | xargs -r git branch --delete";
@@ -44,5 +46,10 @@
       key = "BC10F5DA684B5E5978B836CCB32204E4B8C00747";
       signByDefault = true;
     };
+  };
+
+  home.file."bin/gswitch" = {
+    source = ../scripts/bin/gswitch.sh;
+    executable = true;
   };
 }
