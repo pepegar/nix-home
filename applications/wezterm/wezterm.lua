@@ -24,8 +24,8 @@ end)
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
+config.front_end = "WebGpu"
 config.color_scheme = scheme_for_appearance(get_appearance())
-config.font = wezterm.font("PragmataPro Mono")
 config.font_size = 20
 config.enable_tab_bar = false
 config.send_composed_key_when_right_alt_is_pressed = false
