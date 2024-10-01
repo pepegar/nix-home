@@ -1,5 +1,3 @@
-{ ... }:
-
-{
-  programs.emacs = { enable = true; };
+{...}: {
+  programs.emacs = {enable = false;};
 }

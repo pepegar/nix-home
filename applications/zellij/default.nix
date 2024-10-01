@@ -1,9 +1,6 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.zellij = {
     enable = true;
-    enableZshIntegration = true;
   };
 
   programs.zsh.initExtra = ''
