@@ -9,6 +9,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs";
+    devenv.url = "github:cachix/devenv/latest";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager";
@@ -27,6 +28,7 @@
     nur,
     nix-darwin,
     nix-homebrew,
+    ...
   } @ inputs: let
     user = "pepe";
     nurNoPkgs = system:

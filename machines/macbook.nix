@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ../applications/alacritty
     ../applications/karabiner
@@ -38,6 +42,7 @@
       (attrNames (readDir path)));
 
   home.packages = with pkgs; [
+    inputs.devenv.packages."${pkgs.system}".devenv
     aws-vault
     bat
     bazelisk
