@@ -52,4 +52,13 @@
     source = ../scripts/bin/gswitch.sh;
     executable = true;
   };
+
+  home.file."bin/gh_create_pr.sh" = {
+    source = ../scripts/bin/gh_create_pr.sh;
+    executable = true;
+  };
+
+  home.file.".config/gh/config.yml" = {
+    source = ./gh/config.yml;
+  };
 }
