@@ -69,7 +69,7 @@
     ruby
     silver-searcher
     sops
-    #xcodes
+    xcodes
     yq
     jira-cli-go
     tree-sitter

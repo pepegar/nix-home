@@ -30,3 +30,6 @@ else
 fi
 
 gh pr create --title "$pr_title" --base develop --assignee "@me" --reviewer "GoodNotes/goodnotes-cloud" --label "digital-paper:backend-web" --fill
+
+jira issue move "$jira_issue" "Peer Review"
+
