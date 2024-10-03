@@ -47,7 +47,12 @@ fi
 
 echo "New Task Key: $new_task_key"
 
+# Assign the task to yourself
+echo "Assigning task to yourself..."
+jira issue assign "$new_task_key" "$(jira me)"
+
 # Set the task to "In Progress"
+echo "Putting task in progress..."
 jira issue move $new_task_key "In Progress"
 
 echo "Task created and set to In Progress: $new_task_key"
