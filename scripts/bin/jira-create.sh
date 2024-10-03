@@ -11,7 +11,7 @@ fi
 PROJECT_KEY="GNC"
 
 # Query epics and select one using fzf
-selected_epic=$(jira epic list --project $PROJECT_KEY | fzf --header "Select an Epic:")
+selected_epic=$(jira epic list --project $PROJECT_KEY | fzf --height 40% --header "Select an Epic:")
 
 if [ -z "$selected_epic" ]; then
     echo "No epic selected. Exiting."
