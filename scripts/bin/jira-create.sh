@@ -2,6 +2,8 @@
 
 # Debug flag
 DEBUG=false
+REFRESH=false
+CACHE_FILE="$HOME/.jira-epics"
 
 # Debug function
 debug() {
@@ -14,6 +16,7 @@ debug() {
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --debug) DEBUG=true ;;
+        --refresh) REFRESH=true ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -40,46 +43,56 @@ fetch_epics() {
     jira epic list --project $PROJECT_KEY --paginate "$start:100" --table --plain
 }
 
-# Initialize variables
-all_epics=""
-start=0
-page_size=100
-
-debug "Fetching all epics"
-
-# Fetch all epics
-while true; do
-    debug "Fetching page starting from $start"
-    epics=$(fetch_epics $start)
-
-    latest_epic=$(echo "$epics" | tail -n 1)
-    debug "Latest epic in this page: $latest_epic"   
-
-    # Count the number of lines in the result (subtracting 1 for the header)
-    line_count=$(($(echo "$epics" | wc -l) - 1))
+# Function to fetch and cache all epics
+fetch_and_cache_epics() {
+    debug "Fetching all epics and caching them"
     
-    debug "Number of epics in this page: $line_count"
-    
-    # Break if we have fewer epics than the page size (indicating last page)
-    if [ "$line_count" -lt "$page_size" ]; then
-        debug "Reached the last page of epics (fewer than $page_size epics)"
+    # Initialize variables
+    all_epics=""
+    start=0
+    page_size=100
+
+    # Fetch all epics
+    while true; do
+        debug "Fetching page starting from $start"
+        epics=$(fetch_epics $start)
+
+        # Count the number of lines in the result (subtracting 1 for the header)
+        line_count=$(($(echo "$epics" | wc -l) - 1))
+        
+        debug "Number of epics in this page: $line_count"
+        
+        # Break if we have fewer epics than the page size (indicating last page)
+        if [ "$line_count" -lt "$page_size" ]; then
+            debug "Reached the last page of epics (fewer than $page_size epics)"
+            all_epics+="$epics"$'\n'
+            break
+        fi
+        
+        # Append to all_epics
         all_epics+="$epics"$'\n'
-        break
-    fi
-    
-    # Append to all_epics
-    all_epics+="$epics"$'\n'
- 
-    # Increment start for next page
-    start=$((start + page_size))
-    debug "Next page will start from $start"
-done
+     
+        # Increment start for next page
+        start=$((start + page_size))
+        debug "Next page will start from $start"
+    done
 
-debug "Total epics fetched: $(echo "$all_epics" | wc -l)"
+    # Remove trailing newline and save to cache file
+    echo "$all_epics" | sed '$d' > "$CACHE_FILE"
+    debug "Epics cached to $CACHE_FILE"
+}
 
-# Remove trailing newline and pipe to fzf
+# Check if we need to refresh the cache or if the cache file doesn't exist
+if [ "$REFRESH" = true ] || [ ! -f "$CACHE_FILE" ]; then
+    debug "Refreshing epic cache"
+    fetch_and_cache_epics
+else
+    debug "Using cached epics from $CACHE_FILE"
+fi
+
+# Read epics from cache and pipe to fzf
 debug "Prompting user to select an epic"
-selected_epic=$(echo "$all_epics" | sed '$d' | fzf --height 40% --header "Select an Epic:")
+selected_epic=$(cat "$CACHE_FILE" | fzf --height 40% --header "Select an Epic:")
 
 if [ -z "$selected_epic" ]; then
     echo "No epic selected. Exiting."

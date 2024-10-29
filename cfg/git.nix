@@ -5,7 +5,7 @@
     package = pkgs.gitAndTools.gitFull;
     enable = true;
     userEmail = "pepe@pepegar.com";
-    delta.enable = true;
+    #delta.enable = true;
 
     extraConfig = {
       github = {user = "pepegar";};
