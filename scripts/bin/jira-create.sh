@@ -112,7 +112,7 @@ debug "Task summary: $task_summary"
 
 # Create the Jira task
 debug "Creating Jira task"
-new_task=$(jira issue create --no-input -tTask --parent $epic_key --summary "$task_summary" --project $PROJECT_KEY)
+new_task=$(jira issue create --no-input -tTask --parent $epic_key --summary "$task_summary" --project $PROJECT_KEY -lgnc-aaa)
 
 echo $new_task
 
