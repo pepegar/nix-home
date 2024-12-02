@@ -13,6 +13,7 @@
     ../applications/starship
     ../applications/tmux
     ../applications/zsh
+    ../applications/nushell
     ../applications/fish
     ../applications/emacs
     ../applications/vscode

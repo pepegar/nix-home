@@ -107,7 +107,7 @@ echo $epic_key
 
 # Prompt for the task summary
 echo "Enter the task summary:"
-read task_summary
+read -e task_summary
 debug "Task summary: $task_summary"
 
 # Create the Jira task

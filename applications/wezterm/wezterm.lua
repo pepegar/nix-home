@@ -1,5 +1,4 @@
 local wezterm = require("wezterm")
-local mux = wezterm.mux
 
 function get_appearance()
 	if wezterm.gui then
@@ -16,12 +15,6 @@ function scheme_for_appearance(appearance)
 	end
 end
 
-wezterm.on("gui-startup", function()
-	local _, _, window = mux.spawn_window({})
-	window:gui_window():maximize()
-end)
-
--- This will hold the configuration.
 local config = wezterm.config_builder()
 
 config.front_end = "WebGpu"
@@ -30,7 +23,5 @@ config.font_size = 20
 config.enable_tab_bar = false
 config.send_composed_key_when_right_alt_is_pressed = false
 config.window_decorations = "RESIZE"
-config.front_end = "WebGpu"
 
--- and finally, return the configuration to wezterm
 return config

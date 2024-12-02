@@ -1,6 +1,7 @@
-{ pkgs, buildVimPlugin }:
-
 {
+  pkgs,
+  buildVimPlugin,
+}: {
   telescope-ghq = buildVimPlugin {
     pname = "telescope-ghq";
     version = "2022-12-23";
