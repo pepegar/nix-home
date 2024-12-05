@@ -5,6 +5,8 @@
 }: {
   imports = [
     ../applications/alacritty
+    ../applications/testcontainers
+    ../applications/coldturkey
     ../applications/karabiner
     ../applications/go
     ../applications/direnv
@@ -44,6 +46,7 @@
 
   home.packages = with pkgs; [
     inputs.devenv.packages."${pkgs.system}".devenv
+    alejandra
     aws-vault
     bat
     bazelisk
@@ -59,21 +62,21 @@
     graphviz
     htop
     hub
+    jira-cli-go
     jq
     kotlin-language-server
-    alejandra
     minio-client
     nix-tree
     pass
+    pr-description-wrapped
     prettyping
     ripgrep
     ruby
     silver-searcher
     sops
+    tree-sitter
     xcodes
     yq
-    jira-cli-go
-    tree-sitter
   ];
 
   programs.zsh.sessionVariables = {

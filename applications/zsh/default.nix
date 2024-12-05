@@ -42,6 +42,9 @@
       [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
       source "$HOME/.rye/env"
+
+      # Added by LM Studio CLI tool (lms)
+      export PATH="$PATH:/Users/pepe/.cache/lm-studio/bin"
     '';
 
     shellAliases = {
