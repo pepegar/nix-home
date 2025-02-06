@@ -137,6 +137,18 @@ echo "Assigning task to yourself..."
 debug "Assigning task $new_task_key to $(jira me)"
 jira issue assign "$new_task_key" "$(jira me)"
 
+# Ask if user wants to create a branch
+echo "Would you like to create a branch for this task? (y/n)"
+read -e create_branch
+
+if [[ $create_branch =~ ^[Yy]$ ]]; then
+    debug "Creating branch using jira-branch script"
+    jira-branch
+    if [ $? -ne 0 ]; then
+        echo "Warning: Failed to create branch using jira-branch script"
+    fi
+fi
+
 # Set the task to "In Progress"
 echo "Putting task in progress..."
 debug "Moving task $new_task_key to 'In Progress'"
