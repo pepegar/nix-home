@@ -1,9 +1,8 @@
-{ ... }:
-
-let colorscheme = ./colorschemes.yml;
+{...}: let
+  colorscheme = ./colorschemes.yml;
 in {
   programs.alacritty = {
-    enable = true;
+    enable = false;
     settings = {
       bell = {
         animation = "EaseOutExpo";
@@ -11,7 +10,7 @@ in {
         color = "#ffffff";
       };
       font = {
-        normal = { family = "Iosevka"; };
+        normal = {family = "Iosevka";};
         size = 17;
       };
       selection.save_to_clipboard = true;
@@ -155,7 +154,7 @@ in {
       #chars = "\\x1bz";
       #}
       #];
-      import = [ "${colorscheme}" ];
+      import = ["${colorscheme}"];
     };
   };
 }
