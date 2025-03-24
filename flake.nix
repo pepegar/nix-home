@@ -83,7 +83,19 @@
           ];
         };
         homer = nix-darwin.lib.darwinSystem {
-          modules = [./darwin-configuration.nix];
+          modules = [
+            ./darwin-configuration.nix
+            ./homebrew.nix
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                enableRosetta = true;
+                user = "${user}";
+                autoMigrate = true;
+              };
+            }
+          ];
         };
       };
     }
