@@ -5,23 +5,22 @@
 }: {
   imports = [
     ../applications/alacritty
-    ../applications/testcontainers
     ../applications/coldturkey
-    ../applications/karabiner
-    ../applications/go
     ../applications/direnv
-    ../applications/fzf
-    ../applications/neovim
-    ../applications/starship
-    ../applications/tmux
-    ../applications/zsh
-    ../applications/nushell
-    ../applications/fish
     ../applications/emacs
-    ../applications/vscode
-    ../applications/wezterm
-    ../applications/zellij
+    ../applications/fish
+    ../applications/fzf
+    ../applications/go
     ../applications/intellij-idea
+    ../applications/karabiner
+    ../applications/neovim
+    ../applications/nushell
+    ../applications/starship
+    ../applications/testcontainers
+    ../applications/tmux
+    ../applications/vscode
+    ../applications/zellij
+    ../applications/zsh
     ../cfg/email
     ../cfg/git.nix
     ../cfg/sbt
@@ -77,6 +76,7 @@
     tree-sitter
     xcodes
     yq
+    zig
   ];
 
   programs.zsh.sessionVariables = {

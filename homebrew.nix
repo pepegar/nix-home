@@ -1,44 +1,52 @@
-{ ... }:
-
-{
+{...}: {
   homebrew = {
     enable = true;
 
-    global = { brewfile = true; };
+    global = {brewfile = true;};
 
     onActivation = {
       autoUpdate = true;
       cleanup = "zap";
     };
 
-    brews = [ "git-lfs" "lua-language-server" "stylua" ];
+    taps = [
+      "messense/macos-cross-toolchains"
+    ];
+
+    brews = [
+      "git-lfs"
+      "lua-language-server"
+      "stylua"
+      "x86_64-unknown-linux-gnu"
+      "aarch64-unknown-linux-gnu"
+    ];
 
     casks = [
       "1password"
       "1password-cli"
+      "anaconda"
+      "cold-turkey-blocker"
+      "deskpad"
       "discord"
       "docker"
       "flycut"
+      "ghostty"
       "intellij-idea"
-      "iterm2"
       "karabiner-elements"
       "keymapp"
-      "notion"
+      "loom"
       "ngrok"
+      "notion"
+      "obsidian"
       "quip"
       "raycast"
-      "rectangle"
       "slack"
       "spotify"
+      "steam"
       "tailscale"
       "webex"
       "whatsapp"
       "zoom"
-      "steam"
-      "loom"
-      "anaconda"
-      "cold-turkey-blocker"
-      "obsidian"
     ];
 
     # name = id
