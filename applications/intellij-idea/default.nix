@@ -16,10 +16,19 @@
     dirNames = builtins.attrNames (lib.filterAttrs (_name: type: type == "directory") dirContents);
   in
     dirNames;
-in {
-  home.file = builtins.listToAttrs (map (version: {
-      name = "Library/Application Support/JetBrains/${version}/idea.properties";
-      value = {source = ./idea.properties;};
-    })
+
+  # Create a flat list of name/value pairs for both files
+  jetbrainsFiles = builtins.concatLists (map (version: [
+      {
+        name = "Library/Application Support/JetBrains/${version}/idea.properties";
+        value = {source = ./idea.properties;};
+      }
+      {
+        name = "Library/Application Support/JetBrains/${version}/idea.vmoptions";
+        value = {source = ./idea.vmoptions;};
+      }
+    ])
     jetbrainsProducts);
+in {
+  home.file = builtins.listToAttrs jetbrainsFiles;
 }
