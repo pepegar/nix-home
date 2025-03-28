@@ -5,11 +5,11 @@
 }: {
   imports = [
     ../applications/alacritty
-    ../applications/coldturkey
     ../applications/direnv
     ../applications/emacs
     ../applications/fish
     ../applications/fzf
+    ../applications/ghostty
     ../applications/go
     ../applications/intellij-idea
     ../applications/karabiner
