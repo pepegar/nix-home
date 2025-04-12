@@ -37,9 +37,9 @@
     type = "basic";
   };
 
-  capsLockRemap = {
+  hyperOnHoldKeyOtherwise = from: to: {
     from = {
-      key_code = "caps_lock";
+      key_code = from;
     };
     to = [
       {
@@ -53,7 +53,7 @@
     ];
     to_if_alone = [
       {
-        key_code = "escape";
+        key_code = to;
       }
     ];
     type = "basic";
@@ -67,16 +67,20 @@ in {
         {
           description = "managed by Nix (.config/home-manager/applications/karabiner/default.nix)";
           manipulators = [
-            capsLockRemap
+            (hyperOnHoldKeyOtherwise "caps_lock" "escape")
+            (hyperOnHoldKeyOtherwise "h" "h")
+            (hyperOnHoldKeyOtherwise "g" "g")
             (sysdiagnoseRemap "comma")
             (sysdiagnoseRemap "period")
             (sysdiagnoseRemap "slash")
+            (remapHold "a" "left_shift")
             (remapHold "s" "left_option")
             (remapHold "d" "left_control")
             (remapHold "f" "left_command")
             (remapHold "l" "right_option")
             (remapHold "k" "right_control")
             (remapHold "j" "right_command")
+            (remapHold ";" "right_shift")
           ];
         }
       ];
