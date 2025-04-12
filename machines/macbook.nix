@@ -23,6 +23,7 @@
     ../applications/zsh
     ../cfg/email
     ../cfg/git.nix
+    ../cfg/scripts.nix
     ../cfg/sbt
   ];
 
