@@ -64,7 +64,6 @@
     hub
     jira-cli-go
     jq
-    kotlin-language-server
     minio-client
     nix-tree
     pass
@@ -75,6 +74,7 @@
     silver-searcher
     sops
     tree-sitter
+    uv
     xcodes
     yq
     zig

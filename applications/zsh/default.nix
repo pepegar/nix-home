@@ -14,6 +14,8 @@
     defaultKeymap = "emacs";
 
     initExtra = ''
+      # Added by LM Studio CLI tool (lms)
+      export PATH="$PATH:/Users/pepe/.cache/lm-studio/bin"
       export PATH=~/.nix-profile/bin:$PATH
       export PATH=/Users/pepe/Library/Python/3.7/bin:$PATH
       export PATH=/Users/pepe/bin:$PATH
@@ -41,10 +43,10 @@
       [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
       [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-      source "$HOME/.rye/env"
-
-      # Added by LM Studio CLI tool (lms)
-      export PATH="$PATH:/Users/pepe/.cache/lm-studio/bin"
+      bindkey "^[[3~" delete-char
+      bindkey "^[3;5~" delete-char
+      bindkey "\e[3~" delete-char
+      bindkey "^[[3;3~" delete-word
     '';
 
     shellAliases = {

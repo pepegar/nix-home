@@ -18,4 +18,12 @@
     source = ../scripts/bin/ppg.sh;
     executable = true;
   };
+
+  home.file."bin/kotlin-ls" = {
+    text = ''
+      #!/bin/sh
+      exec /Users/pepe/kotlin-lsp/kotlin-lsp.sh "$@"
+    '';
+    executable = true;
+  };
 }

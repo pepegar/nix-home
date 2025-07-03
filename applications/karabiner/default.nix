@@ -1,20 +1,21 @@
 {...}: let
   remapHold = from: to: {
     type = "basic";
-    from = {key_code = from;};
+    from = {
+      key_code = from;
+      modifiers = {};
+    };
+    parameters = {
+      "basic.to_if_alone_timeout_milliseconds" = 250;
+      "basic.to_if_held_down_threshold_milliseconds" = 250;
+    };
     to_if_alone = [
       {
-        halt = true;
         key_code = from;
       }
     ];
-    to_delayed_action = {
-      to_if_invoked = [{key_code = "vk_none";}];
-      to_if_canceled = [{key_code = from;}];
-    };
     to_if_held_down = [
       {
-        halt = true;
         key_code = to;
       }
     ];
@@ -73,14 +74,12 @@ in {
             (sysdiagnoseRemap "comma")
             (sysdiagnoseRemap "period")
             (sysdiagnoseRemap "slash")
-            (remapHold "a" "left_shift")
             (remapHold "s" "left_option")
             (remapHold "d" "left_control")
             (remapHold "f" "left_command")
             (remapHold "l" "right_option")
             (remapHold "k" "right_control")
             (remapHold "j" "right_command")
-            (remapHold ";" "right_shift")
           ];
         }
       ];
