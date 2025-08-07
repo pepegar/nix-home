@@ -48,6 +48,7 @@
       "webex"
       "whatsapp"
       "yubico-yubikey-manager"
+      "claude-code"
     ];
 
     # name = id
@@ -60,6 +61,7 @@
       Pages = 409201541;
       "Things 3" = 904280696;
       Xcode = 497799835;
+      "Perplexity - Ask Anything" = 1668000334;
     };
   };
 }

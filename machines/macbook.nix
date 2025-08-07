@@ -62,7 +62,6 @@
     graphviz
     htop
     hub
-    jira-cli-go
     jq
     minio-client
     nix-tree

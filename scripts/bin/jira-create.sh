@@ -3,7 +3,7 @@
 # Debug flag
 DEBUG=false
 REFRESH=false
-CACHE_FILE="$HOME/.jira-epics"
+CACHE_FILE="$HOME/.acli-epics"
 
 # Debug function
 debug() {
@@ -24,14 +24,14 @@ done
 
 debug "Debug mode is enabled"
 
-# Check if jira and fzf are installed
-if ! command -v jira &> /dev/null || ! command -v fzf &> /dev/null
+# Check if acli and fzf are installed
+if ! command -v acli &> /dev/null || ! command -v fzf &> /dev/null
 then
-    echo "Error: This script requires jira and fzf to be installed."
+    echo "Error: This script requires acli and fzf to be installed."
     exit 1
 fi
 
-debug "jira and fzf are installed"
+debug "acli and fzf are installed"
 
 PROJECT_KEY="GNC"
 debug "Project key: $PROJECT_KEY"
@@ -40,7 +40,7 @@ debug "Project key: $PROJECT_KEY"
 fetch_epics() {
     local start=$1
     debug "Fetching epics starting from $start"
-    jira epic list --project $PROJECT_KEY --paginate "$start:100" --table --plain
+    acli jira epic list --project $PROJECT_KEY --limit 100 --offset "$start" --plain
 }
 
 # Function to fetch and cache all epics
@@ -112,7 +112,7 @@ debug "Task summary: $task_summary"
 
 # Create the Jira task
 debug "Creating Jira task"
-new_task=$(jira issue create --no-input -tTask --parent $epic_key --summary "$task_summary" --project $PROJECT_KEY -lgnc-aaa)
+new_task=$(acli jira issue create --project $PROJECT_KEY --type Task --parent $epic_key --summary "$task_summary" --labels gnc-aaa)
 
 echo $new_task
 
@@ -132,10 +132,14 @@ fi
 debug "New task key: $new_task_key"
 echo "New Task Key: $new_task_key"
 
+# Get current user for assignment
+debug "Getting current user account ID"
+current_user=$(acli jira user currentUser --field accountId)
+
 # Assign the task to yourself
 echo "Assigning task to yourself..."
-debug "Assigning task $new_task_key to $(jira me)"
-jira issue assign "$new_task_key" "$(jira me)"
+debug "Assigning task $new_task_key to $current_user"
+acli jira issue assign --issue "$new_task_key" --assignee "$current_user"
 
 # Ask if user wants to create a branch
 echo "Would you like to create a branch for this task? (y/n)"
@@ -152,7 +156,7 @@ fi
 # Set the task to "In Progress"
 echo "Putting task in progress..."
 debug "Moving task $new_task_key to 'In Progress'"
-jira issue move $new_task_key "In Progress"
+acli jira issue transition --issue $new_task_key --transition "In Progress"
 
 echo "Task created and set to In Progress: $new_task_key"
 debug "Script completed successfully"

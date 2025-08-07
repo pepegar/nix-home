@@ -9,6 +9,11 @@
     executable = true;
   };
 
+  home.file."bin/jira-branch" = {
+    source = ../scripts/bin/jira-branch.sh;
+    executable = true;
+  };
+
   home.file."bin/gh_create_pr" = {
     source = ../scripts/bin/gh_create_pr.sh;
     executable = true;

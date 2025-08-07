@@ -14,7 +14,7 @@
       custom.git_branch_description = {
         command = "git config branch.$(git rev-parse --abbrev-ref HEAD 2>/dev/null).description";
         when = "git rev-parse --is-inside-work-tree 2>/dev/null";
-        format = "[ - $output]($style) ";
+        format = "[$output]($style) ";
         style = "bold yellow";
       };
       command_timeout = 1000;
