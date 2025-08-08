@@ -19,7 +19,6 @@
       "stylua"
       "x86_64-unknown-linux-gnu"
       "aarch64-unknown-linux-gnu"
-      "llm"
     ];
 
     casks = [

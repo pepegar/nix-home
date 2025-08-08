@@ -13,6 +13,7 @@
     ../applications/go
     ../applications/intellij-idea
     ../applications/karabiner
+    ../applications/llm
     ../applications/neovim
     ../applications/nushell
     ../applications/starship

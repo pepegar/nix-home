@@ -6,7 +6,7 @@ in {
 
     enableCompletion = true;
 
-    sessionVariables = secrets.claude // secrets.llm;
+    sessionVariables = secrets.claude;
 
     history = {
       expireDuplicatesFirst = true;
