@@ -1,8 +1,12 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  secrets = import ../../secrets.nix;
+in {
   programs.zsh = {
     enable = true;
 
     enableCompletion = true;
+
+    sessionVariables = secrets.claude // secrets.llm;
 
     history = {
       expireDuplicatesFirst = true;
