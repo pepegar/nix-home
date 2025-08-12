@@ -19,6 +19,7 @@
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
+  system.primaryUser = "pepe";
   system.stateVersion = 4;
   system.defaults = {
     trackpad.Clicking = true;
