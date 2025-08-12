@@ -31,5 +31,5 @@ fi
 
 gh pr create --title "$pr_title" --base develop --assignee "@me" --reviewer "GoodNotes/goodnotes-cloud" --label "digital-paper:backend-web" --fill
 
-acli jira issue transition --issue "$jira_issue" --transition "Peer Review"
+acli jira workitem transition --key "$jira_issue" --status "Peer Review"
 

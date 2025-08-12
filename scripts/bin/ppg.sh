@@ -67,7 +67,7 @@ main() {
             print_status "Running darwin-rebuild for host: ${HOST}"
             print_status "Using darwin configuration for ${HOST}"
             nix build --impure .#darwinConfigurations.${HOST}.system
-            ./result/sw/bin/darwin-rebuild switch --flake .#${HOST}
+            sudo ./result/sw/bin/darwin-rebuild switch --flake .#${HOST}
             ;;
         *)
             print_error "Unknown command: $COMMAND"

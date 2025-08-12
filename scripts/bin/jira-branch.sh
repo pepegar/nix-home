@@ -65,19 +65,14 @@ set_branch_description() {
 set_issue_in_progress() {
     local issue_key=$1
     debug_echo "Setting Jira issue $issue_key to In Progress"
-    log_command "acli jira issue transition --issue $issue_key --transition \"In Progress\""
-    acli jira issue transition --issue "$issue_key" --transition "In Progress"
+    log_command " acli jira workitem transition --issue $issue_key --status \"In Progress\""
+    acli jira workitem transition --issue $issue_key --status \"In Progress\"
 }
 
-# Get current user account ID for filtering
-debug_echo "Getting current user account ID"
-log_command "acli jira user currentUser --field accountId"
-current_user=$(acli jira user currentUser --field accountId)
-
-# Run ACLI command and pipe to fzf for selection
-debug_echo "Running ACLI command and piping to fzf"
-log_command "acli jira issue list --assignee $current_user --status \"To Do,In Progress,Peer Review,Ready\" --columns key,summary --plain | fzf --ansi --height 40% --reverse"
-selected=$(acli jira issue list --assignee "$current_user" --status "To Do,In Progress,Peer Review,Ready" --columns key,summary --plain | fzf --ansi --height 40% --reverse)
+# Run ACLI command, parse JSON, and pipe to fzf for selection
+debug_echo "Running ACLI command, parsing JSON, and piping to fzf"
+log_command "acli jira workitem search --jql 'assignee = currentuser() and status in ("To Do", "In Progress", "Peer Review", "Ready") ORDER BY updatedDate DESC' --json | jq -r '.[] | \"\\(.key) [\\(.fields.status.name)] \\(.fields.summary)\"' | fzf --ansi --height 40% --reverse"
+selected=$(acli jira workitem search --jql 'assignee = currentuser() and status in ("To Do", "In Progress", "Peer Review", "Ready") ORDER BY updatedDate DESC' --json | jq -r '.[] | "\(.key) [\(.fields.status.name)] \(.fields.summary)"' | fzf --ansi --height 40% --reverse)
 
 # Exit if no selection was made
 if [ -z "$selected" ]; then
@@ -89,7 +84,8 @@ fi
 # Extract Jira key and summary from selection
 debug_echo "Extracting Jira key and summary from selection"
 jira_key=$(echo "$selected" | awk '{print $1}')
-jira_summary=$(echo "$selected" | awk '{$1=""; print substr($0,2)}')
+# Extract summary by removing key and status (format: "KEY [STATUS] SUMMARY")
+jira_summary=$(echo "$selected" | sed -E 's/^[^ ]+ \[[^]]+\] //')
 debug_echo "Jira key: $jira_key"
 debug_echo "Jira summary: $jira_summary"
 
