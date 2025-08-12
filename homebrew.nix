@@ -11,6 +11,7 @@
 
     taps = [
       "messense/macos-cross-toolchains"
+      "atlassian/homebrew-acli"
     ];
 
     brews = [
@@ -19,6 +20,7 @@
       "stylua"
       "x86_64-unknown-linux-gnu"
       "aarch64-unknown-linux-gnu"
+      "acli"
     ];
 
     casks = [
@@ -30,7 +32,7 @@
       "creality-print"
       "deskpad"
       "discord"
-      "docker"
+      "docker-desktop"
       "ghostty"
       "intellij-idea"
       "karabiner-elements"
@@ -42,6 +44,7 @@
       "pritunl"
       "quip"
       "raycast"
+      "rescuetime"
       "slack"
       "spotify"
       "tailscale"
@@ -61,7 +64,6 @@
       Pages = 409201541;
       "Things 3" = 904280696;
       Xcode = 497799835;
-      "Perplexity - Ask Anything" = 1668000334;
     };
   };
 }
