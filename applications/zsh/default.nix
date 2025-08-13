@@ -17,7 +17,7 @@ in {
 
     defaultKeymap = "emacs";
 
-    initExtra = ''
+    initContent = ''
       # Added by LM Studio CLI tool (lms)
       export PATH="$PATH:/Users/pepe/.cache/lm-studio/bin"
       export PATH=~/.nix-profile/bin:$PATH

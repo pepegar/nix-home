@@ -5,5 +5,5 @@
     enableFishIntegration = true;
   };
 
-  programs.zsh = {initExtra = builtins.readFile ./fzf-config.sh;};
+  programs.zsh = {initContent = builtins.readFile ./fzf-config.sh;};
 }
