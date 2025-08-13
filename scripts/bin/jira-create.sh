@@ -12,9 +12,43 @@ debug() {
     fi
 }
 
+# Show help function
+show_help() {
+    cat << EOF
+Usage: $(basename "$0") [OPTIONS]
+
+Interactive script to create a Jira task under an Epic in project GNC.
+
+OPTIONS:
+    --help      Show this help message and exit
+    --debug     Enable debug mode for verbose output
+    --refresh   Refresh the Epic cache instead of using cached data
+
+DESCRIPTION:
+    This script helps you create Jira tasks by:
+    1. Fetching and caching all Epics from the GNC project
+    2. Presenting an interactive fzf menu to select an Epic
+    3. Prompting for a task summary
+    4. Creating the task with label 'gnc-aaa'
+    5. Assigning the task to yourself
+    6. Optionally creating a git branch using jira-branch
+    7. Moving the task to 'In Progress' status
+
+DEPENDENCIES:
+    - acli: Atlassian CLI tool
+    - fzf: Command-line fuzzy finder
+
+CACHE:
+    Epic data is cached in ~/.acli-epics to improve performance.
+    Use --refresh to update the cache with latest Epic data.
+
+EOF
+}
+
 # Parse command line arguments
 while [[ "$#" -gt 0 ]]; do
     case $1 in
+        --help) show_help; exit 0 ;;
         --debug) DEBUG=true ;;
         --refresh) REFRESH=true ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
@@ -40,45 +74,18 @@ debug "Project key: $PROJECT_KEY"
 fetch_epics() {
     local start=$1
     debug "Fetching epics starting from $start"
-    acli jira epic list --project $PROJECT_KEY --limit 100 --offset "$start" --plain
+    acli jira workitem search --jql "project = $PROJECT_KEY AND type = Epic" --fields "key,summary,status" --limit 100
 }
 
 # Function to fetch and cache all epics
 fetch_and_cache_epics() {
     debug "Fetching all epics and caching them"
     
-    # Initialize variables
-    all_epics=""
-    start=0
-    page_size=100
-
-    # Fetch all epics
-    while true; do
-        debug "Fetching page starting from $start"
-        epics=$(fetch_epics $start)
-
-        # Count the number of lines in the result (subtracting 1 for the header)
-        line_count=$(($(echo "$epics" | wc -l) - 1))
-        
-        debug "Number of epics in this page: $line_count"
-        
-        # Break if we have fewer epics than the page size (indicating last page)
-        if [ "$line_count" -lt "$page_size" ]; then
-            debug "Reached the last page of epics (fewer than $page_size epics)"
-            all_epics+="$epics"$'\n'
-            break
-        fi
-        
-        # Append to all_epics
-        all_epics+="$epics"$'\n'
-     
-        # Increment start for next page
-        start=$((start + page_size))
-        debug "Next page will start from $start"
-    done
-
-    # Remove trailing newline and save to cache file
-    echo "$all_epics" | sed '$d' > "$CACHE_FILE"
+    # Fetch all epics using CSV format to avoid headers in pagination
+    epics=$(acli jira workitem search --jql "project = $PROJECT_KEY AND type = Epic" --fields "key,summary,status" --paginate --csv)
+    
+    # Skip the CSV header line and save to cache file
+    echo "$epics" | tail -n +2 > "$CACHE_FILE"
     debug "Epics cached to $CACHE_FILE"
 }
 
@@ -92,18 +99,16 @@ fi
 
 # Read epics from cache and pipe to fzf
 debug "Prompting user to select an epic"
-selected_epic=$(cat "$CACHE_FILE" | fzf --height 40% --header "Select an Epic:")
+selected_epic=$(cat "$CACHE_FILE" | fzf --height 40% --header "Select an Epic:" --delimiter "," --with-nth "{1} {2} {3}")
 
 if [ -z "$selected_epic" ]; then
     echo "No epic selected. Exiting."
     exit 0
 fi
 
-# Extract the epic key from the selected epic
-epic_key=$(echo $selected_epic | awk '{print $2}')
+# Extract the epic key from the selected epic (first column of CSV)
+epic_key=$(echo "$selected_epic" | awk -F',' '{print $1}')
 debug "Selected epic key: $epic_key"
-
-echo $epic_key
 
 # Prompt for the task summary
 echo "Enter the task summary:"
@@ -112,7 +117,7 @@ debug "Task summary: $task_summary"
 
 # Create the Jira task
 debug "Creating Jira task"
-new_task=$(acli jira issue create --project $PROJECT_KEY --type Task --parent $epic_key --summary "$task_summary" --labels gnc-aaa)
+new_task=$(acli jira workitem create --project $PROJECT_KEY --type Task --parent $epic_key --summary "$task_summary" --label gnc --json)
 
 echo $new_task
 
@@ -121,8 +126,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Extract the new task key from the URL (last segment of the path)
-new_task_key=$(echo $new_task | grep -oP 'https://.*?/browse/\K[^/\s]+')
+# Extract the new task key from the JSON response
+new_task_key=$(echo $new_task | grep -o '"key":"[^"]*"' | cut -d'"' -f4)
 
 if [ -z "$new_task_key" ]; then
     echo "Error: Could not extract the new task key. Exiting."
@@ -132,22 +137,17 @@ fi
 debug "New task key: $new_task_key"
 echo "New Task Key: $new_task_key"
 
-# Get current user for assignment
-debug "Getting current user account ID"
-current_user=$(acli jira user currentUser --field accountId)
-
 # Assign the task to yourself
 echo "Assigning task to yourself..."
-debug "Assigning task $new_task_key to $current_user"
-acli jira issue assign --issue "$new_task_key" --assignee "$current_user"
+debug "Assigning task $new_task_key to current user"
+acli jira workitem assign --key "$new_task_key" --assignee "@me"
 
-# Ask if user wants to create a branch
-echo "Would you like to create a branch for this task? (y/n)"
-read -e create_branch
+# Ask if user wants to create a branch using fzf
+create_branch=$(echo -e "Yes\nNo" | fzf --height 15% --reverse --header="Create a branch for this task?")
 
-if [[ $create_branch =~ ^[Yy]$ ]]; then
-    debug "Creating branch using jira-branch script"
-    jira-branch
+if [[ "$create_branch" == "Yes" ]]; then
+    debug "Creating branch using jira-branch script with issue key"
+    jira-branch --issue-key "$new_task_key"
     if [ $? -ne 0 ]; then
         echo "Warning: Failed to create branch using jira-branch script"
     fi
@@ -156,7 +156,7 @@ fi
 # Set the task to "In Progress"
 echo "Putting task in progress..."
 debug "Moving task $new_task_key to 'In Progress'"
-acli jira issue transition --issue $new_task_key --transition "In Progress"
+acli jira workitem transition --key $new_task_key --status "In Progress"
 
 echo "Task created and set to In Progress: $new_task_key"
 debug "Script completed successfully"
