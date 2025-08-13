@@ -9,7 +9,7 @@
     executable = true;
   };
 
-  home.file."bin/jira-branch" = {
+  home.file."bin/jira-branch-ppg" = {
     source = ../scripts/bin/jira-branch.sh;
     executable = true;
   };
