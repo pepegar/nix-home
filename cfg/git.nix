@@ -2,7 +2,6 @@
   home.packages = with pkgs; [gh ghq git-absorb];
 
   programs.git = {
-    package = pkgs.gitAndTools.gitFull;
     enable = true;
     userEmail = "pepe@pepegar.com";
     #delta.enable = true;
