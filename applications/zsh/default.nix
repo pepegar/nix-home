@@ -67,6 +67,7 @@ in {
       k = "kubectl";
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
       vf = "fd --type f | fzf --preview 'bat --style=numbers --color=always {}' | xargs -r vi";
+      gwt = "cd $(git-wt)";
     };
 
     plugins = [

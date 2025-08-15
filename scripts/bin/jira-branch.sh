@@ -67,6 +67,18 @@ get_current_branch() {
     git rev-parse --abbrev-ref HEAD
 }
 
+# Function to check if a branch exists in origin
+check_origin_branch() {
+    local branch_name=$1
+    debug_echo "Checking if branch exists in origin: $branch_name"
+    log_command "git ls-remote --heads origin $branch_name"
+    if git ls-remote --heads origin "$branch_name" | grep -q "refs/heads/$branch_name"; then
+        return 0  # Branch exists
+    else
+        return 1  # Branch doesn't exist
+    fi
+}
+
 # Function to set branch description
 set_branch_description() {
     local branch=$1
@@ -135,8 +147,9 @@ debug_echo "Current branch: $current_branch"
 
 # Get the git repository root and its parent directory for worktrees
 git_root=$(git rev-parse --show-toplevel)
+repo_name=$(basename "$git_root")
 parent_dir=$(dirname "$git_root")
-worktree_path="$parent_dir/$branch_name"
+worktree_path="$parent_dir/${repo_name}-${branch_name}"
 
 # Check if worktree already exists
 debug_echo "Checking if worktree exists: $worktree_path"
@@ -148,10 +161,20 @@ if [ -d "$worktree_path" ]; then
 else
     # Worktree doesn't exist, ask user for base branch
     echo "Choose base branch:"
-    base_branch=$(echo -e "Current branch ($current_branch)\nDevelop branch (origin/develop)" | 
+    
+    # Check if branch already exists in origin
+    branch_options="Current branch ($current_branch)\nDevelop branch (origin/develop)"
+    if check_origin_branch "$branch_name"; then
+        debug_echo "Branch $branch_name exists in origin, adding to options"
+        branch_options="Existing branch (origin/$branch_name)\n$branch_options"
+    fi
+    
+    base_branch=$(echo -e "$branch_options" | 
                   fzf --height 15% --reverse --header="Choose base branch:")
 
-    if [[ "$base_branch" == *"Current"* ]]; then
+    if [[ "$base_branch" == *"Existing"* ]]; then
+        base_branch="origin/$branch_name"
+    elif [[ "$base_branch" == *"Current"* ]]; then
         base_branch="$current_branch"
     else
         base_branch="origin/develop"

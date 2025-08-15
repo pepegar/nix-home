@@ -9,7 +9,7 @@
     executable = true;
   };
 
-  home.file."bin/jira-branch-ppg" = {
+  home.file."bin/ppg-jira-branch" = {
     source = ../scripts/bin/jira-branch.sh;
     executable = true;
   };
@@ -29,6 +29,11 @@
       #!/bin/sh
       exec /Users/pepe/kotlin-lsp/kotlin-lsp.sh "$@"
     '';
+    executable = true;
+  };
+
+  home.file."bin/git-wt" = {
+    source = ../scripts/bin/git-wt.sh;
     executable = true;
   };
 }

@@ -10,11 +10,41 @@ NC='\033[0m' # No Color
 # Get current hostname
 CURRENT_HOST=$(hostname -s)
 
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Helper function to print usage
 print_usage() {
     echo -e "${BLUE}Usage:${NC}"
-    echo -e "  ppg home [hostname]   - Run home-manager for specified host (default: current host)"
-    echo -e "  ppg darwin [hostname] - Run darwin-rebuild for specified host (default: current host)"
+    echo -e "  ppg <command> [args...]"
+    echo
+    echo -e "${BLUE}Available commands:${NC}"
+    
+    # List built-in commands
+    echo -e "  home [hostname]   - Run home-manager for specified host (default: current host)"
+    echo -e "  darwin [hostname] - Run darwin-rebuild for specified host (default: current host)"
+    
+    # List ppg-* scripts as available commands
+    local ppg_scripts
+    ppg_scripts=($(find "$SCRIPT_DIR" -name "ppg-*" -executable -type f | sort))
+    if [ ${#ppg_scripts[@]} -gt 0 ]; then
+        echo
+        echo -e "${BLUE}Extension commands:${NC}"
+        for script in "${ppg_scripts[@]}"; do
+            local cmd_name=$(basename "$script" | sed 's/^ppg-//')
+            local description=""
+            # Try to get description from script's first comment line
+            if [[ -f "$script" ]]; then
+                description=$(head -n 20 "$script" | grep -E "^#.*[Dd]escription:|^# " | head -1 | sed 's/^#[[:space:]]*//' | sed 's/^[Dd]escription:[[:space:]]*//')
+            fi
+            if [[ -n "$description" ]]; then
+                echo -e "  $cmd_name - $description"
+            else
+                echo -e "  $cmd_name"
+            fi
+        done
+    fi
+    
     echo
     echo -e "${BLUE}Examples:${NC}"
     echo -e "  ppg home              - Home-manager for current host"
@@ -37,6 +67,19 @@ print_error() {
     echo -e "${RED}Error:${NC} $1"
 }
 
+# Function to find and execute ppg-* scripts
+execute_ppg_script() {
+    local command=$1
+    shift
+    local script_path="$SCRIPT_DIR/ppg-$command"
+    
+    if [[ -x "$script_path" ]]; then
+        exec "$script_path" "$@"
+    else
+        return 1
+    fi
+}
+
 # Main function
 main() {
     # Check if command is provided
@@ -47,9 +90,17 @@ main() {
     fi
 
     COMMAND=$1
-    HOST=${2:-$CURRENT_HOST}
+    shift
     
-    # Change to the flake directory
+    # First try to execute as ppg-* script
+    if execute_ppg_script "$COMMAND" "$@"; then
+        return 0
+    fi
+    
+    # Fall back to built-in commands
+    HOST=${1:-$CURRENT_HOST}
+    
+    # Change to the flake directory for built-in commands
     cd ~/.config/home-manager || { print_error "Could not find home-manager config directory"; exit 1; }
 
     case $COMMAND in

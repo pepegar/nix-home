@@ -32,7 +32,6 @@ DESCRIPTION:
     4. Creating the task with label 'gnc-aaa'
     5. Assigning the task to yourself
     6. Optionally creating a git branch using jira-branch
-    7. Moving the task to 'In Progress' status
 
 DEPENDENCIES:
     - acli: Atlassian CLI tool
@@ -119,15 +118,13 @@ debug "Task summary: $task_summary"
 debug "Creating Jira task"
 new_task=$(acli jira workitem create --project $PROJECT_KEY --type Task --parent $epic_key --summary "$task_summary" --label gnc --json)
 
-echo $new_task
-
 if [ $? -ne 0 ]; then
     echo "Error creating the task. Exiting."
     exit 1
 fi
 
 # Extract the new task key from the JSON response
-new_task_key=$(echo $new_task | grep -o '"key":"[^"]*"' | cut -d'"' -f4)
+new_task_key=$(echo $new_task | jq -r '.key')
 
 if [ -z "$new_task_key" ]; then
     echo "Error: Could not extract the new task key. Exiting."
@@ -147,16 +144,11 @@ create_branch=$(echo -e "Yes\nNo" | fzf --height 15% --reverse --header="Create 
 
 if [[ "$create_branch" == "Yes" ]]; then
     debug "Creating branch using jira-branch script with issue key"
-    jira-branch --issue-key "$new_task_key"
+    jira-branch-ppg --issue-key "$new_task_key"
     if [ $? -ne 0 ]; then
         echo "Warning: Failed to create branch using jira-branch script"
     fi
 fi
 
-# Set the task to "In Progress"
-echo "Putting task in progress..."
-debug "Moving task $new_task_key to 'In Progress'"
-acli jira workitem transition --key $new_task_key --status "In Progress"
-
-echo "Task created and set to In Progress: $new_task_key"
+echo "Task created: $new_task_key"
 debug "Script completed successfully"
