@@ -15,14 +15,14 @@
     ];
 
     brews = [
-      "git-lfs"
-      "lua-language-server"
-      "stylua"
-      "x86_64-unknown-linux-gnu"
       "aarch64-unknown-linux-gnu"
       "acli"
-      "whisper-cpp"
+      "git-lfs"
+      "lua-language-server"
       "sox"
+      "stylua"
+      "whisper-cpp"
+      "x86_64-unknown-linux-gnu"
     ];
 
     casks = [
@@ -38,6 +38,7 @@
       "docker-desktop"
       "ghostty"
       "intellij-idea"
+      "karabiner-elements"
       "keymapp"
       "ngrok"
       "notion"

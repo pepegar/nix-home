@@ -278,11 +278,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1756573588,
-        "narHash": "sha256-3z2HiCJsMxqJ/o5To8U6Ya1idYZWaN9x3LCzvThBTOk=",
+        "lastModified": 1756594106,
+        "narHash": "sha256-jOG19Iqgh4SKbnJjIHXzcijbOL6fFsrgPbHEfhSA62w=",
         "owner": "pepegar",
         "repo": "karabinix",
-        "rev": "4519ae1bb0dce32fa497b9752370c2bd798d8463",
+        "rev": "e47197c7e7934c4318c96dc1fd9d25225245025b",
         "type": "github"
       },
       "original": {

@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   imports = [
     ./cfg/homebrew.nix
-    ./cfg/karabiner-elements-override.nix
   ];
 
   # List packages installed in system profile. To search by name, run:
@@ -34,19 +33,6 @@
   nix.settings.max-jobs = 16;
   nix.settings.cores = 16;
   nix.settings.trusted-users = ["root" "pepe"];
-  services.karabiner-elements = {
-    enable = true;
-    #package = pkgs.karabiner-elements.overrideAttrs (old: {
-    #version = "15.0.0";
-
-    #src = pkgs.fetchurl {
-    #inherit (old.src) url;
-    #hash = "sha256-xWCsbkP9cVnDjWFTgWl5KrR7wEpcQYM4Md99pTI/l14=";
-    #};
-
-    #dontFixup = true;
-    #});
-  };
   nixpkgs.hostPlatform = "aarch64-darwin";
   ids.gids.nixbld = 350;
 }

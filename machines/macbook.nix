@@ -57,6 +57,7 @@
     cocoapods
     eza
     fd
+    gemini-cli
     gh
     git-crypt
     git-town
