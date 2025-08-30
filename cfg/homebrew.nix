@@ -21,6 +21,8 @@
       "x86_64-unknown-linux-gnu"
       "aarch64-unknown-linux-gnu"
       "acli"
+      "whisper-cpp"
+      "sox"
     ];
 
     casks = [
@@ -28,6 +30,7 @@
       "1password-cli"
       "anaconda"
       "arc"
+      "claude-code"
       "cleanshot"
       "creality-print"
       "deskpad"
@@ -35,7 +38,6 @@
       "docker-desktop"
       "ghostty"
       "intellij-idea"
-      "karabiner-elements"
       "keymapp"
       "ngrok"
       "notion"
@@ -51,7 +53,7 @@
       "webex"
       "whatsapp"
       "yubico-yubikey-manager"
-      "claude-code"
+      "zoom"
     ];
 
     # name = id

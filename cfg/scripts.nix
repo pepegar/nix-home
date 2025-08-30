@@ -4,7 +4,7 @@
     executable = true;
   };
 
-  home.file."bin/jira-create" = {
+  home.file."bin/ppg-jira-create" = {
     source = ../scripts/bin/jira-create.sh;
     executable = true;
   };
@@ -34,6 +34,11 @@
 
   home.file."bin/git-wt" = {
     source = ../scripts/bin/git-wt.sh;
+    executable = true;
+  };
+
+  home.file."bin/ppg-pr" = {
+    source = ../scripts/bin/pr.sh;
     executable = true;
   };
 }

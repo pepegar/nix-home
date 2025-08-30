@@ -16,8 +16,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/nur";
     nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    karabinix.url = "github:pepegar/karabinix";
   };
   outputs = {
     self,
@@ -28,6 +28,7 @@
     nur,
     nix-darwin,
     nix-homebrew,
+    karabinix,
     ...
   } @ inputs: let
     user = "pepe";
@@ -40,6 +41,7 @@
 
         modules = [
           (nurNoPkgs system).repos.rycee.hmModules.emacs-init
+          karabinix.homeManagerModules.karabinix
           machineModule
         ];
 
@@ -64,13 +66,12 @@
         "${user}@bart" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
         "${user}@lisa" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
         "${user}@marge" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
-        "pepe" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
+        "${user}" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
       };
       darwinConfigurations = {
         bart = nix-darwin.lib.darwinSystem {
           modules = [
             ./darwin-configuration.nix
-            ./homebrew.nix
             nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
@@ -85,7 +86,6 @@
         homer = nix-darwin.lib.darwinSystem {
           modules = [
             ./darwin-configuration.nix
-            ./homebrew.nix
             nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
@@ -100,7 +100,6 @@
         milhouse = nix-darwin.lib.darwinSystem {
           modules = [
             ./darwin-configuration.nix
-            ./homebrew.nix
             nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {

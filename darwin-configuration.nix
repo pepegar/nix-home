@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  imports = [./homebrew.nix];
+  imports = [./cfg/homebrew.nix];
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -28,10 +28,22 @@
 
   # You should generally set this to the total number of logical cores in your system.
   # $ sysctl -n hw.ncpu
-  nix.settings.max-jobs = 8;
-  nix.settings.cores = 8;
+  nix.settings.max-jobs = 16;
+  nix.settings.cores = 16;
   nix.settings.trusted-users = ["root" "pepe"];
-  services.emacs.enable = true;
+  services.karabiner-elements = {
+    enable = true;
+    #package = pkgs.karabiner-elements.overrideAttrs (old: {
+    #version = "15.0.0";
+
+    #src = pkgs.fetchurl {
+    #inherit (old.src) url;
+    #hash = "sha256-xWCsbkP9cVnDjWFTgWl5KrR7wEpcQYM4Md99pTI/l14=";
+    #};
+
+    #dontFixup = true;
+    #});
+  };
   nixpkgs.hostPlatform = "aarch64-darwin";
   ids.gids.nixbld = 350;
 }

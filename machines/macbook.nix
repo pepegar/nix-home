@@ -5,6 +5,7 @@
 }: {
   imports = [
     ../applications/alacritty
+    ../applications/claude
     ../applications/direnv
     ../applications/emacs
     ../applications/fish
@@ -12,7 +13,7 @@
     ../applications/ghostty
     ../applications/go
     ../applications/intellij-idea
-    ../applications/karabiner
+    ../applications/karabinix
     ../applications/llm
     ../applications/neovim
     ../applications/nushell
@@ -24,8 +25,8 @@
     ../applications/zsh
     ../cfg/email
     ../cfg/git.nix
-    ../cfg/scripts.nix
     ../cfg/sbt
+    ../cfg/scripts.nix
   ];
 
   # Let Home Manager install and manage itself.
