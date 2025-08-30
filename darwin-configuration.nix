@@ -1,5 +1,8 @@
 {pkgs, ...}: {
-  imports = [./cfg/homebrew.nix];
+  imports = [
+    ./cfg/homebrew.nix
+    ./cfg/karabiner-elements-override.nix
+  ];
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
