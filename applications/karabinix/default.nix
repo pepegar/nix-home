@@ -11,26 +11,33 @@ with inputs.karabinix.lib; {
           complex_modifications = mkComplexModification {
             parameters = {
               "basic.simultaneous_threshold_milliseconds" = 50;
-              "basic.to_if_alone_timeout_milliseconds" = 1000;
-              "basic.to_if_held_down_threshold_milliseconds" = 500;
+              "basic.to_if_alone_timeout_milliseconds" = 150;
+              "basic.to_if_held_down_threshold_milliseconds" = 150;
               "basic.to_delayed_action_delay_milliseconds" = 500;
             };
             rules = [
-              (hyperKey {
+              (sublayerKey {
                 key = keyCodes.caps_lock;
                 alone_key = keyCodes.escape;
-                mappings = {
+                variable_name = "hyper_layer";
+                sublayers = {
                   # apps
-                  t = mkToEvent {shell_command = "open -a 'Ghostty'";};
-                  b = mkToEvent {shell_command = "open -a 'Arc'";};
-                  i = mkToEvent {shell_command = "open -a 'IntelliJ IDEA'";};
+                  o = {
+                    t = mkToEvent {shell_command = "open -a 'Ghostty'";};
+                    b = mkToEvent {shell_command = "open -a 'Arc'";};
+                    i = mkToEvent {shell_command = "open -a 'IntelliJ IDEA'";};
+                    s = mkToEvent {shell_command = "open -a 'Slack'";};
+                    c = mkToEvent {shell_command = "open -a 'Calendar'";};
+                  };
 
                   # window management
-                  f = raycastWindow "maximize";
-                  h = raycastWindow "left-half";
-                  l = raycastWindow "right-half";
-                  k = raycastWindow "top-half";
-                  j = raycastWindow "bottom-half";
+                  w = {
+                    f = raycastWindow "maximize";
+                    h = raycastWindow "left-half";
+                    l = raycastWindow "right-half";
+                    k = raycastWindow "top-half";
+                    j = raycastWindow "bottom-half";
+                  };
                 };
               })
 
