@@ -92,151 +92,15 @@ with inputs.karabinix.lib; {
                 };
               })
 
-              (mkRule "home row mods" [
-                # S = Option/Alt when held, S when tapped
-                (mkManipulator {
-                  from = mkFromEvent {
-                    key_code = keyCodes.s;
-                  };
-                  to_if_alone = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.s;
-                    })
-                  ];
-                  to_if_held_down = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.left_option;
-                    })
-                  ];
-                  to_delayed_action = {
-                    to_if_canceled = [{key_code = keyCodes.s;}];
-                    to_if_invoked = [{key_code = "vk_none";}];
-                  };
-                  description = "S: Option when held, S when tapped";
+              (homeRowMods
+                {
+                  s = keyCodes.left_option; # S = Option when held, S when tapped
+                  d = keyCodes.left_control; # D = Control when held, D when tapped
+                  f = keyCodes.left_command; # F = Command when held, F when tapped
+                  j = keyCodes.right_command; # J = Command when held, J when tapped
+                  k = keyCodes.right_control; # K = Control when held, K when tapped
+                  l = keyCodes.right_option; # L = Option when held, L when tapped
                 })
-
-                # D = Control when held, D when tapped
-                (mkManipulator {
-                  from = mkFromEvent {
-                    key_code = keyCodes.d;
-                  };
-                  to_if_alone = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.d;
-                    })
-                  ];
-                  to_if_held_down = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.left_control;
-                    })
-                  ];
-                  to_delayed_action = {
-                    to_if_canceled = [{key_code = keyCodes.d;}];
-                    to_if_invoked = [{key_code = "vk_none";}];
-                  };
-                  description = "D: control when held, D when tapped";
-                })
-
-                # F = Command when held, F when tapped
-                (mkManipulator {
-                  from = mkFromEvent {
-                    key_code = keyCodes.f;
-                  };
-                  to_if_alone = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.f;
-                    })
-                  ];
-                  to_if_held_down = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.left_command;
-                    })
-                  ];
-                  to_delayed_action = {
-                    to_if_canceled = [{key_code = keyCodes.f;}];
-                    to_if_invoked = [{key_code = "vk_none";}];
-                  };
-                  description = "F: Command when held, F when tapped";
-                })
-
-                # J = Command when held, J when tapped
-                (mkManipulator {
-                  from = mkFromEvent {
-                    key_code = keyCodes.j;
-                  };
-                  to_if_alone = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.j;
-                    })
-                  ];
-                  to_if_held_down = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.right_command;
-                    })
-                  ];
-                  to_delayed_action = {
-                    to_if_canceled = [{key_code = keyCodes.j;}];
-                    to_if_invoked = [{key_code = "vk_none";}];
-                  };
-                  description = "J: Command when held, J when tapped";
-                })
-
-                # K = Control when held, K when tapped
-                (mkManipulator {
-                  from = mkFromEvent {
-                    key_code = keyCodes.k;
-                  };
-                  to_if_alone = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.k;
-                    })
-                  ];
-                  to_if_held_down = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.right_control;
-                    })
-                  ];
-                  to_delayed_action = {
-                    to_if_canceled = [{key_code = keyCodes.k;}];
-                    to_if_invoked = [{key_code = "vk_none";}];
-                  };
-                  description = "K: Control when held, K when tapped";
-                })
-
-                # L = Option/Alt when held, L when tapped
-                (mkManipulator {
-                  from = mkFromEvent {
-                    key_code = keyCodes.l;
-                  };
-                  to_if_alone = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.l;
-                    })
-                  ];
-                  to_if_held_down = [
-                    (mkToEvent {
-                      halt = true;
-                      key_code = keyCodes.right_option;
-                    })
-                  ];
-                  to_delayed_action = {
-                    to_if_canceled = [{key_code = keyCodes.l;}];
-                    to_if_invoked = [{key_code = "vk_none";}];
-                  };
-                  description = "L: Option when held, L when tapped";
-                })
-              ])
             ];
           };
 
