@@ -17,6 +17,8 @@ with inputs.karabinix.lib; {
               "mouse_motion_to_scroll.speed" = 100;
             };
             rules = [
+              (vimNavigation {layer_key = keyCodes.tab;})
+
               (sublayerKey {
                 key = keyCodes.caps_lock;
                 alone_key = keyCodes.escape;
@@ -24,12 +26,13 @@ with inputs.karabinix.lib; {
                 sublayers = {
                   # apps
                   o = {
-                    a = mkToEvent {shell_command = "open -a raycast://extensions/raycast/raycast-ai/ai-chat";};
+                    a = mkToEvent {shell_command = "open raycast://extensions/raycast/raycast-ai/ai-chat";};
                     t = mkToEvent {shell_command = "open -a 'Ghostty'";};
                     b = mkToEvent {shell_command = "open -a 'Arc'";};
                     i = mkToEvent {shell_command = "open -a 'IntelliJ IDEA'";};
                     s = mkToEvent {shell_command = "open -a 'Slack'";};
                     c = mkToEvent {shell_command = "open -a 'Calendar'";};
+                    m = mkToEvent {shell_command = "open -a 'Mail'";};
                   };
 
                   # window management
@@ -39,6 +42,62 @@ with inputs.karabinix.lib; {
                     l = raycastWindow "right-half";
                     k = raycastWindow "top-half";
                     j = raycastWindow "bottom-half";
+                    y = raycastWindow "previous-display";
+                    p = raycastWindow "next-display";
+                  };
+                };
+              })
+
+              (layerKey {
+                key = keyCodes.semicolon;
+                variable_name = "symbols_layer";
+                alone_key = keyCodes.semicolon; # Still types semicolon when pressed alone
+                mappings = {
+                  # Second row - based on your ErgoDox layout
+                  q = mkToEvent {
+                    key_code = keyCodes."1";
+                    modifiers = ["left_shift"]; # !
+                  };
+                  w = mkToEvent {
+                    key_code = keyCodes."2";
+                    modifiers = ["left_shift"]; # @
+                  };
+                  e = mkToEvent {
+                    key_code = keyCodes.open_bracket;
+                    modifiers = ["left_shift"]; # {
+                  };
+                  r = mkToEvent {
+                    key_code = keyCodes.close_bracket;
+                    modifiers = ["left_shift"]; # }
+                  };
+                  t = mkToEvent {
+                    key_code = keyCodes.backslash;
+                    modifiers = ["left_shift"]; # |
+                  };
+                  s = mkToEvent {
+                    key_code = keyCodes."4";
+                    modifiers = ["left_shift"]; # $
+                  };
+                  d = mkToEvent {
+                    key_code = keyCodes."9";
+                    modifiers = ["left_shift"]; # (
+                  };
+                  f = mkToEvent {
+                    key_code = keyCodes."0";
+                    modifiers = ["left_shift"]; # )
+                  };
+                  g = mkToEvent {
+                    key_code = keyCodes.grave_accent_and_tilde;
+                  };
+                  c = mkToEvent {
+                    key_code = keyCodes.open_bracket;
+                  };
+                  v = mkToEvent {
+                    key_code = keyCodes.close_bracket;
+                  };
+                  b = mkToEvent {
+                    key_code = keyCodes.grave_accent_and_tilde;
+                    modifiers = ["left_shift"]; # ?
                   };
                 };
               })
@@ -81,12 +140,40 @@ with inputs.karabinix.lib; {
                       key_code = keyCodes.f12;
                       modifiers = ["fn" "left_command"];
                     };
+
+                    h = mkToEvent {
+                      # file structure
+                      key_code = keyCodes.left_arrow;
+                      modifiers = ["left_option" "left_command"];
+                    };
+                    l = mkToEvent {
+                      # file structure
+                      key_code = keyCodes.right_arrow;
+                      modifiers = ["left_option" "left_command"];
+                    };
                   };
                   "company.thebrowser.Browser" = {
                     i = mkToEvent {
                       # dev tools
                       key_code = keyCodes.i;
                       modifiers = ["left_command" "left_option"];
+                    };
+                  };
+                  "com.tinyspeck.slackmacgap" = {
+                    # home
+                    h = mkToEvent {
+                      key_code = keyCodes."1";
+                      modifiers = ["left_control"];
+                    };
+                    # dms
+                    d = mkToEvent {
+                      key_code = keyCodes."2";
+                      modifiers = ["left_control"];
+                    };
+                    # activity
+                    a = mkToEvent {
+                      key_code = keyCodes."3";
+                      modifiers = ["left_control"];
                     };
                   };
                 };
