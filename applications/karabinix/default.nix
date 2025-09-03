@@ -1,5 +1,7 @@
 {inputs, ...}:
-with inputs.karabinix.lib; {
+with inputs.karabinix.lib; let
+  debug = true;
+in {
   services.karabinix = {
     enable = true;
     configuration = {
@@ -13,26 +15,55 @@ with inputs.karabinix.lib; {
               "basic.simultaneous_threshold_milliseconds" = 50;
               "basic.to_delayed_action_delay_milliseconds" = 500;
               "basic.to_if_alone_timeout_milliseconds" = 120;
-              "basic.to_if_held_down_threshold_milliseconds" = 200;
+              "basic.to_if_held_down_threshold_milliseconds" = 120;
               "mouse_motion_to_scroll.speed" = 100;
             };
             rules = [
-              (vimNavigation {layer_key = keyCodes.tab;})
+              (vimNavigation {
+                enable_debug = debug;
+                layer_key = keyCodes.tab;
+              })
 
               (sublayerKey {
+                enable_debug = debug;
                 key = keyCodes.caps_lock;
                 alone_key = keyCodes.escape;
                 variable_name = "hyper_layer";
                 sublayers = {
                   # apps
                   o = {
-                    a = mkToEvent {shell_command = "open raycast://extensions/raycast/raycast-ai/ai-chat";};
-                    t = mkToEvent {shell_command = "open -a 'Ghostty'";};
-                    b = mkToEvent {shell_command = "open -a 'Arc'";};
-                    i = mkToEvent {shell_command = "open -a 'IntelliJ IDEA'";};
-                    s = mkToEvent {shell_command = "open -a 'Slack'";};
-                    c = mkToEvent {shell_command = "open -a 'Calendar'";};
-                    m = mkToEvent {shell_command = "open -a 'Mail'";};
+                    a = mkToEvent {
+                      description = "ia";
+                      shell_command = "open raycast://extensions/raycast/raycast-ai/ai-chat";
+                    };
+                    w = mkToEvent {
+                      description = "💬";
+                      shell_command = "open -a 'WhatsApp'";
+                    };
+                    t = mkToEvent {
+                      description = "🖥️";
+                      shell_command = "open -a 'Ghostty'";
+                    };
+                    b = mkToEvent {
+                      description = "arc";
+                      shell_command = "open -a 'Arc'";
+                    };
+                    i = mkToEvent {
+                      description = "IJ";
+                      shell_command = "open -a 'IntelliJ IDEA'";
+                    };
+                    s = mkToEvent {
+                      description = "slack";
+                      shell_command = "open -a 'Slack'";
+                    };
+                    c = mkToEvent {
+                      description = "📅";
+                      shell_command = "open -a 'Calendar'";
+                    };
+                    m = mkToEvent {
+                      description = "✉︎";
+                      shell_command = "open -a 'Mail'";
+                    };
                   };
 
                   # window management
@@ -49,6 +80,7 @@ with inputs.karabinix.lib; {
               })
 
               (layerKey {
+                enable_debug = debug;
                 key = keyCodes.semicolon;
                 variable_name = "symbols_layer";
                 alone_key = keyCodes.semicolon; # Still types semicolon when pressed alone
@@ -103,6 +135,7 @@ with inputs.karabinix.lib; {
               })
 
               (appLayerKey {
+                enable_debug = debug;
                 key = keyCodes.backslash;
                 variable_name = "per_app_layer";
                 alone_key = keyCodes.backslash;
@@ -179,7 +212,7 @@ with inputs.karabinix.lib; {
                 };
               })
 
-              (homeRowMods
+              (homeRowModsWithCombinations
                 {
                   s = keyCodes.left_option; # S = Option when held, S when tapped
                   d = keyCodes.left_control; # D = Control when held, D when tapped
