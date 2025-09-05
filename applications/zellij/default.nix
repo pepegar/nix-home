@@ -1,11 +1,13 @@
-{pkgs, ...}: {
+{...}: {
   programs.zellij = {
     enable = true;
     enableZshIntegration = true;
   };
 
-  programs.zsh.shellAliases = with pkgs; {
-    zr = "${zellij}/bin/zellij run -- $@";
-    zrf = "${zellij}/bin/zellij run -f -- $@";
-  };
+  programs.zsh.initContent = ''
+    if [[ -x "$(command -v zellij)" ]];
+    then
+        eval "$(zellij setup --generate-completion zsh | grep "^function")"
+    fi;
+  '';
 }
