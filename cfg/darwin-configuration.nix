@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   imports = [
-    ./cfg/homebrew.nix
+    ./homebrew.nix
   ];
 
   # List packages installed in system profile. To search by name, run:
@@ -10,6 +10,15 @@
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/.config/home-manager/darwin-configuration.nix";
+  # Needed since Determinate Nix manages the main config file for system.
+  environment.etc."nix/nix.custom.conf".text = pkgs.lib.mkForce ''
+    # Add nix settings to seperate conf file
+    # since we use Determinate Nix on our systems.
+    trusted-users = pepe
+    extra-substituters = https://devenv.cachix.org
+    extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
+  '';
+
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
   # nix.package = pkgs.nix;
@@ -30,9 +39,13 @@
 
   # You should generally set this to the total number of logical cores in your system.
   # $ sysctl -n hw.ncpu
+  nix.enable = false;
   nix.settings.max-jobs = 16;
   nix.settings.cores = 16;
   nix.settings.trusted-users = ["root" "pepe"];
   nixpkgs.hostPlatform = "aarch64-darwin";
   ids.gids.nixbld = 350;
+
+  # touchid PLZ
+  security.pam.services.sudo_local.touchIdAuth = true;
 }

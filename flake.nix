@@ -16,7 +16,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/nur";
     nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     karabinix.url = "github:pepegar/karabinix";
   };
   outputs = {
@@ -27,7 +26,6 @@
     home-manager,
     nur,
     nix-darwin,
-    nix-homebrew,
     karabinix,
     ...
   } @ inputs: let
@@ -71,44 +69,17 @@
       darwinConfigurations = {
         bart = nix-darwin.lib.darwinSystem {
           modules = [
-            ./darwin-configuration.nix
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                enableRosetta = true;
-                user = "${user}";
-                autoMigrate = true;
-              };
-            }
+            ./cfg/darwin-configuration.nix
           ];
         };
         homer = nix-darwin.lib.darwinSystem {
           modules = [
-            ./darwin-configuration.nix
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                enableRosetta = true;
-                user = "${user}";
-                autoMigrate = true;
-              };
-            }
+            ./cfg/darwin-configuration.nix
           ];
         };
         milhouse = nix-darwin.lib.darwinSystem {
           modules = [
-            ./darwin-configuration.nix
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                enableRosetta = true;
-                user = "${user}";
-                autoMigrate = true;
-              };
-            }
+            ./cfg/darwin-configuration.nix
           ];
         };
       };
