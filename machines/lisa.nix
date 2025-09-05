@@ -1,8 +1,6 @@
-{ ... }:
-
-let
+{...}: let
   sources = import ../nix/sources.nix;
-  pkgs = import sources.nixpkgs { };
+  pkgs = import sources.nixpkgs {};
 in rec {
   imports = [
     ../applications/fzf
@@ -10,7 +8,6 @@ in rec {
     ../applications/neovim
     ../applications/alacritty
     ../applications/emacs
-    ../applications/tmux
     ../applications/direnv
     ../applications/go
     ../applications/rofi
@@ -30,12 +27,15 @@ in rec {
     ../cfg/pandoc
   ];
 
-  nixpkgs.overlays = let path = ../overlays;
-  in with builtins;
-  map (n: import (path + ("/" + n))) (filter (n:
-    match ".*\\.nix" n != null
-    || pathExists (path + ("/" + n + "/default.nix")))
-    (attrNames (readDir path)));
+  nixpkgs.overlays = let
+    path = ../overlays;
+  in
+    with builtins;
+      map (n: import (path + ("/" + n))) (filter (n:
+        match ".*\\.nix" n
+        != null
+        || pathExists (path + ("/" + n + "/default.nix")))
+      (attrNames (readDir path)));
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

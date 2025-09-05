@@ -4,6 +4,14 @@
 
     enableCompletion = true;
 
+    autosuggestion = {
+      enable = true;
+    };
+
+    syntaxHighlighting = {
+      enable = true;
+    };
+
     history = {
       expireDuplicatesFirst = true;
       extended = true;
@@ -26,19 +34,6 @@
       export PATH=/Users/pepegarcia/.local/share/gem/ruby/2.7.0/bin:$PATH
       export PATH=~/.ghcup/bin:$PATH
       export PATH=~/.cargo/bin:$PATH
-
-      vterm_printf(){
-          if [ -n "$TMUX" ] && ([ "$\{TERM%%-*\}" = "tmux" ] || [ "$\{TERM%%-*\}" = "screen" ] ); then
-              # Tell tmux to pass the escape sequences through
-              printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-          elif [ "$\{TERM%%-*\}" = "screen" ]; then
-              # GNU screen (screen, screen-256color, screen-256color-bce)
-              printf "\eP\e]%s\007\e\\" "$1"
-          else
-              printf "\e]%s\e\\" "$1"
-          fi
-        }
-
       export NVM_DIR="$HOME/.nvm"
       [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
       [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion

@@ -18,7 +18,6 @@
     ../applications/nushell
     ../applications/starship
     ../applications/testcontainers
-    ../applications/tmux
     ../applications/vscode
     ../applications/zellij
     ../applications/zsh

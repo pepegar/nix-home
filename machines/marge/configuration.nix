@@ -1,7 +1,6 @@
-{ pkgs, ... }:
-
-{
-  imports = [ # Include the results of the hardware scan.
+{pkgs, ...}: {
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../services/home-assistant
     ../../services/nextcloud
@@ -83,11 +82,11 @@
   users.users.pepe = {
     isNormalUser = true;
     description = "pepe";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     shell = "/home/pepe/.nix-profile/bin/zsh";
   };
 
-  home-manager.users.pepe = { pkgs, ... }: {
+  home-manager.users.pepe = {pkgs, ...}: {
     home.stateVersion = "22.05";
     imports = [
       ../../applications/go
@@ -95,7 +94,6 @@
       ../../applications/fzf
       ../../applications/neovim
       ../../applications/starship
-      ../../applications/tmux
       ../../applications/zsh
       ../../cfg/email
       ../../cfg/git.nix
@@ -128,12 +126,12 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.permittedInsecurePackages = ["openssl-1.1.1w"];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ vim git tailscale htop glances ];
+  environment.systemPackages = with pkgs; [vim git tailscale htop glances];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -166,5 +164,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
-
 }
