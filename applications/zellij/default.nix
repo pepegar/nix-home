@@ -3,6 +3,25 @@
     enable = true;
     enableZshIntegration = true;
     exitShellOnExit = true;
+
+    layouts = {
+      default = ''
+        layout {
+          default_tab_template {
+              children
+              pane size=1 borderless=true {
+                  plugin location="zellij:compact-bar"
+              }
+          }
+          tab name="Home Manager" cwd="~/.config/home-manager" {
+            pane
+          }
+          tab name="Goodnotes" cwd="~/projects/github.com/GoodNotes/GoodNotes-5" {
+            pane
+          }
+        }
+      '';
+    };
   };
 
   programs.zsh.initContent = ''
