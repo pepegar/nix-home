@@ -129,7 +129,6 @@
 
         nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
           git
-          nix
         ];
       };
     });

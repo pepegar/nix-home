@@ -8,7 +8,6 @@
     ../applications/claude
     ../applications/direnv
     ../applications/emacs
-    ../applications/fish
     ../applications/fzf
     ../applications/ghostty
     ../applications/go
@@ -104,23 +103,6 @@
       "*".extraOptions = {AddKeysToAgent = "yes";};
       "*.github.com".extraOptions = {IdentityFile = "~/.ssh/id_ed25519";};
     };
-  };
-
-  nix = {
-    settings = {
-      trusted-users = "root pepe";
-      experimental-features = "nix-command flakes";
-      substituters = [
-        "https://cache.nixos.org"
-        "https://devenv.cachix.org"
-      ];
-      trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-      ];
-      accept-flake-config = true;
-    };
-    package = pkgs.nix;
   };
 
   nixpkgs = {
