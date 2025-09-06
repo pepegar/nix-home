@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ../applications/alacritty
+    ../applications/firefox
     ../applications/claude
     ../applications/direnv
     ../applications/emacs
@@ -34,15 +34,9 @@
   home.username = "pepe";
   home.homeDirectory = "/Users/pepe";
 
-  nixpkgs.overlays = let
-    path = ../overlays;
-  in
-    with builtins;
-      map (n: import (path + ("/" + n))) (filter (n:
-        match ".*\\.nix" n
-        != null
-        || pathExists (path + ("/" + n + "/default.nix")))
-      (attrNames (readDir path)));
+  nixpkgs.overlays = [
+    inputs.nur.overlays.default
+  ];
 
   home.packages = with pkgs; [
     inputs.devenv.packages."${pkgs.system}".devenv
@@ -67,7 +61,6 @@
     minio-client
     nix-tree
     pass
-    pr-description-wrapped
     prettyping
     ripgrep
     ruby

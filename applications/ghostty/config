@@ -1,3 +1,4 @@
 macos-option-as-alt = true
 macos-titlebar-style = hidden
 copy-on-select = clipboard
+theme = dark:"Builtin Tango Dark",light:"Builtin Tango Light"

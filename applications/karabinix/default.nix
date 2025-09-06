@@ -44,7 +44,7 @@ in {
                   };
                   b = mkToEvent {
                     description = "🌐";
-                    shell_command = "open -a 'Arc'";
+                    shell_command = "open -a 'Firefox'";
                   };
                   i = mkToEvent {
                     description = "☕";
@@ -199,7 +199,7 @@ in {
                       modifiers = [keyCodes.fn keyCodes.left_command];
                     };
                   };
-                  "company.thebrowser.Browser" = {
+                  "org.mozilla.firefox" = {
                     i = mkToEvent {
                       # dev tools
                       key_code = keyCodes.i;

@@ -1,3 +1,3 @@
 {...}: {
-  home.file."Library/Application Support/com.mitchellh.ghostty/config".source = ./config;
+  home.file.".config/ghostty/config".source = ./config;
 }
