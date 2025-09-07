@@ -8,12 +8,14 @@
     profiles.default = {
       name = "Default";
       settings = {
+        "browser.warnOnQuit" = true;
         "browser.tabs.loadInBackground" = true;
         "widget.gtk.rounded-bottom-corners.enabled" = true;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "svg.context-properties.content.enabled" = true;
       };
-      extensions = with pkgs.nur.repos.rycee; [
+      extensions.packages = with pkgs.nur.repos.rycee; [
+        firefox-addons.duckduckgo-privacy-essentials
         firefox-addons.onepassword-password-manager
         firefox-addons.surfingkeys
         firefox-addons.tree-style-tab
@@ -29,24 +31,43 @@
         force = true;
         default = "ddg";
         engines = {
-          "Nix Packages" = {
+          "Github (nix)" = {
+            definedAliases = [
+              "@ghnix"
+              "@githubnix"
+            ];
             urls = [
               {
-                template = "https://search.nixos.org/packages";
+                template = "https://github.com/search?q={searchTerms}+language%3ANix";
                 params = [
                   {
                     name = "type";
-                    value = "packages";
-                  }
-                  {
-                    name = "query";
-                    value = "{searchTerms}";
+                    value = "code";
                   }
                 ];
               }
             ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            definedAliases = ["@nixpackages"];
+          };
+          "Github" = {
+            definedAliases = [
+              "@gh"
+              "@github"
+            ];
+            urls = [
+              {
+                template = "https://github.com/search";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                  {
+                    name = "type";
+                    value = "code";
+                  }
+                ];
+              }
+            ];
           };
           "Home Manager Options" = {
             definedAliases = [
@@ -69,11 +90,11 @@
               }
             ];
           };
-          "Wikipedia (en)".metaData.alias = "@wiki";
-          "Google".metaData.hidden = true;
-          "Amazon.com".metaData.hidden = true;
-          "Bing".metaData.hidden = true;
-          "eBay".metaData.hidden = true;
+          "wikipedia".metaData.alias = "@wiki";
+          "google".metaData.hidden = true;
+          "amazondotcom-us".metaData.hidden = true;
+          "bing".metaData.hidden = true;
+          "ebay".metaData.hidden = true;
         };
       };
     };
