@@ -199,11 +199,16 @@ in {
                       modifiers = [keyCodes.fn keyCodes.left_command];
                     };
                   };
-                  "org.mozilla.firefox" = {
+                  "org.nixos.firefox" = {
                     i = mkToEvent {
                       # dev tools
                       key_code = keyCodes.i;
                       modifiers = [keyCodes.left_command keyCodes.left_option];
+                    };
+                    t = mkToEvent {
+                      # dev tools
+                      key_code = keyCodes.f1;
+                      modifiers = [keyCodes.fn];
                     };
                   };
                   "com.tinyspeck.slackmacgap" = {

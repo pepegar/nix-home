@@ -67,6 +67,7 @@
     silver-searcher
     sops
     tree-sitter
+    tree
     uv
     xcodes
     yq

@@ -35,7 +35,6 @@
       "deskpad"
       "discord"
       "docker-desktop"
-      #"firefox"
       "ghostty"
       "intellij-idea"
       "karabiner-elements"
