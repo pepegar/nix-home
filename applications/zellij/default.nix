@@ -25,9 +25,27 @@
   };
 
   programs.zsh.initContent = ''
-    function zr () { zellij run --name "$*" -- zsh -ic "$*";}
-    function zrf () { zellij run --name "$*" --floating -- zsh -ic "$*";}
-    function zri () { zellij run --name "$*" --in-place -- zsh -ic "$*";}
+    function zr () {
+      if [ -n "$DIRENV_DIR" ]; then
+        zellij run --name "$*" -- direnv exec . zsh -ic "$*";
+      else
+        zellij run --name "$*" -- zsh -ic "$*";
+      fi
+    }
+    function zrf () {
+      if [ -n "$DIRENV_DIR" ]; then
+        zellij run --name "$*" --floating -- direnv exec . zsh -ic "$*";
+      else
+        zellij run --name "$*" --floating -- zsh -ic "$*";
+      fi
+    }
+    function zri () {
+      if [ -n "$DIRENV_DIR" ]; then
+        zellij run --name "$*" --in-place -- direnv exec . zsh -ic "$*";
+      else
+        zellij run --name "$*" --in-place -- zsh -ic "$*";
+      fi
+    }
     function ze () { zellij edit "$*";}
     function zef () { zellij edit --floating "$*";}
     function zei () { zellij edit --in-place "$*";}
