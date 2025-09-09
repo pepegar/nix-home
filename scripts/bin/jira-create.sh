@@ -144,7 +144,7 @@ create_branch=$(echo -e "Yes\nNo" | fzf --height 15% --reverse --header="Create 
 
 if [[ "$create_branch" == "Yes" ]]; then
     debug "Creating branch using jira-branch script with issue key"
-    jira-branch-ppg --issue-key "$new_task_key"
+    ppg jira-branch --issue-key "$new_task_key"
     if [ $? -ne 0 ]; then
         echo "Warning: Failed to create branch using jira-branch script"
     fi
