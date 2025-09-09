@@ -90,6 +90,23 @@
               }
             ];
           };
+          "nixpkgs" = {
+            definedAliases = [
+              "@nixpkgs"
+            ];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            urls = [
+              {
+                template = "https://search.nixos.org/packages";
+                params = [
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+          };
           "wikipedia".metaData.alias = "@wiki";
           "google".metaData.hidden = true;
           "amazondotcom-us".metaData.hidden = true;
