@@ -163,19 +163,23 @@ else
     echo "Choose base branch:"
     
     # Check if branch already exists in origin
-    branch_options="Current branch ($current_branch)\nDevelop branch (origin/develop)"
+    branch_options="Develop branch (origin/develop)\nDevelop Web Viewer branch (origin/develop-web-viewer)\nMaster Web Viewer branch (origin/master-web-viewer)\nCurrent branch ($current_branch)"
     if check_origin_branch "$branch_name"; then
         debug_echo "Branch $branch_name exists in origin, adding to options"
         branch_options="Existing branch (origin/$branch_name)\n$branch_options"
     fi
     
     base_branch=$(echo -e "$branch_options" | 
-                  fzf --height 15% --reverse --header="Choose base branch:")
+                  fzf --height 20% --reverse --header="Choose base branch:")
 
     if [[ "$base_branch" == *"Existing"* ]]; then
         base_branch="origin/$branch_name"
     elif [[ "$base_branch" == *"Current"* ]]; then
         base_branch="$current_branch"
+    elif [[ "$base_branch" == *"Develop Web Viewer"* ]]; then
+        base_branch="origin/develop-web-viewer"
+    elif [[ "$base_branch" == *"Master Web Viewer"* ]]; then
+        base_branch="origin/master-web-viewer"
     else
         base_branch="origin/develop"
     fi

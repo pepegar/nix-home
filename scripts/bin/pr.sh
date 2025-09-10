@@ -129,7 +129,7 @@ debug_echo "PR branch: $pr_branch"
 git_root=$(git rev-parse --show-toplevel)
 repo_name=$(basename "$git_root")
 parent_dir=$(dirname "$git_root")
-worktree_path="$parent_dir/${repo_name}-pr-${pr_branch}"
+worktree_path="$parent_dir/${repo_name}-pr-${selected_user}-${pr_number}"
 
 debug_echo "Worktree path: $worktree_path"
 
@@ -184,14 +184,14 @@ else
 
     debug_echo "Creating new worktree from $base_branch"
     log_command "git worktree add \"$worktree_path\" -b \"pr-$pr_number\" \"$base_branch\""
-    if git worktree add "$worktree_path" -b "pr-$pr_number" "$base_branch"; then
-        echo "Created worktree: $worktree_path (branch: pr-$pr_number, based on $base_branch)"
+    if git worktree add "$worktree_path" -b "pr-${selected_user}-${pr_number}" "$base_branch"; then
+        echo "Created worktree: $worktree_path (branch: pr-${selected_user}-${pr_number}, based on $base_branch)"
         
         # Change to the new worktree directory
         cd "$worktree_path"
         
         # Set branch description with PR info
-        git config "branch.pr-$pr_number.description" "PR #$pr_number: $pr_title"
+        git config "branch.pr-${selected_user}-${pr_number}.description" "PR #$pr_number: $pr_title"
         echo "Set branch description from PR information."
         echo "Changed to worktree directory: $worktree_path"
     else

@@ -200,6 +200,14 @@ in {
                     };
                   };
                   "org.nixos.firefox" = {
+                    h = mkToEvent {
+                      key_code = keyCodes.left_arrow;
+                      modifiers = [keyCodes.left_command];
+                    };
+                    l = mkToEvent {
+                      key_code = keyCodes.right_arrow;
+                      modifiers = [keyCodes.left_command];
+                    };
                     i = mkToEvent {
                       # dev tools
                       key_code = keyCodes.i;

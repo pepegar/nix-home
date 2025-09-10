@@ -5,17 +5,11 @@
     enableBashIntegration = true;
 
     settings = {
-      format = "$directory$git_branch$git_commit$git_state$git_metrics$git_status$\{custom.git_branch_description\}$fill$nix_shell$aws$line_break$jobs$battery$time$status$os$container$shell$character";
+      format = "$directory$git_branch$git_commit$git_state$git_metrics$git_status$fill$nix_shell$aws$line_break$jobs$battery$time$status$os$container$shell$character";
       palette = "catppuccin_latte";
       fill = {
         symbol = " ";
         style = "bright-black";
-      };
-      custom.git_branch_description = {
-        command = "git config branch.$(git rev-parse --abbrev-ref HEAD 2>/dev/null).description";
-        when = "git rev-parse --is-inside-work-tree 2>/dev/null";
-        format = "[$output]($style) ";
-        style = "bold yellow";
       };
       command_timeout = 1000;
       directory.read_only = " ";
