@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./homebrew.nix
+    ../services/git-fetch-goodnotes.nix
   ];
 
   # List packages installed in system profile. To search by name, run:
