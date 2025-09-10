@@ -49,7 +49,6 @@
       "rescuetime"
       "slack"
       "spotify"
-      "tailscale"
       "webex"
       "whatsapp"
       "yubico-yubikey-manager"
