@@ -1,4 +1,4 @@
 macos-option-as-alt = true
 macos-titlebar-style = hidden
 copy-on-select = clipboard
-theme = dark:"nord",light:"nord-light"
+theme = dark:"Adwaita Dark",light:"Adwaita"

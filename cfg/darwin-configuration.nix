@@ -49,4 +49,8 @@
 
   # touchid PLZ
   security.pam.services.sudo_local.touchIdAuth = true;
+
+  services.tailscale = {
+    enable = true;
+  };
 }

@@ -45,7 +45,7 @@
     '';
 
     shellAliases = {
-      cat = "bat -p";
+      cat = "bat --theme auto:system --theme-dark default --theme-light GitHub -p";
       g = "git";
       gc = "git commit";
       gst = "git status";
@@ -56,7 +56,6 @@
       "...." = "cd ../../..";
       ping = "prettyping";
       k = "kubectl";
-      tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
       vf = "fd --type f | fzf --preview 'bat --style=numbers --color=always {}' | xargs -r vi";
       gwt = "cd $(git-wt)";
     };
