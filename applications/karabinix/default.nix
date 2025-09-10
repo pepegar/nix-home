@@ -32,7 +32,7 @@ in {
                 mappings = {
                   a = mkToEvent {
                     description = "🤖";
-                    shell_command = "open raycast://extensions/raycast/raycast-ai/ai-chat";
+                    shell_command = "open https://gemini.google.com/app";
                   };
                   w = mkToEvent {
                     description = "💬";
