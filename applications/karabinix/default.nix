@@ -150,6 +150,16 @@ in {
                 alone_key = keyCodes.backslash;
                 app_mappings = {
                   "com.jetbrains.intellij" = {
+                    # go to interface
+                    u = mkToEvent {
+                      key_code = keyCodes.u;
+                      modifiers = [keyCodes.left_command];
+                    };
+                    # go to implementations
+                    i = mkToEvent {
+                      key_code = keyCodes.b;
+                      modifiers = [keyCodes.left_command keyCodes.left_option];
+                    };
                     h = mkToEvent {
                       key_code = keyCodes.left_arrow;
                       modifiers = [keyCodes.left_command keyCodes.left_option];

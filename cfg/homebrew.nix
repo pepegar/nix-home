@@ -29,7 +29,6 @@
       "1password"
       "1password-cli"
       "anaconda"
-      "claude-code"
       "cleanshot"
       "creality-print"
       "deskpad"

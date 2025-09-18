@@ -9,7 +9,8 @@
     };
   };
 in {
-  home.file.".claude/settings.json" = {
-    text = builtins.toJSON claudeConfig;
+  programs.claude-code = {
+    enable = true;
+    settings = claudeConfig;
   };
 }

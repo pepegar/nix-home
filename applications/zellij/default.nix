@@ -16,6 +16,9 @@
           tab name="Home Manager" cwd="~/.config/home-manager" {
             pane
           }
+          tab name="Karabinix" cwd="~/projects/github.com/pepegar/karabinix" {
+            pane
+          }
           tab name="Goodnotes" cwd="~/projects/github.com/GoodNotes/GoodNotes-5" {
             pane
           }

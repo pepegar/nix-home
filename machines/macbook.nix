@@ -47,6 +47,7 @@
     buildifier
     cargo
     cocoapods
+    difftastic
     eza
     fd
     gemini-cli
