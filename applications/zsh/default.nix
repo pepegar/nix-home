@@ -57,7 +57,7 @@
       ping = "prettyping";
       k = "kubectl";
       vf = "fd --type f | fzf --preview 'bat --style=numbers --color=always {}' | xargs -r vi";
-      gwt = "cd $(git-wt)";
+      gwt = "zellij action new-tab --cwd $(git-wt)";
     };
 
     plugins = [
