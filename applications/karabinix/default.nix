@@ -255,6 +255,65 @@ in {
                 };
               })
 
+              (layerKey {
+                enable_debug = debug;
+                key = keyCodes.equal_sign;
+                variable_name = "mouse_layer";
+                alone_key = keyCodes.equal_sign;
+                mappings = {
+                  h = mkToEvent {
+                    description = "Move cursor left";
+                    mouse_key = {
+                      x = -1536;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                  j = mkToEvent {
+                    description = "Move cursor down";
+                    mouse_key = {
+                      y = 1536;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                  k = mkToEvent {
+                    description = "Move cursor up";
+                    mouse_key = {
+                      y = -1536;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                  l = mkToEvent {
+                    description = "Move cursor right";
+                    mouse_key = {
+                      x = 1536;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                  y = mkToEvent {
+                    description = "Left click";
+                    pointing_button = "button1";
+                  };
+                  u = mkToEvent {
+                    description = "Right click";
+                    pointing_button = "button2";
+                  };
+                  m = mkToEvent {
+                    description = "Scroll down";
+                    mouse_key = {
+                      vertical_wheel = 32;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                  "comma" = mkToEvent {
+                    description = "Scroll up";
+                    mouse_key = {
+                      vertical_wheel = -32;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                };
+              })
+
               (homeRowModsWithCombinations {
                 s = keyCodes.left_option; # S = Option when held, S when tapped
                 d = keyCodes.left_control; # D = Control when held, D when tapped
