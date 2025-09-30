@@ -27,6 +27,10 @@
         name = "Library/Application Support/JetBrains/${version}/idea.vmoptions";
         value = {source = ./idea.vmoptions;};
       }
+      {
+        name = "Library/Application Support/JetBrains/${version}/keymaps/macOS copy.xml";
+        value = {source = ./keymap.xml;};
+      }
     ])
     jetbrainsProducts);
 in {

@@ -1,10 +1,10 @@
 -ea
 -server
--Xms4G
--Xmx20G
+-Xms16G
+-Xmx100G
 -XX:ReservedCodeCacheSize=2G
 -XX:+UseG1GC
--XX:SoftRefLRUPolicyMSPerMB=50
+-XX:SoftRefLRUPolicyMSPerMB=200
 -XX:CICompilerCount=12
 -XX:+HeapDumpOnOutOfMemoryError
 -XX:-OmitStackTraceInFastThrow
@@ -15,7 +15,7 @@
 -Dfile.encoding=UTF-8
 -XX:+UseStringDeduplication
 -XX:MaxGCPauseMillis=200
--XX:G1HeapRegionSize=16M
+-XX:G1HeapRegionSize=64M
 -XX:InitiatingHeapOccupancyPercent=35
 -XX:+ParallelRefProcEnabled
 -XX:+ExplicitGCInvokesConcurrent

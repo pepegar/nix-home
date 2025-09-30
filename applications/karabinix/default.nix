@@ -1,6 +1,136 @@
 {inputs, ...}:
 with inputs.karabinix.lib; let
   debug = true;
+
+  mkAppLayer = key: variable_name:
+    appLayerKey {
+      enable_debug = debug;
+      key = key;
+      variable_name = variable_name;
+      alone_key = key;
+      app_mappings = {
+        "com.jetbrains.intellij" = {
+          # go to interface
+          u = mkToEvent {
+            key_code = keyCodes.u;
+            modifiers = [keyCodes.left_command];
+            description = "⤴️";
+          };
+          # go to implementations
+          i = mkToEvent {
+            key_code = keyCodes.b;
+            modifiers = [keyCodes.left_command keyCodes.left_option];
+            description = "⤵️";
+          };
+          h = mkToEvent {
+            key_code = keyCodes.left_arrow;
+            modifiers = [keyCodes.left_command keyCodes.left_option];
+            description = "↩️";
+          };
+          j = mkToEvent {
+            key_code = keyCodes.down_arrow;
+            modifiers = [keyCodes.left_option];
+          };
+          k = mkToEvent {
+            key_code = keyCodes.up_arrow;
+            modifiers = [keyCodes.left_option];
+          };
+          l = mkToEvent {
+            key_code = keyCodes.right_arrow;
+            modifiers = [keyCodes.left_command keyCodes.left_option];
+            description = "↪️";
+          };
+          m = mkToEvent {
+            key_code = keyCodes.down_arrow;
+            modifiers = [keyCodes.left_control keyCodes.left_shift];
+            description = "⬇️method";
+          };
+
+          "shift+m" = mkToEvent {
+            key_code = keyCodes.up_arrow;
+            modifiers = [keyCodes.left_control keyCodes.left_shift];
+            description = "⬆️method";
+          };
+
+          n = mkToEvent {
+            key_code = keyCodes.f2;
+            modifiers = [keyCodes.fn];
+            description = "⬇️💥";
+          };
+
+          "shift+n" = mkToEvent {
+            key_code = keyCodes.f2;
+            modifiers = [keyCodes.fn keyCodes.left_shift];
+            description = "⬆️💥";
+          };
+
+          # Debugging shortcuts with mnemonics
+          b = mkToEvent {
+            # Toggle Breakpoint
+            key_code = keyCodes.f8;
+            modifiers = [keyCodes.fn keyCodes.left_command];
+            description = "🐞🔴";
+          };
+          e = mkToEvent {
+            # file structure
+            key_code = keyCodes.f12;
+            modifiers = [keyCodes.fn keyCodes.left_command];
+            description = "file structure";
+          };
+          p = mkToEvent {
+            key_code = keyCodes.r;
+            modifiers = [keyCodes.left_command keyCodes.left_option];
+            description = "🐞▶️";
+          };
+        };
+        "org.nixos.firefox" = {
+          h = mkToEvent {
+            key_code = keyCodes.left_arrow;
+            modifiers = [keyCodes.left_command];
+            description = "↩️";
+          };
+          l = mkToEvent {
+            key_code = keyCodes.right_arrow;
+            modifiers = [keyCodes.left_command];
+            description = "↪️";
+          };
+          i = mkToEvent {
+            # dev tools
+            key_code = keyCodes.i;
+            modifiers = [keyCodes.left_command keyCodes.left_option];
+            description = "🔍";
+          };
+          t = mkToEvent {
+            # dev tools
+            key_code = keyCodes.f1;
+            modifiers = [keyCodes.fn];
+          };
+        };
+        "com.tinyspeck.slackmacgap" = {
+          # home
+          h = mkToEvent {
+            key_code = keyCodes."1";
+            modifiers = [keyCodes.left_control];
+          };
+          # dms
+          d = mkToEvent {
+            key_code = keyCodes."2";
+            modifiers = [keyCodes.left_control];
+          };
+          # activity
+          a = mkToEvent {
+            key_code = keyCodes."3";
+            modifiers = [keyCodes.left_control];
+          };
+        };
+        "net.whatsapp.WhatsApp" = {
+          k = mkToEvent {
+            key_code = keyCodes.f;
+            modifiers = [keyCodes.left_command];
+          };
+        };
+      };
+    };
 in {
   services.karabinix = {
     enable = true;
@@ -30,45 +160,49 @@ in {
                 alone_key = keyCodes.escape;
                 variable_name = "apps_layer";
                 mappings = {
+                  n = mkToEvent {
+                    shell_command = "open -a 'Notion'";
+                    description = "🧠";
+                  };
                   a = mkToEvent {
-                    description = "🤖";
                     shell_command = "open https://gemini.google.com/app";
+                    description = "🤖";
                   };
                   w = mkToEvent {
-                    description = "💬";
                     shell_command = "open -a 'WhatsApp'";
+                    description = "💬";
                   };
                   t = mkToEvent {
-                    description = "🖥️";
                     shell_command = "open -a 'Ghostty'";
+                    description = "🖥️";
                   };
                   b = mkToEvent {
-                    description = "🌐";
                     shell_command = "open -a 'Firefox'";
+                    description = "🌐";
                   };
                   i = mkToEvent {
-                    description = "☕";
                     shell_command = "open -a 'IntelliJ IDEA'";
+                    description = "☕";
                   };
                   s = mkToEvent {
-                    description = "🤝";
                     shell_command = "open -a 'Slack'";
+                    description = "🤝";
                   };
                   c = mkToEvent {
-                    description = "📅";
                     shell_command = "open -a 'Calendar'";
+                    description = "📅";
                   };
                   m = mkToEvent {
-                    description = "✉︎";
                     shell_command = "open -a 'Mail'";
+                    description = "✉︎";
                   };
                   p = mkToEvent {
-                    description = "✉︎";
                     shell_command = "open -a 'Perplexity'";
+                    description = "perplexity";
                   };
                   "1" = mkToEvent {
-                    description = "🔑";
                     shell_command = "open -a '1Password'";
+                    description = "🔑";
                   };
                 };
               })
@@ -97,222 +231,125 @@ in {
                 mappings = {
                   q = mkToEvent {
                     key_code = keyCodes."1";
-                    modifiers = [keyCodes.left_shift]; # !
+                    modifiers = [keyCodes.left_shift];
+                    description = "!";
                   };
                   w = mkToEvent {
                     key_code = keyCodes."2";
                     modifiers = [keyCodes.left_shift]; # @
+                    description = "@";
                   };
                   e = mkToEvent {
                     key_code = keyCodes.open_bracket;
                     modifiers = [keyCodes.left_shift]; # {
+                    description = "{";
                   };
                   r = mkToEvent {
                     key_code = keyCodes.close_bracket;
                     modifiers = [keyCodes.left_shift]; # }
+                    description = "}";
                   };
                   t = mkToEvent {
                     key_code = keyCodes.backslash;
                     modifiers = [keyCodes.left_shift]; # |
+                    description = "|";
                   };
                   s = mkToEvent {
                     key_code = keyCodes."4";
                     modifiers = [keyCodes.left_shift]; # $
+                    description = "$";
                   };
                   d = mkToEvent {
                     key_code = keyCodes."9";
                     modifiers = [keyCodes.left_shift]; # (
+                    description = "(";
                   };
                   f = mkToEvent {
                     key_code = keyCodes."0";
                     modifiers = [keyCodes.left_shift]; # )
+                    description = ")";
                   };
                   g = mkToEvent {
                     key_code = keyCodes.grave_accent_and_tilde;
+                    description = "`";
                   };
                   c = mkToEvent {
                     key_code = keyCodes.open_bracket;
+                    description = "[";
                   };
                   v = mkToEvent {
                     key_code = keyCodes.close_bracket;
+                    description = "]";
                   };
                   b = mkToEvent {
                     key_code = keyCodes.grave_accent_and_tilde;
                     modifiers = [keyCodes.left_shift]; # ?
+                    description = "~";
                   };
                 };
               })
 
-              (appLayerKey {
-                enable_debug = debug;
-                key = keyCodes.backslash;
-                variable_name = "per_app_layer";
-                alone_key = keyCodes.backslash;
-                app_mappings = {
-                  "com.jetbrains.intellij" = {
-                    # go to interface
-                    u = mkToEvent {
-                      key_code = keyCodes.u;
-                      modifiers = [keyCodes.left_command];
-                    };
-                    # go to implementations
-                    i = mkToEvent {
-                      key_code = keyCodes.b;
-                      modifiers = [keyCodes.left_command keyCodes.left_option];
-                    };
-                    h = mkToEvent {
-                      key_code = keyCodes.left_arrow;
-                      modifiers = [keyCodes.left_command keyCodes.left_option];
-                    };
-                    j = mkToEvent {
-                      key_code = keyCodes.down_arrow;
-                      modifiers = [keyCodes.left_option];
-                    };
-                    k = mkToEvent {
-                      key_code = keyCodes.up_arrow;
-                      modifiers = [keyCodes.left_option];
-                    };
-                    l = mkToEvent {
-                      key_code = keyCodes.right_arrow;
-                      modifiers = [keyCodes.left_command keyCodes.left_option];
-                    };
-                    m = mkToEvent {
-                      key_code = keyCodes.down_arrow;
-                      modifiers = [keyCodes.left_control keyCodes.left_shift];
-                    };
+              (mkAppLayer keyCodes.backslash "per_app_layer")
+              (mkAppLayer keyCodes.equal_sign "per_app_layer")
 
-                    "shift+m" = mkToEvent {
-                      key_code = keyCodes.up_arrow;
-                      modifiers = [keyCodes.left_control keyCodes.left_shift];
-                    };
-
-                    n = mkToEvent {
-                      key_code = keyCodes.f2;
-                      modifiers = [keyCodes.fn];
-                    };
-
-                    "shift+n" = mkToEvent {
-                      key_code = keyCodes.f2;
-                      modifiers = [keyCodes.fn keyCodes.left_shift];
-                    };
-
-                    # Debugging shortcuts with mnemonics
-                    b = mkToEvent {
-                      # Toggle Breakpoint
-                      key_code = keyCodes.f8;
-                      modifiers = [keyCodes.fn keyCodes.left_command];
-                    };
-
-                    e = mkToEvent {
-                      # file structure
-                      key_code = keyCodes.f12;
-                      modifiers = [keyCodes.fn keyCodes.left_command];
-                    };
-                  };
-                  "org.nixos.firefox" = {
-                    h = mkToEvent {
-                      key_code = keyCodes.left_arrow;
-                      modifiers = [keyCodes.left_command];
-                    };
-                    l = mkToEvent {
-                      key_code = keyCodes.right_arrow;
-                      modifiers = [keyCodes.left_command];
-                    };
-                    i = mkToEvent {
-                      # dev tools
-                      key_code = keyCodes.i;
-                      modifiers = [keyCodes.left_command keyCodes.left_option];
-                    };
-                    t = mkToEvent {
-                      # dev tools
-                      key_code = keyCodes.f1;
-                      modifiers = [keyCodes.fn];
-                    };
-                  };
-                  "com.tinyspeck.slackmacgap" = {
-                    # home
-                    h = mkToEvent {
-                      key_code = keyCodes."1";
-                      modifiers = [keyCodes.left_control];
-                    };
-                    # dms
-                    d = mkToEvent {
-                      key_code = keyCodes."2";
-                      modifiers = [keyCodes.left_control];
-                    };
-                    # activity
-                    a = mkToEvent {
-                      key_code = keyCodes."3";
-                      modifiers = [keyCodes.left_control];
-                    };
-                  };
-                  "net.whatsapp.WhatsApp" = {
-                    k = mkToEvent {
-                      key_code = keyCodes.f;
-                      modifiers = [keyCodes.left_command];
-                    };
-                  };
-                };
-              })
-
-              (layerKey {
-                enable_debug = debug;
-                key = keyCodes.equal_sign;
-                variable_name = "mouse_layer";
-                alone_key = keyCodes.equal_sign;
-                mappings = {
-                  h = mkToEvent {
-                    description = "Move cursor left";
-                    mouse_key = {
-                      x = -1536;
-                      speed_multiplier = 1.0;
-                    };
-                  };
-                  j = mkToEvent {
-                    description = "Move cursor down";
-                    mouse_key = {
-                      y = 1536;
-                      speed_multiplier = 1.0;
-                    };
-                  };
-                  k = mkToEvent {
-                    description = "Move cursor up";
-                    mouse_key = {
-                      y = -1536;
-                      speed_multiplier = 1.0;
-                    };
-                  };
-                  l = mkToEvent {
-                    description = "Move cursor right";
-                    mouse_key = {
-                      x = 1536;
-                      speed_multiplier = 1.0;
-                    };
-                  };
-                  y = mkToEvent {
-                    description = "Left click";
-                    pointing_button = "button1";
-                  };
-                  u = mkToEvent {
-                    description = "Right click";
-                    pointing_button = "button2";
-                  };
-                  m = mkToEvent {
-                    description = "Scroll down";
-                    mouse_key = {
-                      vertical_wheel = 32;
-                      speed_multiplier = 1.0;
-                    };
-                  };
-                  "comma" = mkToEvent {
-                    description = "Scroll up";
-                    mouse_key = {
-                      vertical_wheel = -32;
-                      speed_multiplier = 1.0;
-                    };
-                  };
-                };
-              })
+              #(layerKey {
+              #enable_debug = debug;
+              #key = keyCodes.equal_sign;
+              #variable_name = "mouse_layer";
+              #alone_key = keyCodes.equal_sign;
+              #mappings = {
+              #h = mkToEvent {
+              #description = "⬅️";
+              #mouse_key = {
+              #x = -1300;
+              #speed_multiplier = 1.0;
+              #};
+              #};
+              #j = mkToEvent {
+              #description = "⬇️";
+              #mouse_key = {
+              #y = 1300;
+              #speed_multiplier = 1.0;
+              #};
+              #};
+              #k = mkToEvent {
+              #description = "⬆️";
+              #mouse_key = {
+              #y = -1300;
+              #speed_multiplier = 1.0;
+              #};
+              #};
+              #l = mkToEvent {
+              #description = "➡️";
+              #mouse_key = {
+              #x = 1300;
+              #speed_multiplier = 1.0;
+              #};
+              #};
+              #y = mkToEvent {
+              #description = "⬅️🖱️";
+              #pointing_button = "button1";
+              #};
+              #u = mkToEvent {
+              #description = "➡️🖱️";
+              #pointing_button = "button2";
+              #};
+              #m = mkToEvent {
+              #description = "⬇️⚙️";
+              #mouse_key = {
+              #vertical_wheel = 32;
+              #speed_multiplier = 1.0;
+              #};
+              #};
+              #"comma" = mkToEvent {
+              #description = "⬆️⚙️";
+              #mouse_key = {
+              #vertical_wheel = -32;
+              #speed_multiplier = 1.0;
+              #};
+              #};
+              #};
+              #})
 
               (homeRowModsWithCombinations {
                 s = keyCodes.left_option; # S = Option when held, S when tapped

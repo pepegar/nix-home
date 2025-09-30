@@ -22,6 +22,8 @@
     defaultKeymap = "emacs";
 
     initContent = ''
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+
       # Added by LM Studio CLI tool (lms)
       export PATH="$PATH:/Users/pepe/.cache/lm-studio/bin"
       export PATH=~/.nix-profile/bin:$PATH
@@ -30,7 +32,6 @@
       export PATH=/Users/pepe/go/bin:$PATH
       export PATH=/usr/local/bin:$PATH
       export PATH=/Library/TeX/texbin:$PATH
-      export PATH=/opt/homebrew/bin:$PATH
       export PATH=/Users/pepegarcia/.local/share/gem/ruby/2.7.0/bin:$PATH
       export PATH=~/.ghcup/bin:$PATH
       export PATH=~/.cargo/bin:$PATH

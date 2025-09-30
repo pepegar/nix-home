@@ -1,8 +1,6 @@
-{...}: {
+{pkgs, ...}: {
   programs.zellij = {
     enable = true;
-    enableZshIntegration = true;
-    exitShellOnExit = true;
 
     layouts = {
       default = ''
@@ -59,5 +57,9 @@
         zellij pipe -p $1;
       fi
     }
+
+    #if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
+      #eval "$(${pkgs.zellij}/bin/zellij setup --generate-auto-start zsh)"
+    #fi
   '';
 }

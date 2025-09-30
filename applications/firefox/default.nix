@@ -19,6 +19,8 @@
         firefox-addons.privacy-badger
         firefox-addons.ublock-origin
         firefox-addons.greasemonkey
+        firefox-addons.return-youtube-dislikes
+        firefox-addons.refined-github
       ];
       userChrome = ''
         #TabsToolbar { visibility: collapse; }
@@ -27,6 +29,23 @@
         force = true;
         default = "ddg";
         engines = {
+          "Youtube" = {
+            definedAliases = [
+              "@yt"
+              "@youtube"
+            ];
+            urls = [
+              {
+                template = "https://www.youtube.com/results";
+                params = [
+                  {
+                    name = "search_query";
+                    value = "{searchterms}";
+                  }
+                ];
+              }
+            ];
+          };
           "Github (nix)" = {
             definedAliases = [
               "@ghnix"
@@ -103,6 +122,7 @@
               }
             ];
           };
+
           "wikipedia".metaData.alias = "@wiki";
           "google".metaData.hidden = true;
           "amazondotcom-us".metaData.hidden = true;
