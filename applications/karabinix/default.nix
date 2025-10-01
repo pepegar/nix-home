@@ -10,6 +10,12 @@ with inputs.karabinix.lib; let
       alone_key = key;
       app_mappings = {
         "com.jetbrains.intellij" = {
+          # all commands
+          a = mkToEvent {
+            key_code = keyCodes.a;
+            modifiers = [keyCodes.command keyCodes.shift];
+            description = "all";
+          };
           # go to interface
           u = mkToEvent {
             key_code = keyCodes.u;
@@ -289,67 +295,67 @@ in {
                 };
               })
 
-              (mkAppLayer keyCodes.backslash "per_app_layer")
+              (mkAppLayer keyCodes.hyphen "per_app_layer")
               (mkAppLayer keyCodes.equal_sign "per_app_layer")
 
-              #(layerKey {
-              #enable_debug = debug;
-              #key = keyCodes.equal_sign;
-              #variable_name = "mouse_layer";
-              #alone_key = keyCodes.equal_sign;
-              #mappings = {
-              #h = mkToEvent {
-              #description = "⬅️";
-              #mouse_key = {
-              #x = -1300;
-              #speed_multiplier = 1.0;
-              #};
-              #};
-              #j = mkToEvent {
-              #description = "⬇️";
-              #mouse_key = {
-              #y = 1300;
-              #speed_multiplier = 1.0;
-              #};
-              #};
-              #k = mkToEvent {
-              #description = "⬆️";
-              #mouse_key = {
-              #y = -1300;
-              #speed_multiplier = 1.0;
-              #};
-              #};
-              #l = mkToEvent {
-              #description = "➡️";
-              #mouse_key = {
-              #x = 1300;
-              #speed_multiplier = 1.0;
-              #};
-              #};
-              #y = mkToEvent {
-              #description = "⬅️🖱️";
-              #pointing_button = "button1";
-              #};
-              #u = mkToEvent {
-              #description = "➡️🖱️";
-              #pointing_button = "button2";
-              #};
-              #m = mkToEvent {
-              #description = "⬇️⚙️";
-              #mouse_key = {
-              #vertical_wheel = 32;
-              #speed_multiplier = 1.0;
-              #};
-              #};
-              #"comma" = mkToEvent {
-              #description = "⬆️⚙️";
-              #mouse_key = {
-              #vertical_wheel = -32;
-              #speed_multiplier = 1.0;
-              #};
-              #};
-              #};
-              #})
+              (layerKey {
+                enable_debug = debug;
+                key = keyCodes.backslash;
+                variable_name = "mouse_layer";
+                alone_key = keyCodes.backslash;
+                mappings = {
+                  a = mkToEvent {
+                    description = "⬅️";
+                    mouse_key = {
+                      x = -1400;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                  s = mkToEvent {
+                    description = "⬇️";
+                    mouse_key = {
+                      y = 1300;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                  w = mkToEvent {
+                    description = "⬆️";
+                    mouse_key = {
+                      y = -1300;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                  d = mkToEvent {
+                    description = "➡️";
+                    mouse_key = {
+                      x = 1300;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                  q = mkToEvent {
+                    description = "⬅️🖱️";
+                    pointing_button = "button1";
+                  };
+                  e = mkToEvent {
+                    description = "➡️🖱️";
+                    pointing_button = "button2";
+                  };
+                  r = mkToEvent {
+                    description = "⬇️⚙️";
+                    mouse_key = {
+                      vertical_wheel = 32;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                  f = mkToEvent {
+                    description = "⬆️⚙️";
+                    mouse_key = {
+                      vertical_wheel = -32;
+                      speed_multiplier = 1.0;
+                    };
+                  };
+                };
+              })
 
               (homeRowModsWithCombinations {
                 s = keyCodes.left_option; # S = Option when held, S when tapped
