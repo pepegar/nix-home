@@ -1,6 +1,7 @@
 {...}: let
   secrets = import ../../secrets.nix;
   claudeConfig = {
+    "$schema" = "https://json.schemastore.org/claude-code-settings.json";
     env = {
       ANTHROPIC_AUTH_TOKEN = secrets.ANTHROPIC_AUTH_TOKEN;
       ANTHROPIC_BASE_URL = secrets.ANTHROPIC_BASE_URL;
@@ -9,8 +10,7 @@
     };
   };
 in {
-  programs.claude-code = {
-    enable = true;
-    settings = claudeConfig;
-  };
+  home.file.".claude/settings.json".text = builtins.toJSON claudeConfig;
+  home.file.".claude/agents/jira-manager.md".source = ./jira-manager.md;
+  home.file.".claude/agents/github-manager.md".source = ./github-manager.md;
 }

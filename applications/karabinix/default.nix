@@ -10,10 +10,22 @@ with inputs.karabinix.lib; let
       alone_key = key;
       app_mappings = {
         "com.jetbrains.intellij" = {
+          # move line up
+          w = mkToEvent {
+            key_code = keyCodes.up_arrow;
+            modifiers = [keyCodes.left_option keyCodes.left_shift];
+            description = "⬆️―";
+          };
+          # move line down
+          s = mkToEvent {
+            key_code = keyCodes.down_arrow;
+            modifiers = [keyCodes.left_option keyCodes.left_shift];
+            description = "⬇️―";
+          };
           # all commands
           a = mkToEvent {
             key_code = keyCodes.a;
-            modifiers = [keyCodes.command keyCodes.shift];
+            modifiers = [keyCodes.left_command keyCodes.left_shift];
             description = "all";
           };
           # go to interface
@@ -166,41 +178,45 @@ in {
                 alone_key = keyCodes.escape;
                 variable_name = "apps_layer";
                 mappings = {
+                  o = mkToEvent {
+                    shell_command = "open -a 'Obsidian'";
+                    description = "Obsidian";
+                  };
                   n = mkToEvent {
                     shell_command = "open -a 'Notion'";
-                    description = "🧠";
+                    description = "Notion";
                   };
                   a = mkToEvent {
-                    shell_command = "open https://gemini.google.com/app";
-                    description = "🤖";
+                    shell_command = "open -a 'ChatGPT'";
+                    description = "ChatGPT";
                   };
                   w = mkToEvent {
                     shell_command = "open -a 'WhatsApp'";
-                    description = "💬";
+                    description = "Whatsapp";
                   };
                   t = mkToEvent {
                     shell_command = "open -a 'Ghostty'";
-                    description = "🖥️";
+                    description = "Ghostty";
                   };
                   b = mkToEvent {
                     shell_command = "open -a 'Firefox'";
-                    description = "🌐";
+                    description = "Firefox";
                   };
                   i = mkToEvent {
                     shell_command = "open -a 'IntelliJ IDEA'";
-                    description = "☕";
+                    description = "Idea";
                   };
                   s = mkToEvent {
                     shell_command = "open -a 'Slack'";
-                    description = "🤝";
+                    description = "Slack";
                   };
                   c = mkToEvent {
                     shell_command = "open -a 'Calendar'";
-                    description = "📅";
+                    description = "Calendar";
                   };
                   m = mkToEvent {
                     shell_command = "open -a 'Mail'";
-                    description = "✉︎";
+                    description = "Mail";
                   };
                   p = mkToEvent {
                     shell_command = "open -a 'Perplexity'";
@@ -208,7 +224,7 @@ in {
                   };
                   "1" = mkToEvent {
                     shell_command = "open -a '1Password'";
-                    description = "🔑";
+                    description = "1Password";
                   };
                 };
               })

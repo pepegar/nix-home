@@ -19,16 +19,19 @@
       "acli"
       "git-lfs"
       "lua-language-server"
+      "r"
       "sox"
       "stylua"
       "whisper-cpp"
       "x86_64-unknown-linux-gnu"
+      "ghostscript"
     ];
 
     casks = [
       "1password"
       "1password-cli"
       "anaconda"
+      "chatgpt"
       "cleanshot"
       "creality-print"
       "deskpad"
@@ -46,6 +49,7 @@
       "quip"
       "raycast"
       "rescuetime"
+      "rstudio"
       "slack"
       "spotify"
       "webex"

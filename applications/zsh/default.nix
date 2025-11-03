@@ -23,6 +23,7 @@
 
     initContent = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
+      eval "$(acli completion zsh)"
 
       # Added by LM Studio CLI tool (lms)
       export PATH="$PATH:/Users/pepe/.cache/lm-studio/bin"
@@ -58,7 +59,7 @@
       ping = "prettyping";
       k = "kubectl";
       vf = "fd --type f | fzf --preview 'bat --style=numbers --color=always {}' | xargs -r vi";
-      gwt = "zellij action new-tab --cwd $(git-wt)";
+      gwt = "wt=$(git-wt) && zellij action new-tab --name $(basename $wt) --cwd $wt";
     };
 
     plugins = [

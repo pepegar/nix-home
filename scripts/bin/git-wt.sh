@@ -27,7 +27,7 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "Create mode (--create):"
             echo "  Interactive branch selection to create new worktree"
-            echo "  Location: ../<repo_name>-<branch_name>"
+            echo "  Location: .worktrees/<branch_name>"
             echo "  Shows all local and remote branches"
             echo ""
             echo "Output: Prints target directory path to stdout"
@@ -93,9 +93,8 @@ get_repo_name() {
 # Function to create worktree for branch
 create_worktree() {
     local branch_name="$1"
-    local repo_name=$(get_repo_name)
-    local safe_branch_name=$(echo "$branch_name" | sed 's/\//_/g')  # Replace / with _ for filesystem safety
-    local worktree_path="../${repo_name}-${safe_branch_name}"
+    local git_root=$(git rev-parse --show-toplevel)
+    local worktree_path="$git_root/.worktrees/${branch_name}"
     
     debug_echo "Creating worktree for branch: $branch_name"
     debug_echo "Repository name: $repo_name"

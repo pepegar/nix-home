@@ -1,20 +1,14 @@
 {pkgs, ...}: let
   llmConfig = [
     {
-      model_id = "litellm-opus";
-      model_name = "anthropic/claude-opus-4-1-20250805";
+      model_id = "sonnet";
+      model_name = "anthropic/claude-sonnet-4-5-20250929";
       api_base = "https://litellm.ml.goodnotesbeta.com";
       api_key_name = "litellm";
     }
     {
-      model_id = "litellm-sonnet";
-      model_name = "anthropic/claude-sonnet-4-20250514";
-      api_base = "https://litellm.ml.goodnotesbeta.com";
-      api_key_name = "litellm";
-    }
-    {
-      model_id = "litellm-haiku";
-      model_name = "anthropic/claude-3-5-haiku-latest";
+      model_id = "haiku";
+      model_name = "anthropic/claude-haiku-4-5-20251001";
       api_base = "https://litellm.ml.goodnotesbeta.com";
       api_key_name = "litellm";
     }

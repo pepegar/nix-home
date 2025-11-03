@@ -125,11 +125,9 @@ pr_branch=$(echo "$pr_details" | jq -r '.headRefName')
 debug_echo "PR title: $pr_title"
 debug_echo "PR branch: $pr_branch"
 
-# Get the git repository root and its parent directory for worktrees
+# Get the git repository root and worktree path
 git_root=$(git rev-parse --show-toplevel)
-repo_name=$(basename "$git_root")
-parent_dir=$(dirname "$git_root")
-worktree_path="$parent_dir/${repo_name}-pr-${selected_user}-${pr_number}"
+worktree_path="$git_root/.worktrees/pr-${selected_user}-${pr_number}"
 
 debug_echo "Worktree path: $worktree_path"
 

@@ -145,11 +145,9 @@ current_branch=$(get_current_branch)
 debug_echo "Develop SHA: $develop_sha"
 debug_echo "Current branch: $current_branch"
 
-# Get the git repository root and its parent directory for worktrees
+# Get the git repository root and worktree path
 git_root=$(git rev-parse --show-toplevel)
-repo_name=$(basename "$git_root")
-parent_dir=$(dirname "$git_root")
-worktree_path="$parent_dir/${repo_name}-${branch_name}"
+worktree_path="$git_root/.worktrees/${branch_name}"
 
 # Check if worktree already exists
 debug_echo "Checking if worktree exists: $worktree_path"
