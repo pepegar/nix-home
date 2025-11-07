@@ -8,7 +8,7 @@
   ];
 
   programs.emacs = {
-    enable = true;
+    enable = false;
     init = {
       enable = true;
       recommendedGcSettings = true;
