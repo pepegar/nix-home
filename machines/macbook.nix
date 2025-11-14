@@ -24,6 +24,8 @@
     ../cfg/email
     ../cfg/git.nix
     ../cfg/sbt
+    ../cfg/gradle
+    ../cfg/yarn
     ../cfg/scripts.nix
   ];
 
