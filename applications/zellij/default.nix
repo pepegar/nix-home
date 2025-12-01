@@ -20,6 +20,9 @@
           tab name="Goodnotes" cwd="~/projects/github.com/GoodNotes/GoodNotes-5" {
             pane
           }
+          tab name="Math" cwd="~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Math" {
+            pane
+          }
         }
       '';
     };
