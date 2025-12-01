@@ -26,16 +26,17 @@
       eval "$(acli completion zsh)"
 
       # Added by LM Studio CLI tool (lms)
-      export PATH="$PATH:/Users/pepe/.cache/lm-studio/bin"
-      export PATH=~/.nix-profile/bin:$PATH
-      export PATH=/Users/pepe/Library/Python/3.7/bin:$PATH
-      export PATH=/Users/pepe/bin:$PATH
-      export PATH=/Users/pepe/go/bin:$PATH
+      export PATH=$HOME/.cache/lm-studio/bin:$PATH
+      export PATH=$HOME/.nix-profile/bin:$PATH
+      export PATH=$HOME/Library/Python/3.7/bin:$PATH
+      export PATH=$HOME/bin:$PATH
+      export PATH=$HOME/go/bin:$PATH
       export PATH=/usr/local/bin:$PATH
       export PATH=/Library/TeX/texbin:$PATH
-      export PATH=/Users/pepegarcia/.local/share/gem/ruby/2.7.0/bin:$PATH
-      export PATH=~/.ghcup/bin:$PATH
-      export PATH=~/.cargo/bin:$PATH
+      export PATH=$HOME/.local/share/gem/ruby/2.7.0/bin:$PATH
+      export PATH=$HOME/.local/bin:$PATH
+      export PATH=$HOME/.ghcup/bin:$PATH
+      export PATH=$HOME/.cargo/bin:$PATH
       export NVM_DIR="$HOME/.nvm"
       [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
       [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion

@@ -41,4 +41,9 @@
     source = ../scripts/bin/pr.sh;
     executable = true;
   };
+
+  home.file."bin/autocommit.sh" = {
+    source = ../scripts/bin/autocommit.sh;
+    executable = true;
+  };
 }

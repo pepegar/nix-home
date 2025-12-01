@@ -10,6 +10,7 @@
     ../applications/emacs
     ../applications/fzf
     ../applications/ghostty
+    ../applications/kitty
     ../applications/go
     ../applications/intellij-idea
     ../applications/karabinix

@@ -195,12 +195,12 @@ in {
                     description = "Whatsapp";
                   };
                   t = mkToEvent {
-                    shell_command = "open -a 'Ghostty'";
-                    description = "Ghostty";
+                    shell_command = "open -a 'Kitty'";
+                    description = "Kitty";
                   };
                   b = mkToEvent {
-                    shell_command = "open -a 'Firefox'";
-                    description = "Firefox";
+                    shell_command = "open -a 'Chrome'";
+                    description = "Chrome";
                   };
                   i = mkToEvent {
                     shell_command = "open -a 'IntelliJ IDEA'";
