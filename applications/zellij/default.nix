@@ -17,10 +17,10 @@
           tab name="Karabinix" cwd="~/projects/github.com/pepegar/karabinix" {
             pane
           }
-          tab name="Goodnotes" cwd="~/projects/github.com/GoodNotes/GoodNotes-5" {
+          tab name="Math" cwd="~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Math" {
             pane
           }
-          tab name="Math" cwd="~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Math" {
+          tab name="Goodnotes" cwd="~/projects/github.com/GoodNotes/GoodNotes-5" {
             pane
           }
         }

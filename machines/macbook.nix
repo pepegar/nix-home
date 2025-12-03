@@ -4,7 +4,8 @@
   ...
 }: {
   imports = [
-    ../applications/firefox
+    #../applications/firefox
+    ../applications/chrome
     ../applications/claude
     ../applications/direnv
     ../applications/emacs

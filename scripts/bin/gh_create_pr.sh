@@ -37,6 +37,19 @@ commit_log=$(git log origin/develop..HEAD --pretty=format:"- %s" --no-merges)
 diff_stat=$(git diff origin/develop...HEAD --stat)
 diff_content=$(git diff origin/develop...HEAD)
 
+# Count the number of changed files
+file_count=$(git diff origin/develop...HEAD --name-only | wc -l | tr -d ' ')
+
+# Build prompt conditionally based on file count
+if [ "$file_count" -gt 5 ]; then
+  files_section="
+
+## Files to Review Carefully
+[List 2-4 files that contain critical changes, complex logic, or require special attention. For each file, briefly explain why it needs careful review]"
+else
+  files_section=""
+fi
+
 # Create prompt for LLM to generate brief PR description
 prompt="Generate a GitHub pull request description based on these changes.
 
@@ -55,10 +68,7 @@ Format the PR description with the following structure:
 [2-3 sentences explaining what changed and why]
 
 ## Key Changes
-[3-5 bullet points of the most important modifications]
-
-## Files to Review Carefully
-[List 2-4 files that contain critical changes, complex logic, or require special attention. For each file, briefly explain why it needs careful review]
+[3-5 bullet points of the most important modifications]$files_section
 
 Keep it concise and focused on what reviewers need to know."
 
