@@ -11,6 +11,7 @@ pager:
 # Aliases allow you to create nicknames for gh commands
 aliases:
     create_pr: "!gh_create_pr"
+    merge_pr: "!gh_merge_pr"
     create_prod_hotfix: pr create --base master-web-viewer --assignee "@me" --reviewer "GoodNotes/goodnotes-cloud" --label "digital-paper:backend-web" --label "team-gnc" --fill
     create_staging_hotfix: pr create --base develop-web-viewer --assignee "@me" --reviewer "GoodNotes/goodnotes-cloud" --label "digital-paper:backend-web" --label "team-gnc" --fill
     create_sandbox_hotfix: pr create --base sandbox-web-viewer --assignee "@me" --reviewer "GoodNotes/goodnotes-cloud" --label "digital-paper:backend-web" --label "team-gnc" --fill

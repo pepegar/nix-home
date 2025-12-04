@@ -19,6 +19,11 @@
     executable = true;
   };
 
+  home.file."bin/gh_merge_pr" = {
+    source = ../scripts/bin/gh_merge_pr.sh;
+    executable = true;
+  };
+
   home.file."bin/ppg" = {
     source = ../scripts/bin/ppg.sh;
     executable = true;
