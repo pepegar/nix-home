@@ -24,9 +24,25 @@ print_usage() {
     echo -e "  home [hostname]   - Run home-manager for specified host (default: current host)"
     echo -e "  darwin [hostname] - Run darwin-rebuild for specified host (default: current host)"
     
-    # List ppg-* scripts as available commands
-    local ppg_scripts
-    ppg_scripts=($(find "$SCRIPT_DIR" -name "ppg-*" -executable -type f | sort))
+    # List ppg-* scripts as available commands from PATH
+    local ppg_scripts=()
+    local seen_scripts=()
+
+    # Search each directory in PATH for ppg-* scripts
+    while IFS= read -r path_dir; do
+        if [[ -d "$path_dir" ]]; then
+            while IFS= read -r script; do
+                local cmd_name=$(basename "$script")
+                # Skip if we've already seen this command name or if it's ppg.sh itself
+                if [[ "$cmd_name" == "ppg.sh" ]] || [[ " ${seen_scripts[@]} " =~ " ${cmd_name} " ]]; then
+                    continue
+                fi
+                seen_scripts+=("$cmd_name")
+                ppg_scripts+=("$script")
+            done < <(find "$path_dir" -maxdepth 1 -name "ppg-*" -executable \( -type f -o -type l \) 2>/dev/null | sort)
+        fi
+    done < <(echo "$PATH" | tr ':' '\n')
+
     if [ ${#ppg_scripts[@]} -gt 0 ]; then
         echo
         echo -e "${BLUE}Extension commands:${NC}"
@@ -71,13 +87,25 @@ print_error() {
 execute_ppg_script() {
     local command=$1
     shift
-    local script_path="$SCRIPT_DIR/ppg-$command"
-    
+    local script_name="ppg-$command"
+
+    # First try SCRIPT_DIR for backwards compatibility
+    local script_path="$SCRIPT_DIR/$script_name"
     if [[ -x "$script_path" ]]; then
         exec "$script_path" "$@"
-    else
-        return 1
     fi
+
+    # Then search PATH
+    while IFS= read -r path_dir; do
+        if [[ -d "$path_dir" ]]; then
+            script_path="$path_dir/$script_name"
+            if [[ -x "$script_path" ]]; then
+                exec "$script_path" "$@"
+            fi
+        fi
+    done < <(echo "$PATH" | tr ':' '\n')
+
+    return 1
 }
 
 # Main function
