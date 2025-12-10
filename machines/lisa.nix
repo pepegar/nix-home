@@ -75,4 +75,6 @@ in rec {
     DISPLAY = ":0";
     EDITOR = "emacs";
   };
+
+  home.stateVersion = "22.05";
 }
