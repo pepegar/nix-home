@@ -21,10 +21,8 @@ in rec {
 
     ../cfg/email
     ../cfg/git.nix
-    ../cfg/ssh.nix
     ../cfg/xresources.nix
     ../cfg/sbt
-    ../cfg/pandoc
   ];
 
   nixpkgs.overlays = let

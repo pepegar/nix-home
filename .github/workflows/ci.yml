@@ -64,6 +64,24 @@ jobs:
           }
           EOF
 
+          # Create stub for encrypted nextcloud service
+          mkdir -p services/nextcloud
+          cat > services/nextcloud/default.nix << 'EOF'
+          { config, pkgs, ... }:
+          {
+            # Stub nextcloud configuration for CI
+          }
+          EOF
+
+          # Create stub for encrypted tailscale service
+          mkdir -p services/tailscale
+          cat > services/tailscale/default.nix << 'EOF'
+          { config, pkgs, ... }:
+          {
+            # Stub tailscale configuration for CI
+          }
+          EOF
+
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v9
         with:
@@ -107,6 +125,24 @@ jobs:
             goodnotesRepoPath = "/tmp/ci-stub";
             goodnotes_GITHUB_PACKAGES_MAVEN_USER = "ci-stub";
             goodnotes_GITHUB_PACKAGES_MAVEN_PASS = "ci-stub";
+          }
+          EOF
+
+          # Create stub for encrypted nextcloud service
+          mkdir -p services/nextcloud
+          cat > services/nextcloud/default.nix << 'EOF'
+          { config, pkgs, ... }:
+          {
+            # Stub nextcloud configuration for CI
+          }
+          EOF
+
+          # Create stub for encrypted tailscale service
+          mkdir -p services/tailscale
+          cat > services/tailscale/default.nix << 'EOF'
+          { config, pkgs, ... }:
+          {
+            # Stub tailscale configuration for CI
           }
           EOF
 
@@ -160,6 +196,24 @@ jobs:
           }
           EOF
 
+          # Create stub for encrypted nextcloud service
+          mkdir -p services/nextcloud
+          cat > services/nextcloud/default.nix << 'EOF'
+          { config, pkgs, ... }:
+          {
+            # Stub nextcloud configuration for CI
+          }
+          EOF
+
+          # Create stub for encrypted tailscale service
+          mkdir -p services/tailscale
+          cat > services/tailscale/default.nix << 'EOF'
+          { config, pkgs, ... }:
+          {
+            # Stub tailscale configuration for CI
+          }
+          EOF
+
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v9
         with:
@@ -210,6 +264,24 @@ jobs:
           }
           EOF
 
+          # Create stub for encrypted nextcloud service
+          mkdir -p services/nextcloud
+          cat > services/nextcloud/default.nix << 'EOF'
+          { config, pkgs, ... }:
+          {
+            # Stub nextcloud configuration for CI
+          }
+          EOF
+
+          # Create stub for encrypted tailscale service
+          mkdir -p services/tailscale
+          cat > services/tailscale/default.nix << 'EOF'
+          { config, pkgs, ... }:
+          {
+            # Stub tailscale configuration for CI
+          }
+          EOF
+
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v9
         with:
@@ -256,6 +328,24 @@ jobs:
             goodnotesRepoPath = "/tmp/ci-stub";
             goodnotes_GITHUB_PACKAGES_MAVEN_USER = "ci-stub";
             goodnotes_GITHUB_PACKAGES_MAVEN_PASS = "ci-stub";
+          }
+          EOF
+
+          # Create stub for encrypted nextcloud service
+          mkdir -p services/nextcloud
+          cat > services/nextcloud/default.nix << 'EOF'
+          { config, pkgs, ... }:
+          {
+            # Stub nextcloud configuration for CI
+          }
+          EOF
+
+          # Create stub for encrypted tailscale service
+          mkdir -p services/tailscale
+          cat > services/tailscale/default.nix << 'EOF'
+          { config, pkgs, ... }:
+          {
+            # Stub tailscale configuration for CI
           }
           EOF
 
