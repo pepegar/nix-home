@@ -1,18 +1,22 @@
-{ config, pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 with pkgs; {
   programs.emacs.init.usePackage = {
     org = {
       enable = true;
       package = "org-plus-contrib";
-      mode = [ ''("\\.org\\'" . org-mode)'' ];
+      mode = [''("\\.org\\'" . org-mode)''];
       init = readFile ./org-init.el;
       config = readFile ./org-config.el;
     };
 
     org-bullets = {
       enable = true;
-      hook = [ "(org-mode . org-bullets-mode)" ];
+      hook = ["(org-mode . org-bullets-mode)"];
       extraConfig = ''
         :custom
         (org-bullets-bullet-list '("✿" "◉" "✸" "○"))
@@ -21,7 +25,7 @@ with pkgs; {
 
     org-journal = {
       enable = true;
-      command = [ "org-journal-new-entry" ];
+      command = ["org-journal-new-entry"];
       extraConfig = ''
         :custom
         (org-journal-file-type 'weekly)
@@ -32,7 +36,7 @@ with pkgs; {
 
     org-pomodoro = {
       enable = true;
-      command = [ "org-pomodoro" ];
+      command = ["org-pomodoro"];
       extraConfig = ''
         :custom
         (org-pomodoro-format "🍅~%s")
@@ -48,7 +52,7 @@ with pkgs; {
 
     org-projectile = {
       enable = true;
-      command = [ "org-projectile-project-todo-completing-read" ];
+      command = ["org-projectile-project-todo-completing-read"];
       config = ''
         (org-projectile-per-project)
         (setq org-agenda-files
@@ -70,9 +74,9 @@ with pkgs; {
     };
 
     org-eldoc.enable = true;
-    org-eldoc.hook = [ "(org-mode . org-eldoc-load)" ];
+    org-eldoc.hook = ["(org-mode . org-eldoc-load)"];
 
-    smartparens.hook = [ "(org-mode . smartparens-mode)" ];
+    smartparens.hook = ["(org-mode . smartparens-mode)"];
     smartparens.config = mkAfter ''
       (sp-local-pair 'org-mode "\\[" "\\]")
     '';

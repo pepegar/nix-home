@@ -1,55 +1,57 @@
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   systemd.services.glances = {
     enable = true;
     description = "glances";
-    unitConfig = { Type = "simple"; };
-    serviceConfig = { ExecStart = "${pkgs.glances}/bin/glances -w"; };
-    wantedBy = [ "multi-user.target" ];
+    unitConfig = {Type = "simple";};
+    serviceConfig = {ExecStart = "${pkgs.glances}/bin/glances -w";};
+    wantedBy = ["multi-user.target"];
   };
 
   services.postgresql = {
     enable = true;
-    ensureDatabases = [ "hass" ];
-    ensureUsers = [{
-      name = "hass";
-      ensureDBOwnership = true;
-    }];
+    ensureDatabases = ["hass"];
+    ensureUsers = [
+      {
+        name = "hass";
+        ensureDBOwnership = true;
+      }
+    ];
   };
 
   services.home-assistant = {
     enable = true;
-    package = (pkgs.home-assistant.override {
-      extraComponents = [
-        "default_config"
-        "esphome"
-        "met"
-        "aemet"
-        "backup"
-        "shelly"
-        "webostv"
-        "enphase_envoy"
-        "roomba"
-        "radio_browser"
-        "sonos"
-        "spotify"
-        "homekit"
-        "glances"
-        "apple_tv"
-      ];
-      extraPackages = py: with py; [ psycopg2 getmac zeroconf ];
-    }).overrideAttrs (_: {
-      # Don't run package tests, they take a long time
-      doInstallCheck = false;
-    });
+    package =
+      (pkgs.home-assistant.override {
+        extraComponents = [
+          "default_config"
+          "esphome"
+          "met"
+          "aemet"
+          "backup"
+          "shelly"
+          "webostv"
+          "enphase_envoy"
+          "roomba"
+          "radio_browser"
+          "sonos"
+          "spotify"
+          "homekit"
+          "glances"
+          "apple_tv"
+        ];
+        extraPackages = py: with py; [psycopg2 getmac zeroconf];
+      }).overrideAttrs (_: {
+        # Don't run package tests, they take a long time
+        doInstallCheck = false;
+      });
     config = {
       homeassistant = {
         latitude = 29.051456;
         longitude = -13.64463;
       };
       recorder.db_url = "postgresql://@/hass";
-      default_config = { };
-      "automation manual" = [ ];
+      default_config = {};
+      "automation manual" = [];
       "automation ui" = "!include automations.yaml";
       template = [
         {
@@ -60,8 +62,7 @@
             icon = "mdi:transmission-tower";
             unit_of_measurement = "W";
             device_class = "power";
-            state =
-              "{{ [0, states('sensor.envoy_122203094420_current_power_consumption') | int - states('sensor.envoy_122203094420_current_power_production') | int ] | max }}";
+            state = "{{ [0, states('sensor.envoy_122203094420_current_power_consumption') | int - states('sensor.envoy_122203094420_current_power_production') | int ] | max }}";
           };
         }
         {
@@ -72,8 +73,7 @@
             icon = "mdi:transmission-tower";
             unit_of_measurement = "W";
             device_class = "power";
-            state =
-              "{{ [0, states('sensor.envoy_122203094420_current_power_production') | int - states('sensor.envoy_122203094420_current_power_consumption') | int ] | max }}";
+            state = "{{ [0, states('sensor.envoy_122203094420_current_power_production') | int - states('sensor.envoy_122203094420_current_power_consumption') | int ] | max }}";
           };
         }
       ];

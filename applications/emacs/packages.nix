@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-
+{pkgs, ...}:
 with pkgs; {
   programs.emacs.init.usePackage = {
-
     use-package.enable = true;
     macrostep.enable = true;
     general.enable = true;
@@ -10,14 +8,14 @@ with pkgs; {
     ripgrep.enable = true;
 
     restart-emacs.enable = true;
-    restart-emacs.command = [ "restart-emacs" ];
+    restart-emacs.command = ["restart-emacs"];
 
     undo-fu.enable = true;
     undo-fu-session.enable = true;
     undo-fu-session.config = "(global-undo-fu-session-mode 1)";
 
     undo-tree.enable = true;
-    undo-tree.command = [ "undo-tree-visualize" ];
+    undo-tree.command = ["undo-tree-visualize"];
 
     winum.enable = true;
     winum.config = "(winum-mode)";
@@ -45,8 +43,8 @@ with pkgs; {
 
     consult = {
       enable = true;
-      after = [ "projectile" ];
-      command = [ "consult-buffer" ];
+      after = ["projectile"];
+      command = ["consult-buffer"];
       bind = {
         "C-x C-b" = "consult-buffer";
         "C-s" = "consult-line";
@@ -60,20 +58,20 @@ with pkgs; {
 
     consult-selectrum = {
       enable = true;
-      after = [ "consult" "selectrum" ];
-      hook = [ "(consult-mode . (lambda () (require 'consult-selectrum)))" ];
+      after = ["consult" "selectrum"];
+      hook = ["(consult-mode . (lambda () (require 'consult-selectrum)))"];
     };
 
     embark = {
       enable = true;
-      bind = { "C-," = "embark-act"; };
+      bind = {"C-," = "embark-act";};
     };
 
     embark-consult = {
       enable = true;
-      after = [ "embark" "consult" ];
+      after = ["embark" "consult"];
       demand = true;
-      hook = [ "(embark-collect-mode . embark-consult-preview-minor-mode)" ];
+      hook = ["(embark-collect-mode . embark-consult-preview-minor-mode)"];
     };
 
     marginalia = {
@@ -93,8 +91,8 @@ with pkgs; {
 
     projectile = {
       enable = true;
-      extraPackages = [ fd ripgrep ];
-      hook = [ "(selectrum-mode . projectile-mode)" ];
+      extraPackages = [fd ripgrep];
+      hook = ["(selectrum-mode . projectile-mode)"];
       extraConfig = ''
         :custom
         (projectile-indexing-method 'alien)
@@ -125,22 +123,22 @@ with pkgs; {
         (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)
         (define-key envrc-command-map (kbd "R") 'envrc-reload-all)
       '';
-      extraPackages = [ direnv ];
+      extraPackages = [direnv];
     };
 
     magit = {
       enable = true;
-      command = [ "magit-status" ];
+      command = ["magit-status"];
     };
 
     forge = {
       enable = true;
-      after = [ "magit" ];
+      after = ["magit"];
     };
 
     treemacs = {
       enable = true;
-      command = [ "treemacs" "treemacs-select-window" ];
+      command = ["treemacs" "treemacs-select-window"];
       config = ''
         (treemacs-git-mode 'deferred)
         (require 'treemacs-magit)
@@ -163,7 +161,7 @@ with pkgs; {
     posframe.defer = true;
 
     all-the-icons.enable = true;
-    all-the-icons.extraPackages = [ emacs-all-the-icons-fonts ];
+    all-the-icons.extraPackages = [emacs-all-the-icons-fonts];
 
     doom-themes = {
       enable = true;
@@ -183,16 +181,16 @@ with pkgs; {
 
     pdf-tools = {
       enable = true;
-      mode = [ ''("\\.pdf\\'" . pdf-view-mode)'' ];
+      mode = [''("\\.pdf\\'" . pdf-view-mode)''];
     };
 
     ebib.enable = true;
-    ebib.command = [ "ebib" ];
+    ebib.command = ["ebib"];
 
     git-link = {
       enable = true;
 
-      bind = { "C-c g l" = "git-link"; };
+      bind = {"C-c g l" = "git-link";};
     };
   };
 }

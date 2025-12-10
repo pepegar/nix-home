@@ -29,14 +29,15 @@ jobs:
 
       - name: Check Nix formatting
         run: |
-          nix run nixpkgs#alejandra -- --check .
+          nix run nixpkgs#alejandra -- --check . \
+            --exclude ./secrets.nix \
+            --exclude ./services/nextcloud/default.nix \
+            --exclude ./services/tailscale/default.nix
 
       - name: Check for dead code
         run: |
           nix run nixpkgs#deadnix -- --fail . \
-            --exclude secrets.nix \
-            --exclude services/nextcloud/default.nix \
-            --exclude services/tailscale/default.nix
+            --exclude secrets.nix services/nextcloud/default.nix services/tailscale/default.nix
 
   # Flake check (validates flake structure)
   flake-check:

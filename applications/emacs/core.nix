@@ -1,5 +1,4 @@
-{ ... }: {
-
+{...}: {
   programs.emacs.init.usePackage = {
     mule = {
       config = ''
@@ -55,7 +54,7 @@
 
     simple = {
       enable = true;
-      hook = [ "(before-save . delete-trailing-whitespace)" ];
+      hook = ["(before-save . delete-trailing-whitespace)"];
       config = ''
         (column-number-mode t)
         (global-visual-line-mode t)
@@ -69,10 +68,10 @@
         (setq dashboard-center-content t)
         (setq dashboard-show-shortcuts nil)
         (setq dashboard-items '((recents . 5)
-	        (bookmarks .  5)
-	        (projects . 5)
-	        (agenda . 5)
-	        (registers . 5)))
+         (bookmarks .  5)
+         (projects . 5)
+         (agenda . 5)
+         (registers . 5)))
         (setq dashboard-startup-banner 'logo)
         (setq dashboard-set-navigator t)
         (setq dashboard-set-heading-icons t)
@@ -88,7 +87,7 @@
 
     doom-modeline = {
       enable = true;
-      hook = [ "(after-init . doom-modeline-mode)" ];
+      hook = ["(after-init . doom-modeline-mode)"];
     };
 
     page-break-lines = {
@@ -106,8 +105,8 @@
 
     golden-ratio = {
       enable = true;
-      diminish = [ "golden-ratio-mode" ];
-      hook = [ "(after-init . golden-ratio-mode)" ];
+      diminish = ["golden-ratio-mode"];
+      hook = ["(after-init . golden-ratio-mode)"];
     };
   };
 }

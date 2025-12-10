@@ -1,5 +1,3 @@
-{ ... }:
-
-{
-  programs.emacs.init.usePackage = { zig-mode.enable = true; };
+{...}: {
+  programs.emacs.init.usePackage = {zig-mode.enable = true;};
 }

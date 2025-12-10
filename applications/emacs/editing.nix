@@ -1,10 +1,8 @@
-{ ... }:
-
-{
+{...}: {
   programs.emacs.init.usePackage = {
     paredit = {
       enable = true;
-      hook = [ "(emacs-lisp-mod-hook . paredit-mode)" ];
+      hook = ["(emacs-lisp-mod-hook . paredit-mode)"];
     };
 
     multiple-cursors = {
@@ -29,7 +27,6 @@
       config = ''
         (require 'mc-extras)
       '';
-
     };
     mc-extras = {
       enable = true;
@@ -54,7 +51,7 @@
 
     expand-region = {
       enable = true;
-      bind = { "C-@" = "er/expand-region"; };
+      bind = {"C-@" = "er/expand-region";};
     };
 
     move-text = {

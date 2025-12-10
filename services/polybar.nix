@@ -1,16 +1,20 @@
-{ pkgs, config, ... }:
-
-let
+{
+  pkgs,
+  config,
+  ...
+}: let
   xdgUtils = pkgs.xdg_utils.overrideAttrs (old: {
-    nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ pkgs.makeWrapper ];
-    postInstall = old.postInstall + "\n" + ''
-      wrapProgram $out/bin/xdg-open --suffix PATH : /run/current-system/sw/bin
-    '';
+    nativeBuildInputs = old.nativeBuildInputs or [] ++ [pkgs.makeWrapper];
+    postInstall =
+      old.postInstall
+      + "\n"
+      + ''
+        wrapProgram $out/bin/xdg-open --suffix PATH : /run/current-system/sw/bin
+      '';
   });
   openCalendar = "${pkgs.gnome3.gnome-calendar}/bin/gnome-calendar";
   openGithub = "${xdgUtils}/bin/xdg-open https\\://github.com/notifications";
-  mprisScript = pkgs.callPackage ../scripts/mpris.nix { };
-  networkScript = pkgs.callPackage ../scripts/network.nix { };
+  mprisScript = pkgs.callPackage ../scripts/mpris.nix {};
   myPolybar = pkgs.polybar.override {
     alsaSupport = true;
     githubSupport = true;
@@ -38,7 +42,7 @@ let
       tray-scale = "1.0";
     };
 
-    "settings" = { screenchange-reload = true; };
+    "settings" = {screenchange-reload = true;};
 
     "bar/main" = {
       enable-ipc = "true";
@@ -57,20 +61,16 @@ let
 
     "bar/top" = {
       "inherit" = "bar/main";
-      modules-left =
-        "right-end-top xmonad left-end-bottom right-end-top left-end-top";
-      modules-right =
-        "left-end-top keyboard clickable-github clickable-date battery";
+      modules-left = "right-end-top xmonad left-end-bottom right-end-top left-end-top";
+      modules-right = "left-end-top keyboard clickable-github clickable-date battery";
       tray-position = "center";
     };
 
     "bar/bottom" = {
       "inherit" = "bar/main";
       bottom = true;
-      modules-left =
-        "right-end-bottom mpris left-end-top cpu memory filesystem";
-      modules-right =
-        "left-end-bottom temperature wired-network pulseaudio left-end-bottom powermenu";
+      modules-left = "right-end-bottom mpris left-end-top cpu memory filesystem";
+      modules-right = "left-end-bottom temperature wired-network pulseaudio left-end-bottom powermenu";
       tray-position = "none";
     };
 
@@ -97,8 +97,7 @@ let
 
     "module/clickable-github" = {
       "inherit " = "module/github";
-      "token " =
-        "''\${file:${config.xdg.configHome}/polybar/github-notifications-token}";
+      "token " = "''\${file:${config.xdg.configHome}/polybar/github-notifications-token}";
       "label " = "%{A1:${openGithub}:}  %notifications%%{A}";
     };
   };

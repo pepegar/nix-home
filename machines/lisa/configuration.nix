@@ -1,11 +1,10 @@
-{ pkgs, ... }:
+{pkgs, ...}: let
+  customFonts = pkgs.nerdfonts.override {fonts = ["Iosevka"];};
 
-let
-  customFonts = pkgs.nerdfonts.override { fonts = [ "Iosevka" ]; };
-
-  myfonts = pkgs.callPackage fonts/default.nix { inherit pkgs; };
+  myfonts = pkgs.callPackage fonts/default.nix {inherit pkgs;};
 in {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
@@ -14,18 +13,18 @@ in {
     pulseaudio = true;
   };
 
-  fonts.fonts = with pkgs; [ customFonts font-awesome myfonts.icomoon-feather ];
+  fonts.fonts = with pkgs; [customFonts font-awesome myfonts.icomoon-feather];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = ["ntfs"];
 
   fileSystems."/home/pepe/shared-disk" = {
     device = "/dev/sda2";
     fsType = "ntfs";
-    options = [ "rw" "uid=1000" ];
+    options = ["rw" "uid=1000"];
   };
 
   networking.hostName = "lisa"; # Define your hostname.
@@ -54,7 +53,7 @@ in {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ wget vim samba ];
+  environment.systemPackages = with pkgs; [wget vim samba];
 
   virtualisation.docker.enable = true;
 
@@ -76,9 +75,9 @@ in {
     description = "Automatic connection to Tailscale";
 
     # make sure tailscale is running before trying to connect to tailscale
-    after = [ "network-pre.target" "tailscale.service" ];
-    wants = [ "network-pre.target" "tailscale.service" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network-pre.target" "tailscale.service"];
+    wants = ["network-pre.target" "tailscale.service"];
+    wantedBy = ["multi-user.target"];
 
     # set this service as a oneshot job
     serviceConfig.Type = "oneshot";
@@ -101,39 +100,40 @@ in {
 
   services.home-assistant = {
     enable = true;
-    package = (pkgs.home-assistant.override {
-      extraComponents = [
-        "default_config"
-        "esphome"
-        "met"
-        "aemet"
-        "backup"
-        "shelly"
-        "enphase_envoy"
-        "roomba"
-        "radio_browser"
-        "sonos"
-        "spotify"
-      ];
-      extraPackages = py:
-        with py; [
-          # Are you using a database server for your recorder?
-          # https://www.home-assistant.io/integrations/recorder/
-          #mysqlclient
-          psycopg2
-          getmac
+    package =
+      (pkgs.home-assistant.override {
+        extraComponents = [
+          "default_config"
+          "esphome"
+          "met"
+          "aemet"
+          "backup"
+          "shelly"
+          "enphase_envoy"
+          "roomba"
+          "radio_browser"
+          "sonos"
+          "spotify"
         ];
-    }).overrideAttrs (_: {
-      # Don't run package tests, they take a long time
-      doInstallCheck = false;
-    });
+        extraPackages = py:
+          with py; [
+            # Are you using a database server for your recorder?
+            # https://www.home-assistant.io/integrations/recorder/
+            #mysqlclient
+            psycopg2
+            getmac
+          ];
+      }).overrideAttrs (_: {
+        # Don't run package tests, they take a long time
+        doInstallCheck = false;
+      });
     config = {
       homeassistant = {
         latitude = 29.051456;
         longitude = -13.64463;
       };
       recorder.db_url = "postgresql://@/hass";
-      default_config = { };
+      default_config = {};
       template = [
         {
           unique_id = "sensor.grid_import_power";
@@ -143,8 +143,7 @@ in {
             icon = "mdi:transmission-tower";
             unit_of_measurement = "W";
             device_class = "power";
-            state =
-              "{{ [0, states('sensor.envoy_122203094420_current_power_consumption') | int - states('sensor.envoy_122203094420_current_power_production') | int ] | max }}";
+            state = "{{ [0, states('sensor.envoy_122203094420_current_power_consumption') | int - states('sensor.envoy_122203094420_current_power_production') | int ] | max }}";
           };
         }
         {
@@ -155,8 +154,7 @@ in {
             icon = "mdi:transmission-tower";
             unit_of_measurement = "W";
             device_class = "power";
-            state =
-              "{{ [0, states('sensor.envoy_122203094420_current_power_production') | int - states('sensor.envoy_122203094420_current_power_consumption') | int ] | max }}";
+            state = "{{ [0, states('sensor.envoy_122203094420_current_power_production') | int - states('sensor.envoy_122203094420_current_power_consumption') | int ] | max }}";
           };
         }
       ];
@@ -183,11 +181,13 @@ in {
 
   services.postgresql = {
     enable = true;
-    ensureDatabases = [ "hass" ];
-    ensureUsers = [{
-      name = "hass";
-      ensurePermissions = { "DATABASE hass" = "ALL PRIVILEGES"; };
-    }];
+    ensureDatabases = ["hass"];
+    ensureUsers = [
+      {
+        name = "hass";
+        ensurePermissions = {"DATABASE hass" = "ALL PRIVILEGES";};
+      }
+    ];
   };
 
   # Open ports in the firewall.
@@ -200,7 +200,7 @@ in {
   # services.printing.enable = true;
 
   # Enable sound.
-  sound = { enable = true; };
+  sound = {enable = true;};
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
 
@@ -210,23 +210,23 @@ in {
     layout = "us,es";
 
     displayManager = {
-      lightdm = { enable = true; };
+      lightdm = {enable = true;};
       defaultSession = "none+xmonad";
     };
 
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;
-      extraPackages = hp: [ hp.dbus hp.monad-logger ];
+      extraPackages = hp: [hp.dbus hp.monad-logger];
     };
 
-    videoDrivers = [ "nvidia" ];
+    videoDrivers = ["nvidia"];
   };
 
   services.gnome.gnome-keyring.enable = true;
   services.dbus = {
     enable = true;
-    packages = [ ];
+    packages = [];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -234,8 +234,7 @@ in {
     createHome = true;
     home = "/home/pepe";
     isNormalUser = true;
-    extraGroups =
-      [ "wheel" "video" "audio" "disk" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel" "video" "audio" "disk" "docker"]; # Enable ‘sudo’ for the user.
     group = "users";
     uid = 1000;
     shell = "/home/pepe/.nix-profile/bin/zsh";
@@ -265,4 +264,3 @@ in {
   # should.
   system.stateVersion = "22.05"; # Did you read the comment?
 }
-

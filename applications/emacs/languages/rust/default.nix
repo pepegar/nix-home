@@ -1,20 +1,17 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.emacs.init.usePackage = {
     rust-mode.enable = true;
 
     lsp-rust = {
       enable = true;
-      extraPackages = [ pkgs.rust-analyzer ];
+      extraPackages = [pkgs.rust-analyzer];
       defer = true;
-      hook = [ "(rust-mode . lsp-deferred)" ];
+      hook = ["(rust-mode . lsp-deferred)"];
     };
 
     pest-mode = {
       enable = true;
-      mode = [ ''("\\.pest\\'" . pest-mode)'' ];
+      mode = [''("\\.pest\\'" . pest-mode)''];
     };
-
   };
 }

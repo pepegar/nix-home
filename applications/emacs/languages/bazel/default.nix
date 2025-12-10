@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   programs.emacs.init.usePackage = {
     bazel-mode = {
       enable = true;
@@ -10,5 +10,4 @@
       ];
     };
   };
-
 }

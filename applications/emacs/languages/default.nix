@@ -1,5 +1,4 @@
-{ ... }: {
-
+{...}: {
   imports = [
     ./haskell
     ./html
@@ -15,10 +14,9 @@
   ];
 
   programs.emacs.init.usePackage = {
-
     rainbow-delimiters = {
       enable = true;
-      hook = [ "(prog-mode . rainbow-delimiters-mode)" ];
+      hook = ["(prog-mode . rainbow-delimiters-mode)"];
     };
 
     smartparens.enable = true;
@@ -27,14 +25,13 @@
     yasnippet = {
       enable = true;
       defer = true;
-      hook = [ "(after-init . yas-global-mode)" ];
-      bindLocal = { yas-minor-mode-map = { "C-c y" = "company-yasnippet"; }; };
-
+      hook = ["(after-init . yas-global-mode)"];
+      bindLocal = {yas-minor-mode-map = {"C-c y" = "company-yasnippet";};};
     };
 
     yasnippet-snippets = {
       enable = true;
-      after = [ "yasnippet" ];
+      after = ["yasnippet"];
     };
 
     flycheck = {
@@ -44,27 +41,26 @@
         "M-p" = "flycheck-previous-error";
       };
       init = ''(setq ispell-program-name "aspell")'';
-      config =
-        "\n      (require 'pkg-info)\n      (global-flycheck-mode t)\n      ";
+      config = "\n      (require 'pkg-info)\n      (global-flycheck-mode t)\n      ";
     };
 
     lsp-headerline = {
       enable = true;
-      command = [ "lsp-headerline-breadcrumb-mode" ];
+      command = ["lsp-headerline-breadcrumb-mode"];
     };
 
     lsp-modeline = {
       enable = true;
-      command = [ "lsp-modeline-workspace-status-mode " ];
+      command = ["lsp-modeline-workspace-status-mode "];
     };
 
     lsp-mode = {
       enable = true;
-      command = [ "lsp" "lsp-deferred" ];
+      command = ["lsp" "lsp-deferred"];
       init = ''
         (setq lsp-keymap-prefix "C-c l")
       '';
-      after = [ "company" "flycheck" ];
+      after = ["company" "flycheck"];
       hook = [
         "(lsp-mode . lsp-enable-which-key-integration)"
         "(lsp-mode . lsp-lens-mode)"
@@ -97,7 +93,7 @@
 
     lsp-ui = {
       enable = true;
-      command = [ "lsp-ui-mode" ];
+      command = ["lsp-ui-mode"];
       bindLocal = {
         lsp-mode-map = {
           "C-c r d" = "lsp-ui-doc-glance";
@@ -115,33 +111,33 @@
 
     lsp-ui-flycheck = {
       enable = true;
-      after = [ "flycheck" "lsp-ui" ];
+      after = ["flycheck" "lsp-ui"];
     };
 
     lsp-diagnostics = {
       enable = true;
-      after = [ "lsp-mode" ];
+      after = ["lsp-mode"];
     };
 
     lsp-completion = {
       enable = true;
-      after = [ "lsp-mode" ];
+      after = ["lsp-mode"];
     };
 
     lsp-treemacs = {
       enable = true;
-      after = [ "lsp-mode" ];
-      command = [ "lsp-treemacs-errors-list" ];
+      after = ["lsp-mode"];
+      command = ["lsp-treemacs-errors-list"];
     };
 
     swift-mode = {
       enable = true;
-      mode = [ ''("\\.swift\\'" . swift-mode)'' ];
+      mode = [''("\\.swift\\'" . swift-mode)''];
     };
 
     company = {
       enable = true;
-      hook = [ "(after-init . global-company-mode)" ];
+      hook = ["(after-init . global-company-mode)"];
       extraConfig = ''
         :bind (("M-/" . company-complete)
                :map company-active-map
@@ -162,13 +158,13 @@
 
     company-capf = {
       enable = true;
-      after = [ "company-mode" ];
-      command = [ "company-capf" ];
+      after = ["company-mode"];
+      command = ["company-capf"];
     };
 
     company-lsp = {
       enable = true;
-      after = [ "company-mode" "lsp-mode" ];
+      after = ["company-mode" "lsp-mode"];
       config = ''
         (company-lsp-cache-candidates nil)
         (company-lsp-async t)
@@ -178,8 +174,8 @@
 
     dap-mode = {
       enable = true;
-      after = [ "lsp-mode" "dap-ui" "dap-mouse" ];
-      command = [ "dap-mode" "dap-auto-configure-mode" ];
+      after = ["lsp-mode" "dap-ui" "dap-mouse"];
+      command = ["dap-mode" "dap-auto-configure-mode"];
       config = ''
         (dap-auto-configure-mode)
       '';
@@ -187,7 +183,7 @@
 
     dap-ui = {
       enable = true;
-      command = [ "dap-ui-mode" ];
+      command = ["dap-ui-mode"];
       config = ''
         (dap-ui-mode t)
       '';
@@ -202,18 +198,17 @@
 
     jsonnet-mode = {
       enable = true;
-      mode = [ ''("\\.jsonnet\\'" . jsonnet-mode)'' ];
+      mode = [''("\\.jsonnet\\'" . jsonnet-mode)''];
     };
 
     go-mode = {
       enable = true;
-      mode = [ ''"\\.go\\'"'' ];
-      hook = [ "(go-mode . lsp-deferred)" ];
+      mode = [''"\\.go\\'"''];
+      hook = ["(go-mode . lsp-deferred)"];
     };
 
     dap-go.enable = true;
 
     bazel.enable = true;
-
   };
 }

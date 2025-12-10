@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   services.dunst = {
     enable = true;
     iconTheme = {
@@ -41,8 +39,7 @@
         browser = "/usr/bin/firefox -new-tab";
         icon_position = "left";
         max_icon_size = 48;
-        icon_folders =
-          "${pkgs.gnome3.adwaita-icon-theme}/48x48/emblems/:${pkgs.gnome3.adwaita-icon-theme}/48x48/mimetypes/:${pkgs.gnome3.adwaita-icon-theme}/48x48/status/:${pkgs.gnome3.adwaita-icon-theme}/48x48/devices/:${pkgs.gnome3.adwaita-icon-theme}/48x48/apps/";
+        icon_folders = "${pkgs.gnome3.adwaita-icon-theme}/48x48/emblems/:${pkgs.gnome3.adwaita-icon-theme}/48x48/mimetypes/:${pkgs.gnome3.adwaita-icon-theme}/48x48/status/:${pkgs.gnome3.adwaita-icon-theme}/48x48/devices/:${pkgs.gnome3.adwaita-icon-theme}/48x48/apps/";
         frame_width = 3;
         frame_color = "#000000";
       };
@@ -71,8 +68,6 @@
         foreground = "#000000";
         timeout = 0;
       };
-
     };
   };
-
 }

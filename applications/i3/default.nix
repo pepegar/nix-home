@@ -1,6 +1,4 @@
-{ config, pkgs, ... }:
-
-let
+{pkgs, ...}: let
   modifier = "Mod4";
   ws1 = "1:code";
   ws2 = "2:web";
@@ -18,7 +16,7 @@ in {
 
     config = {
       modifier = modifier;
-      fonts = [ "PragmataPro" ];
+      fonts = ["PragmataPro"];
       gaps = {
         inner = 12;
         outer = 5;
@@ -26,8 +24,7 @@ in {
       keybindings = pkgs.lib.mkOptionDefault {
         "${modifier}+Return" = "exec urxvt";
         "${modifier}+Shift+q" = "kill";
-        "${modifier}+d" =
-          "exec ${pkgs.bash}/bin/bash ~/.config/i3/rofi-wrapper";
+        "${modifier}+d" = "exec ${pkgs.bash}/bin/bash ~/.config/i3/rofi-wrapper";
 
         "${modifier}+j" = "focus left";
         "${modifier}+k" = "focus right";
@@ -76,22 +73,23 @@ in {
 
         "${modifier}+Shift+c" = "reload";
         "${modifier}+Shift+r" = "restart";
-        "${modifier}+Shift+e" =
-          "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
+        "${modifier}+Shift+e" = "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
 
         "${modifier}+r" = "mode resize";
       };
 
-      bars = [{
-        fonts = [ "PragmataPro" ];
-        extraConfig = ''
-          strip_workspace_numbers yes
-        '';
-      }];
+      bars = [
+        {
+          fonts = ["PragmataPro"];
+          extraConfig = ''
+            strip_workspace_numbers yes
+          '';
+        }
+      ];
       assigns = {
-        "${ws1}" = [ { class = "^Emacs$"; } { class = "^URxvt"; } ];
-        "${ws2}" = [ { class = "^Firefox$"; } { class = "^Slack"; } ];
-        "${ws3}" = [{ class = "^Spotify$"; }];
+        "${ws1}" = [{class = "^Emacs$";} {class = "^URxvt";}];
+        "${ws2}" = [{class = "^Firefox$";} {class = "^Slack";}];
+        "${ws3}" = [{class = "^Spotify$";}];
       };
     };
   };

@@ -1,6 +1,5 @@
-{ ... }: {
+{...}: {
   programs.emacs.init.usePackage = {
-
     web-mode = {
       enable = true;
       mode = [

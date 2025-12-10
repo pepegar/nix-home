@@ -1,7 +1,7 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.vscode = {
     mutableExtensionsDir = true;
-    extensions = (with pkgs.vscode-extensions; [
+    extensions = with pkgs.vscode-extensions; [
       vscodevim.vim
       mvllow.rose-pine
       alefragnani.project-manager
@@ -41,6 +41,6 @@
       usernamehw.errorlens
       yzhang.markdown-all-in-one
       batisteo.vscode-django
-    ]);
+    ];
   };
 }

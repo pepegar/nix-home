@@ -1,1 +1,1 @@
-{ ... }: { imports = [ ./gnus ]; }
+{...}: {imports = [./gnus];}

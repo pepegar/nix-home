@@ -1,4 +1,3 @@
-{ ... }: {
-
-  programs.emacs.init.usePackage = { yaml-mode.enable = true; };
+{...}: {
+  programs.emacs.init.usePackage = {yaml-mode.enable = true;};
 }

@@ -1,9 +1,8 @@
-{ ... }: {
-
+{...}: {
   programs.emacs.init.usePackage = {
     scala-mode = {
       enable = true;
-      mode = [ ''"\\.s\\(cala\\|bt\\)$"'' ];
+      mode = [''"\\.s\\(cala\\|bt\\)$"''];
       extraConfig = ''
         :custom
         (scala-indent:align-forms t)
@@ -16,8 +15,8 @@
 
     sbt-mode = {
       enable = true;
-      after = [ "scala-mode" ];
-      command = [ "sbt-start" "sbt-command" ];
+      after = ["scala-mode"];
+      command = ["sbt-start" "sbt-command"];
       config = ''
         (substitute-key-definition
          'minibuffer-complete-word
@@ -28,5 +27,4 @@
 
     lsp-metals.enable = true;
   };
-
 }

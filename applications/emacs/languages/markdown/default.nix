@@ -1,5 +1,5 @@
-{ pkgs, ... }:
-let font = "PragmataPro Mono Liga";
+{...}: let
+  font = "PragmataPro Mono Liga";
 in {
   programs.emacs.init.usePackage = {
     markdown-mode = {

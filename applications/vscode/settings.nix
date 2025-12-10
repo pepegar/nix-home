@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   editor = {
     "editor.bracketPairColorization.enabled" = true;
     "editor.bracketPairColorization.independentColorPoolPerBracketType" = true;
@@ -26,7 +25,7 @@ let
     "editor.tabSize" = 4;
     "editor.codeLens" = false;
     "editor.trimAutoWhitespace" = true;
-    "emmet.includeLanguages" = { "django-html" = "html"; };
+    "emmet.includeLanguages" = {"django-html" = "html";};
   };
 
   explorer = {
@@ -91,11 +90,13 @@ let
   };
 
   java = {
-    "java.configuration.runtimes" = [{
-      name = "JavaSE-17";
-      path = "${pkgs.jdk17}/lib/openjdk";
-      default = true;
-    }];
+    "java.configuration.runtimes" = [
+      {
+        name = "JavaSE-17";
+        path = "${pkgs.jdk17}/lib/openjdk";
+        default = true;
+      }
+    ];
     "java.format.settings.profile" = "GoogleStyle";
     "java.jdt.ls.java.home" = "${pkgs.jdk17}/lib/openjdk";
   };
@@ -104,8 +105,7 @@ let
     "nix.enableLanguageServer" = true;
     "nix.formatterPath" = "${pkgs.alejandra}/bin/alejandra";
     "nix.serverPath" = "${pkgs.nil}/bin/nil";
-    "nix.serverSettings"."nil"."formatting"."command" =
-      [ "${pkgs.alejandra}/bin/alejandra" ];
+    "nix.serverSettings"."nil"."formatting"."command" = ["${pkgs.alejandra}/bin/alejandra"];
   };
 
   python = {
@@ -123,13 +123,24 @@ let
     "workbench.preferredLightColorTheme" = "Rosé Pine Dawn";
   };
 
-  vim = { "vim.smartRelativeLine" = true; };
+  vim = {"vim.smartRelativeLine" = true;};
 in {
-  programs.vscode.userSettings = {
-    "extensions.autoCheckUpdates" = false;
-    "extensions.ignoreRecommendations" = true;
-    "update.mode" = "none";
-  } // editor // explorer // files // terminal // window // workbench
-    // defaultFormatter // git // github // path-intellisense // telemetry
+  programs.vscode.userSettings =
+    {
+      "extensions.autoCheckUpdates" = false;
+      "extensions.ignoreRecommendations" = true;
+      "update.mode" = "none";
+    }
+    // editor
+    // explorer
+    // files
+    // terminal
+    // window
+    // workbench
+    // defaultFormatter
+    // git
+    // github
+    // path-intellisense
+    // telemetry
     // java // nix // python // vim;
 }

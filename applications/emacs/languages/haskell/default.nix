@@ -1,13 +1,13 @@
-{ ... }:
-
-{
+{...}: {
   programs.emacs.init.usePackage = {
     lsp-haskell = {
       enable = true;
       defer = true;
-      hook = [''
-        (haskell-mode . lsp-deferred)
-      ''];
+      hook = [
+        ''
+          (haskell-mode . lsp-deferred)
+        ''
+      ];
     };
 
     haskell-mode = {
@@ -19,7 +19,7 @@
         ''("\\.cpphs\\'" . haskell-mode)''
         ''("\\.lhs\\'" . haskell-literate-mode)''
       ];
-      hook = [ "(haskell-mode . subword-mode)" ];
+      hook = ["(haskell-mode . subword-mode)"];
       config = ''
         (setq tab-width 2)
 
@@ -33,7 +33,7 @@
 
     haskell-cabal = {
       enable = true;
-      mode = [ ''("\\.cabal\\'" . haskell-cabal-mode)'' ];
+      mode = [''("\\.cabal\\'" . haskell-cabal-mode)''];
       bindLocal = {
         haskell-cabal-mode-map = {
           "C-c C-c" = "haskell-process-cabal-build";
@@ -45,7 +45,7 @@
 
     haskell-doc = {
       enable = true;
-      command = [ "haskell-doc-current-info" ];
+      command = ["haskell-doc-current-info"];
     };
   };
 }
