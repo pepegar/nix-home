@@ -66,26 +66,38 @@ fi
 
 debug "acli and fzf are installed"
 
-PROJECT_KEY="GNC"
-debug "Project key: $PROJECT_KEY"
-
-# Function to fetch epics
-fetch_epics() {
-    local start=$1
-    debug "Fetching epics starting from $start"
-    acli jira workitem search --jql "project = $PROJECT_KEY AND type = Epic" --fields "key,summary,status" --limit 100
-}
+PROJECTS=("GNC" "GSC")
+debug "Projects: ${PROJECTS[*]}"
 
 # Function to fetch and cache all epics
 fetch_and_cache_epics() {
-    debug "Fetching all epics and caching them"
-    
-    # Fetch all epics using CSV format to avoid headers in pagination
-    epics=$(acli jira workitem search --jql "project = $PROJECT_KEY AND type = Epic" --fields "key,summary,status" --paginate --csv)
-    
-    # Skip the CSV header line and save to cache file
-    echo "$epics" | tail -n +2 > "$CACHE_FILE"
-    debug "Epics cached to $CACHE_FILE"
+    debug "Fetching all epics from multiple projects and caching them"
+
+    # Clear the cache file
+    > "$CACHE_FILE"
+
+    # Fetch epics from each project
+    for project in "${PROJECTS[@]}"; do
+        debug "Fetching epics from project $project"
+
+        # Fetch all epics using CSV format to avoid headers in pagination
+        epics=$(acli jira workitem search --jql "project = $project AND type = Epic" --fields "key,summary,status" --paginate --csv)
+
+        if [ $? -ne 0 ]; then
+            echo "Warning: Failed to fetch epics from project $project" >&2
+            continue
+        fi
+
+        # Count lines before processing
+        epic_count=$(echo "$epics" | tail -n +2 | wc -l | tr -d ' ')
+        debug "Found $epic_count epics in project $project"
+
+        # Skip the CSV header line and append to cache file
+        echo "$epics" | tail -n +2 >> "$CACHE_FILE"
+        debug "Epics from $project appended to $CACHE_FILE"
+    done
+
+    debug "All epics cached to $CACHE_FILE"
 }
 
 # Check if we need to refresh the cache or if the cache file doesn't exist
@@ -109,14 +121,18 @@ fi
 epic_key=$(echo "$selected_epic" | awk -F',' '{print $1}')
 debug "Selected epic key: $epic_key"
 
+# Extract the project key from the epic key (e.g., GNC-123 -> GNC)
+project_key=$(echo "$epic_key" | cut -d'-' -f1)
+debug "Extracted project key: $project_key"
+
 # Prompt for the task summary
 echo "Enter the task summary:"
 read -e task_summary
 debug "Task summary: $task_summary"
 
 # Create the Jira task
-debug "Creating Jira task"
-new_task=$(acli jira workitem create --project $PROJECT_KEY --type Task --parent $epic_key --summary "$task_summary" --label gnc --json)
+debug "Creating Jira task in project $project_key"
+new_task=$(acli jira workitem create --project $project_key --type Task --parent $epic_key --summary "$task_summary" --label gnc --json)
 
 if [ $? -ne 0 ]; then
     echo "Error creating the task. Exiting."
