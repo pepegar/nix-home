@@ -1,15 +1,194 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest]
+  # Code quality checks (fast, no builds)
+  lint:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4.1.1
-      with:
-        submodules: true
-    - uses: cachix/install-nix-action@v25
-    - run: nix flake check --impure
+      - uses: actions/checkout@v4.1.1
+        with:
+          submodules: true
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v9
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v14
+        with:
+          name: nix-community
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+
+      - name: Check Nix formatting
+        run: |
+          nix develop --command alejandra --check .
+
+      - name: Check for dead code
+        run: |
+          nix develop --command deadnix --fail .
+
+  # Flake check (validates flake structure)
+  flake-check:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          submodules: true
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v9
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v14
+        with:
+          name: nix-community
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+
+      - name: Check flake
+        run: nix flake check --impure --accept-flake-config --show-trace
+
+  # Build home-manager configurations
+  build-home-manager-darwin:
+    runs-on: macos-latest
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: bart
+            user: pepe
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          submodules: true
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v9
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v14
+        with:
+          name: nix-community
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+
+      - name: Build home-manager configuration for ${{ matrix.config.name }}
+        run: |
+          nix build .#homeConfigurations."${{ matrix.config.user }}@${{ matrix.config.name }}".activationPackage \
+            --print-build-logs \
+            --accept-flake-config
+
+  build-home-manager-linux:
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: lisa
+            user: pepe
+          - name: marge
+            user: pepe
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          submodules: true
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v9
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v14
+        with:
+          name: nix-community
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+
+      - name: Build home-manager configuration for ${{ matrix.config.name }}
+        run: |
+          nix build .#homeConfigurations."${{ matrix.config.user }}@${{ matrix.config.name }}".activationPackage \
+            --print-build-logs \
+            --accept-flake-config
+
+  # Build darwin system configurations
+  build-darwin:
+    runs-on: macos-latest
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        system:
+          - bart
+          - homer
+          - milhouse
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          submodules: true
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v9
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v14
+        with:
+          name: nix-community
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+
+      - name: Build darwin configuration for ${{ matrix.system }}
+        run: |
+          nix build .#darwinConfigurations.${{ matrix.system }}.system \
+            --print-build-logs \
+            --accept-flake-config
+
+  # Build NixOS configurations (on Linux runner)
+  build-nixos:
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        system:
+          - lisa
+          - marge
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          submodules: true
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v9
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v14
+        with:
+          name: nix-community
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+
+      - name: Build NixOS configuration for ${{ matrix.system }}
+        run: |
+          nix build .#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel \
+            --print-build-logs \
+            --accept-flake-config
