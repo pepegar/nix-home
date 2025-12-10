@@ -44,7 +44,7 @@ in rec {
     bat
     eza
     ghq
-    gnome3.nautilus
+    gnome.nautilus
     gnupg
     graphviz
     heroku
