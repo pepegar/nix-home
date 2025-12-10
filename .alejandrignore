@@ -1,0 +1,4 @@
+# Git-crypt encrypted files
+secrets.nix
+services/nextcloud/
+services/tailscale/

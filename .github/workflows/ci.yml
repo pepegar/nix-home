@@ -33,7 +33,10 @@ jobs:
 
       - name: Check for dead code
         run: |
-          nix run nixpkgs#deadnix -- --fail .
+          nix run nixpkgs#deadnix -- --fail . \
+            --exclude secrets.nix \
+            --exclude services/nextcloud/default.nix \
+            --exclude services/tailscale/default.nix
 
   # Flake check (validates flake structure)
   flake-check:
