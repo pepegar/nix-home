@@ -29,11 +29,11 @@ jobs:
 
       - name: Check Nix formatting
         run: |
-          nix develop --command alejandra --check .
+          nix run nixpkgs#alejandra -- --check .
 
       - name: Check for dead code
         run: |
-          nix develop --command deadnix --fail .
+          nix run nixpkgs#deadnix -- --fail .
 
   # Flake check (validates flake structure)
   flake-check:

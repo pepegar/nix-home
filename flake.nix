@@ -94,6 +94,9 @@
 
         nativeBuildInputs = with nixpkgs.legacyPackages.${system}; [
           git
+          alejandra
+          deadnix
+          stylua
         ];
       };
     });
