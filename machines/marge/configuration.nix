@@ -87,6 +87,8 @@
   };
 
   home-manager.users.pepe = {pkgs, ...}: {
+    home.username = "pepe";
+    home.homeDirectory = "/home/pepe";
     home.stateVersion = "22.05";
     imports = [
       ../../applications/go

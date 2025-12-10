@@ -71,6 +71,9 @@ in rec {
     nyxt
   ];
 
+  home.username = "pepe";
+  home.homeDirectory = "/home/pepe";
+
   home.sessionVariables = {
     DISPLAY = ":0";
     EDITOR = "emacs";
