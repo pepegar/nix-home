@@ -1,6 +1,4 @@
 {pkgs, ...}: let
-  customFonts = pkgs.nerdfonts.override {fonts = ["Iosevka"];};
-
   myfonts = pkgs.callPackage fonts/default.nix {inherit pkgs;};
 in {
   imports = [
@@ -13,7 +11,7 @@ in {
     pulseaudio = true;
   };
 
-  fonts.fonts = with pkgs; [customFonts font-awesome myfonts.icomoon-feather];
+  fonts.fonts = with pkgs; [nerd-fonts.Iosevka font-awesome myfonts.icomoon-feather];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
