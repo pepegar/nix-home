@@ -244,7 +244,7 @@ in {
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     distributedBuilds = true;
     #settings = {
     #trustedUsers = [ "root" "pepe" ];
