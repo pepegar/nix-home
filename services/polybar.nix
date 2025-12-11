@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  xdgUtils = pkgs.xdg_utils.overrideAttrs (old: {
+  xdgUtils = pkgs.xdg-utils.overrideAttrs (old: {
     nativeBuildInputs = old.nativeBuildInputs or [] ++ [pkgs.makeWrapper];
     postInstall =
       old.postInstall

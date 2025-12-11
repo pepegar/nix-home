@@ -11,7 +11,7 @@ in {
     pulseaudio = true;
   };
 
-  fonts.fonts = with pkgs; [nerd-fonts.Iosevka font-awesome myfonts.icomoon-feather];
+  fonts.packages = with pkgs; [nerd-fonts.iosevka font-awesome myfonts.icomoon-feather];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
