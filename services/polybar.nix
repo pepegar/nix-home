@@ -12,7 +12,7 @@
         wrapProgram $out/bin/xdg-open --suffix PATH : /run/current-system/sw/bin
       '';
   });
-  openCalendar = "${pkgs.gnome.gnome-calendar}/bin/gnome-calendar";
+  openCalendar = "${pkgs.gnome-calendar}/bin/gnome-calendar";
   openGithub = "${xdgUtils}/bin/xdg-open https\\://github.com/notifications";
   mprisScript = pkgs.callPackage ../scripts/mpris.nix {};
   myPolybar = pkgs.polybar.override {

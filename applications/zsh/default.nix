@@ -25,6 +25,8 @@
       eval "$(/opt/homebrew/bin/brew shellenv)"
       eval "$(acli completion zsh)"
 
+      export BUN_INSTALL="$HOME/.bun"
+
       # Added by LM Studio CLI tool (lms)
       export PATH=$HOME/.cache/lm-studio/bin:$PATH
       export PATH=$HOME/.nix-profile/bin:$PATH
@@ -37,6 +39,8 @@
       export PATH=$HOME/.local/bin:$PATH
       export PATH=$HOME/.ghcup/bin:$PATH
       export PATH=$HOME/.cargo/bin:$PATH
+      export PATH="$BUN_INSTALL/bin:$PATH"
+
       export NVM_DIR="$HOME/.nvm"
       [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
       [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
