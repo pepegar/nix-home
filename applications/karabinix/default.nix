@@ -2,6 +2,12 @@
 with inputs.karabinix.lib; let
   debug = true;
 
+  mkLatex = latex: description:
+    mkToEvent {
+      shell_command = "printf '%s' '${latex}' | pbcopy && osascript -e 'tell application \"System Events\" to keystroke \"v\" using command down'";
+      inherit description;
+    };
+
   mkAppLayer = key: variable_name:
     appLayerKey {
       enable_debug = debug;
@@ -313,6 +319,37 @@ in {
 
               (mkAppLayer keyCodes.hyphen "per_app_layer")
               (mkAppLayer keyCodes.equal_sign "per_app_layer")
+
+              (layerKey {
+                enable_debug = debug;
+                key = keyCodes.slash;
+                variable_name = "latex_layer";
+                alone_key = keyCodes.slash;
+                mappings = {
+                  # Number sets (blackboard bold)
+                  n = mkLatex ''\mathbb{N}'' "ℕ";
+                  z = mkLatex ''\mathbb{Z}'' "ℤ";
+                  q = mkLatex ''\mathbb{Q}'' "ℚ";
+                  r = mkLatex ''\mathbb{R}'' "ℝ";
+                  c = mkLatex ''\mathbb{C}'' "ℂ";
+                  # Greek letters
+                  a = mkLatex ''\alpha'' "α";
+                  b = mkLatex ''\beta'' "β";
+                  g = mkLatex ''\gamma'' "γ";
+                  d = mkLatex ''\delta'' "δ";
+                  e = mkLatex ''\epsilon'' "ε";
+                  l = mkLatex ''\lambda'' "λ";
+                  m = mkLatex ''\mu'' "μ";
+                  p = mkLatex ''\pi'' "π";
+                  s = mkLatex ''\sigma'' "σ";
+                  t = mkLatex ''\theta'' "θ";
+                  o = mkLatex ''\omega'' "ω";
+                  # Common operators/symbols
+                  i = mkLatex ''\in'' "∈";
+                  f = mkLatex ''\forall'' "∀";
+                  x = mkLatex ''\exists'' "∃";
+                };
+              })
 
               (layerKey {
                 enable_debug = debug;
