@@ -1,4 +1,5 @@
 #!/bin/bash
+# Create a Jira task interactively under an Epic
 
 # Debug flag
 DEBUG=false

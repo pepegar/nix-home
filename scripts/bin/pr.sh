@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Browse and checkout open PRs from team members
 
 # Debug flag
 DEBUG=0

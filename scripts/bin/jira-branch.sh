@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Create a git branch from a Jira issue key
 
 # Debug flag
 DEBUG=0
