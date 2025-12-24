@@ -10,4 +10,9 @@ in {
 
   home.file.".claude/agents/jira-manager.md".source = ./jira-manager.md;
   home.file.".claude/agents/github-manager.md".source = ./github-manager.md;
+  home.file.".claude/settings.json".source = ./settings.json;
+  home.file.".claude/statusline.sh" = {
+    source = ./statusline.sh;
+    executable = true;
+  };
 }
