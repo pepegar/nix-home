@@ -201,11 +201,11 @@ in {
                     description = "Whatsapp";
                   };
                   t = mkToEvent {
-                    shell_command = "open -a 'Kitty'";
+                    shell_command = "open -a 'kitty'";
                     description = "Kitty";
                   };
                   b = mkToEvent {
-                    shell_command = "open -a 'Chrome'";
+                    shell_command = "open -a 'Google Chrome'";
                     description = "Chrome";
                   };
                   i = mkToEvent {
@@ -396,14 +396,14 @@ in {
                   r = mkToEvent {
                     description = "⬇️⚙️";
                     mouse_key = {
-                      vertical_wheel = 32;
+                      vertical_wheel = -32;
                       speed_multiplier = 1.0;
                     };
                   };
                   f = mkToEvent {
                     description = "⬆️⚙️";
                     mouse_key = {
-                      vertical_wheel = -32;
+                      vertical_wheel = 32;
                       speed_multiplier = 1.0;
                     };
                   };
