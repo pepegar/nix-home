@@ -334,11 +334,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1758630456,
-        "narHash": "sha256-n6KMPyt2+ZXIBBhcd5JOzcvumjQMnaTn3HYj5ET+YEQ=",
+        "lastModified": 1765644878,
+        "narHash": "sha256-TtJDdwJkqC0KHNnhrrT1keFCAWtCvxFQtTa9FlEIIjs=",
         "owner": "pepegar",
         "repo": "karabinix",
-        "rev": "5b56f844924f21398d3d2b3deddcfc80b501bb2e",
+        "rev": "9f17ee6debffc8a9c4f118d5fb66675a4a1c72ff",
         "type": "github"
       },
       "original": {

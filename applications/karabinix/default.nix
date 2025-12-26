@@ -16,6 +16,18 @@ with inputs.karabinix.lib; let
       inherit description;
     };
 
+  # Creates \begin{env}\end{env} and moves cursor between them
+  # arrows = number of left arrow presses to position cursor (length of "\end{env}" + 1)
+  mkLatexEnv = env: description: let
+    endTag = "\\end{${env}}";
+    arrows = builtins.stringLength endTag;
+    arrowPresses = builtins.concatStringsSep " & " (builtins.genList (_: "key code 123") arrows);
+  in
+    mkToEvent {
+      shell_command = "printf '%s' '\\begin{${env}}\\end{${env}}' | pbcopy && osascript -e 'tell application \"System Events\" to keystroke \"v\" using command down' -e 'delay 0.05' -e 'tell application \"System Events\" to ${arrowPresses}'";
+      inherit description;
+    };
+
   mkAppLayer = key: variable_name:
     appLayerKey {
       enable_debug = debug;
@@ -304,34 +316,58 @@ in {
               (mkAppLayer keyCodes.hyphen "per_app_layer")
               (mkAppLayer keyCodes.equal_sign "per_app_layer")
 
-              (layerKey {
+              (sublayerKey {
                 enable_debug = debug;
                 key = keyCodes.slash;
-                variable_name = "latex_layer";
                 alone_key = keyCodes.slash;
+                variable_name = "latex";
+
                 mappings = {
-                  # Number sets (blackboard bold)
-                  n = mkLatex ''\mathbb{N}'' "ℕ";
-                  z = mkLatex ''\mathbb{Z}'' "ℤ";
-                  q = mkLatex ''\mathbb{Q}'' "ℚ";
-                  r = mkLatex ''\mathbb{R}'' "ℝ";
-                  c = mkLatex ''\mathbb{C}'' "ℂ";
-                  # Greek letters
-                  a = mkLatex ''\alpha'' "α";
-                  b = mkLatex ''\beta'' "β";
-                  g = mkLatex ''\gamma'' "γ";
-                  d = mkLatex ''\delta'' "δ";
-                  e = mkLatex ''\epsilon'' "ε";
-                  l = mkLatex ''\lambda'' "λ";
-                  m = mkLatex ''\mu'' "μ";
-                  p = mkLatex ''\pi'' "π";
-                  s = mkLatex ''\sigma'' "σ";
-                  t = mkLatex ''\theta'' "θ";
-                  o = mkLatex ''\omega'' "ω";
-                  # Common operators/symbols
-                  i = mkLatex ''\in'' "∈";
-                  f = mkLatex ''\forall'' "∀";
-                  x = mkLatex ''\exists'' "∃";
+                  "n" = mkLatex ''\mathbb{N}'' "ℕ";
+                  "z" = mkLatex ''\mathbb{Z}'' "ℤ";
+                  "q" = mkLatex ''\mathbb{Q}'' "ℚ";
+                  "r" = mkLatex ''\mathbb{R}'' "ℝ";
+                  "c" = mkLatex ''\mathbb{C}'' "ℂ";
+                  "i" = mkLatex ''\in'' "∈";
+                  "f" = mkLatex ''\forall'' "∀";
+                  "x" = mkLatex ''\exists'' "∃";
+                  "a" = mkLatex ''\land'' "∧";
+                  "o" = mkLatex ''\lor'' "∨";
+                  "e" = mkLatex ''\equiv'' "≡";
+                };
+                sublayers = {
+                  "g" = {
+                    "a" = mkLatex ''\alpha'' "α";
+                    "b" = mkLatex ''\beta'' "β";
+                    "g" = mkLatex ''\gamma'' "γ";
+                    "d" = mkLatex ''\delta'' "δ";
+                    "e" = mkLatex ''\epsilon'' "ε";
+                    "l" = mkLatex ''\lambda'' "λ";
+                    "m" = mkLatex ''\mu'' "μ";
+                    "p" = mkLatex ''\pi'' "π";
+                    "s" = mkLatex ''\sigma'' "σ";
+                    "t" = mkLatex ''\theta'' "θ";
+                    "o" = mkLatex ''\omega'' "ω";
+                  };
+                  "b" = {
+                    # Matrices
+                    "m" = mkLatexEnv "matrix" "matrix";
+                    "p" = mkLatexEnv "pmatrix" "(matrix)";
+                    "b" = mkLatexEnv "bmatrix" "[matrix]";
+                    "v" = mkLatexEnv "vmatrix" "|matrix|";
+                    "shift+v" = mkLatexEnv "Vmatrix" "‖matrix‖";
+                    # Equations & alignment
+                    "a" = mkLatexEnv "align" "align";
+                    "e" = mkLatexEnv "equation" "equation";
+                    "c" = mkLatexEnv "cases" "cases";
+                    # Theorems & proofs (analysis)
+                    "t" = mkLatexEnv "theorem" "theorem";
+                    "d" = mkLatexEnv "definition" "definition";
+                    "l" = mkLatexEnv "lemma" "lemma";
+                    "r" = mkLatexEnv "proof" "proof";
+                    "shift+p" = mkLatexEnv "proposition" "proposition";
+                    "shift+c" = mkLatexEnv "corollary" "corollary";
+                  };
                 };
               })
 
