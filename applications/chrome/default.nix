@@ -1,6 +1,6 @@
-{pkgs, ...}: {
+{...}: {
   programs.chromium = {
-    enable = true;
-    package = pkgs.google-chrome;
+    enable = false;
+    #package = pkgs.google-chrome;
   };
 }

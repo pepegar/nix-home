@@ -63,6 +63,22 @@ log_command() {
     fi
 }
 
+# Function to extract issue ID from branch name (e.g., GNC-1234-description -> GNC-1234)
+extract_issue_id() {
+    local branch_name="$1"
+    echo "$branch_name" | grep -oE '^[A-Z]+-[0-9]+' | head -1
+}
+
+# Function to rename Zellij tab to issue ID
+rename_zellij_tab() {
+    local branch_name="$1"
+    local issue_id=$(extract_issue_id "$branch_name")
+    if [[ -n "$issue_id" ]] && command -v zellij &> /dev/null && [[ -n "$ZELLIJ" ]]; then
+        debug_echo "Renaming Zellij tab to: $issue_id"
+        zellij action rename-tab "$issue_id"
+    fi
+}
+
 # Function to check if branch exists (local or remote)
 branch_exists() {
     local branch_name="$1"
@@ -236,9 +252,13 @@ if [[ $CREATE_MODE -eq 1 ]]; then
         branch_name="${branch_name#origin/}"
         debug_echo "Creating from remote branch: $branch_name"
     fi
-    
+
     create_worktree "$branch_name"
-    exit $?
+    local result=$?
+    if [[ $result -eq 0 ]]; then
+        rename_zellij_tab "$branch_name"
+    fi
+    exit $result
 fi
 
 # Continue with interactive worktree switching mode
@@ -543,6 +563,10 @@ if [[ ! -d "$target_path" ]]; then
 fi
 
 debug_echo "Selected worktree: $target_path"
+
+# Rename Zellij tab to issue ID
+branch_name=$(get_branch_from_line "$selected")
+rename_zellij_tab "$branch_name"
 
 # Output the target path for cd usage
 echo "$target_path"

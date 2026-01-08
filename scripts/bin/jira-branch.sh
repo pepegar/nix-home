@@ -97,6 +97,15 @@ set_issue_in_progress() {
     acli jira workitem transition --key $issue_key --status "In Progress"
 }
 
+# Function to rename Zellij tab to issue ID
+rename_zellij_tab() {
+    local issue_key=$1
+    if [[ -n "$issue_key" ]] && command -v zellij &> /dev/null && [[ -n "$ZELLIJ" ]]; then
+        debug_echo "Renaming Zellij tab to: $issue_key"
+        zellij action rename-tab "$issue_key"
+    fi
+}
+
 if [ -n "$ISSUE_KEY" ]; then
     # Issue key provided, get issue details directly
     debug_echo "Using provided issue key: $ISSUE_KEY"
@@ -200,6 +209,9 @@ else
         exit 1
     fi
 fi
+
+# Rename Zellij tab to issue ID
+rename_zellij_tab "$jira_key"
 
 # Set Jira issue to In Progress
 set_issue_in_progress "$jira_key"
