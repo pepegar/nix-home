@@ -407,6 +407,10 @@ in {
                       speed_multiplier = 1.0;
                     };
                   };
+                  c = mkToEvent {
+                    description = "center→";
+                    shell_command = "~/bin/mouse-center.sh";
+                  };
                 };
               })
 

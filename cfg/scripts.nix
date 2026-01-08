@@ -51,4 +51,9 @@
     source = ../scripts/bin/autocommit.sh;
     executable = true;
   };
+
+  home.file."bin/mouse-center.sh" = {
+    source = ../scripts/bin/mouse-center.sh;
+    executable = true;
+  };
 }
