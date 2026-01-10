@@ -33,6 +33,8 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  manual.manpages.enable = false;
   programs.command-not-found.enable = true;
   home.stateVersion = "22.11";
   home.username = "pepe";

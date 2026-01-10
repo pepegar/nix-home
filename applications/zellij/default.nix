@@ -2,6 +2,13 @@
   programs.zellij = {
     enable = true;
 
+    settings = {
+      support_kitty_keyboard_protocol = false;
+      keybinds = {
+        unbind = ["Alt Left" "Alt Right"];
+      };
+    };
+
     layouts = {
       default = ''
         layout {
@@ -12,9 +19,6 @@
               }
           }
           tab name="Home Manager" cwd="~/.config/home-manager" {
-            pane
-          }
-          tab name="Karabinix" cwd="~/projects/github.com/pepegar/karabinix" {
             pane
           }
           tab name="Math" cwd="~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Math" {
