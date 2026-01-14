@@ -7,6 +7,7 @@
     #../applications/firefox
     ../applications/chrome
     ../applications/claude
+    ../applications/codex
     ../applications/direnv
     ../applications/emacs
     ../applications/fzf

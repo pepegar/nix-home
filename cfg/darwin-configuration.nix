@@ -16,8 +16,9 @@
     # Add nix settings to seperate conf file
     # since we use Determinate Nix on our systems.
     trusted-users = pepe
-    extra-substituters = https://devenv.cachix.org
+    extra-substituters = https://devenv.cachix.org https://cache.nixos.org
     extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
+    substituters = https://cache.nixos.org https://devenv.cachix.org
   '';
 
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";

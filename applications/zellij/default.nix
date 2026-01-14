@@ -6,6 +6,14 @@
       support_kitty_keyboard_protocol = false;
       keybinds = {
         unbind = ["Alt Left" "Alt Right"];
+        normal = {
+          unbind = ["Ctrl g"];
+          "bind \"Ctrl b\"" = {SwitchToMode = "Locked";};
+        };
+        locked = {
+          unbind = ["Ctrl g"];
+          "bind \"Ctrl b\"" = {SwitchToMode = "Normal";};
+        };
       };
     };
 
