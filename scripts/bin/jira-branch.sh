@@ -92,9 +92,9 @@ set_branch_description() {
 # Function to set Jira issue to In Progress
 set_issue_in_progress() {
     local issue_key=$1
-    debug_echo "Setting Jira issue $issue_key to In Progress"
-    log_command " acli jira workitem transition --key $issue_key --status \"In Progress\""
-    acli jira workitem transition --key $issue_key --status "In Progress"
+    debug_echo "Setting Jira issue $issue_key to In Development"
+    log_command " acli jira workitem transition --key $issue_key --status \"In Development\""
+    acli jira workitem transition --key $issue_key --status "In Development"
 }
 
 # Function to rename Zellij tab to issue ID
@@ -126,7 +126,7 @@ else
     # Run ACLI command, parse JSON, and pipe to fzf for selection
     debug_echo "Running ACLI command, parsing JSON, and piping to fzf"
     log_command "acli jira workitem search --jql 'assignee = currentuser() and status in (\"To Do\", \"In Progress\", \"Peer Review\", \"Ready\") ORDER BY updatedDate DESC' --json | jq -r '.[] | \"\\(.key) [\\(.fields.status.name)] \\(.fields.summary)\"' | fzf --ansi --height 40% --reverse"
-    selected=$(acli jira workitem search --jql 'assignee = currentuser() and status in ("To Do", "In Progress", "Peer Review", "Ready") ORDER BY updatedDate DESC' --json | jq -r '.[] | "\(.key) [\(.fields.status.name)] \(.fields.summary)"' | fzf --ansi --height 40% --reverse)
+    selected=$(acli jira workitem search --jql 'assignee = currentuser() and status in ("To Do", "In Progress", "Peer Review", "Ready", "Ready for Development") ORDER BY updatedDate DESC' --json | jq -r '.[] | "\(.key) [\(.fields.status.name)] \(.fields.summary)"' | fzf --ansi --height 40% --reverse)
 
     # Exit if no selection was made
     if [ -z "$selected" ]; then
@@ -215,4 +215,4 @@ rename_zellij_tab "$jira_key"
 
 # Set Jira issue to In Progress
 set_issue_in_progress "$jira_key"
-echo "Updated Jira issue $jira_key to In Progress status."
+echo "Updated Jira issue $jira_key to In Development status."

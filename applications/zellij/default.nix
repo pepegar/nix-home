@@ -4,6 +4,20 @@
 
     settings = {
       support_kitty_keyboard_protocol = false;
+      theme = "custom";
+      themes.custom = {
+        fg = [171 178 191]; # light gray text
+        bg = [40 44 52]; # dark background
+        black = [40 44 52];
+        red = [224 108 117];
+        green = [152 195 121];
+        yellow = [229 192 123];
+        blue = [97 175 239];
+        magenta = [198 120 221];
+        cyan = [86 182 194];
+        white = [171 178 191];
+        orange = [209 154 102];
+      };
       keybinds = {
         unbind = ["Alt Left" "Alt Right"];
         normal = {
