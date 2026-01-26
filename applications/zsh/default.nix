@@ -49,6 +49,16 @@
       bindkey "^[3;5~" delete-char
       bindkey "\e[3~" delete-char
       bindkey "^[[3;3~" delete-word
+
+      zz () {
+        local dir
+        if [ $# -gt 0 ]; then
+          dir=$(_z -l 2>&1 | grep -i "$*" | tail -1 | sed 's/^[0-9,.]* *//')
+        else
+          dir=$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "''${*##-* }" | sed 's/^[0-9,.]* *//')
+        fi
+        [ -n "$dir" ] && zellij action new-tab --name "$(basename "$dir")" --cwd "$dir"
+      }
     '';
 
     shellAliases = {
@@ -65,6 +75,7 @@
       k = "kubectl";
       vf = "fd --type f | fzf --preview 'bat --style=numbers --color=always {}' | xargs -r vi";
       gwt = "wt=$(git-wt) && zellij action new-tab --name $(basename $wt) --cwd $wt";
+      jj = "zz";
     };
 
     plugins = [
