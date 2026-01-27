@@ -34,6 +34,8 @@
         ac = "autocommit";
       };
 
+      diff.external = "difft";
+
       ghq.root = "~/projects";
 
       init.defaultBranch = "main";

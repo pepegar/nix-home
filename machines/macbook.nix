@@ -8,6 +8,7 @@
     ../applications/chrome
     ../applications/claude
     ../applications/codex
+    ../applications/opencode
     ../applications/direnv
     ../applications/emacs
     ../applications/fzf

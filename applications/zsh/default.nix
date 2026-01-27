@@ -22,6 +22,8 @@
     defaultKeymap = "emacs";
 
     initContent = ''
+      export PROJECT_TO_IGNORE="':!Web/projection/Package.resolved' ':!iOS/GoodNotesUITests/screenshots' ':!HWR/HanwangHWR' ':!iOS/GoodNotesUITests/uitest-fixtures' ':!CrossPlatformWeb-Localization' ':!Localization' ':!Organizations/Organization-Localization' ':!MarketplaceWeb-Localization' ':!iOS/certificates-catalyst' ':!marketplace-core/content-store-backend' ':!projection/Package.resolved' ':!iOS/GoodNotes/MLModels' ':!CommonSwift/GoodNotesSchema/Package.resolved' ':!tree-sitter-rtf' ':!iOS/GoodNotesRetailDemo/Resources' ':!ts-packages/content-store-client/content-store-backend' ':!WebShared/DevOps/container-images' ':!Web/tools/gnc-cli/yarn.lock' ':!tools/gnc-cli/yarn.lock' ':!.idea/runConfigurations/_template__of_Gradle.xml'"
+
       eval "$(/opt/homebrew/bin/brew shellenv)"
       eval "$(acli completion zsh)"
 
@@ -29,6 +31,7 @@
 
       # Added by LM Studio CLI tool (lms)
       export PATH=$HOME/.cache/lm-studio/bin:$PATH
+      export PATH=$HOME/.opencode/bin:$PATH
       export PATH=$HOME/.nix-profile/bin:$PATH
       export PATH=$HOME/Library/Python/3.7/bin:$PATH
       export PATH=$HOME/bin:$PATH
@@ -66,6 +69,9 @@
       g = "git";
       gc = "git commit";
       gst = "git status";
+      gadp = "git add -p -- . $PROJECT_TO_IGNORE";
+      gs = "git status -- . $PROJECT_TO_IGNORE";
+      gd = "git diff -- . $PROJECT_TO_IGNORE";
       ls = "exa";
       ll = "ls -a";
       ".." = "cd ..";
