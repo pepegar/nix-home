@@ -26,6 +26,7 @@
       "x86_64-unknown-linux-gnu"
       "ghostscript"
       "pinentry-mac"
+      "xcodes"
     ];
 
     casks = [

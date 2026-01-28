@@ -78,7 +78,6 @@
     tree-sitter
     tree
     uv
-    xcodes
     yq
     zig
   ];
