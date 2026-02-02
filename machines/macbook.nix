@@ -9,6 +9,7 @@
     ../applications/claude
     ../applications/codex
     ../applications/opencode
+    ../applications/pi
     ../applications/direnv
     ../applications/emacs
     ../applications/fzf
