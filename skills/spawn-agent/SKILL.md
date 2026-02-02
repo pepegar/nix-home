@@ -1,7 +1,6 @@
 ---
 name: spawn-agent
 description: Create a git worktree and spawn a Claude Code agent in a new Zellij tab with a prompt
-argument-hint: <branch-name> "<prompt>"
 allowed-tools: Bash, Skill
 ---
 

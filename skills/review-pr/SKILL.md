@@ -1,7 +1,6 @@
 ---
 name: review-pr
 description: Review a pull request using team PR patterns - correctness, type safety, naming, testing, configuration, error handling, performance, architecture, cleanup, and storage consistency.
-user-invocable: true
 disable-model-invocation: true
 ---
 

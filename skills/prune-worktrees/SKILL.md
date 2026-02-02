@@ -1,9 +1,7 @@
 ---
 name: prune-worktrees
 description: Safely prune git worktrees by checking for open PRs, unmerged commits, and uncommitted files before deletion
-user-invocable: true
 disable-model-invocation: true
-argument-hint: "[--force] [--dry-run]"
 allowed-tools: Bash
 ---
 

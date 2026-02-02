@@ -1,8 +1,6 @@
 ---
 name: run-tests
 description: Run the minimum set of gradle tests needed for changed files. Supports modes - staged (default), pr (all PR files), or a specific module path.
-argument-hint: "[staged|pr|module-path]"
-user-invocable: true
 disable-model-invocation: true
 ---
 
