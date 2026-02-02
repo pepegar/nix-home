@@ -1,4 +1,9 @@
 {...}: {
+  home.file.".claude/skills" = {
+    source = ../../skills;
+    recursive = true;
+  };
+
   home.sessionVariables = {
     #ANTHROPIC_AUTH_TOKEN = secrets.ANTHROPIC_AUTH_TOKEN;
     #ANTHROPIC_BASE_URL = secrets.ANTHROPIC_BASE_URL;

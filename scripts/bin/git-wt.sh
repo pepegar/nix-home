@@ -564,9 +564,11 @@ fi
 
 debug_echo "Selected worktree: $target_path"
 
-# Rename Zellij tab to issue ID
-branch_name=$(get_branch_from_line "$selected")
-rename_zellij_tab "$branch_name"
+# Rename Zellij tab to issue ID (only when switching to a different worktree)
+if [[ "$target_path" != "$current_worktree" ]]; then
+    branch_name=$(get_branch_from_line "$selected")
+    rename_zellij_tab "$branch_name"
+fi
 
 # Output the target path for cd usage
 echo "$target_path"

@@ -3,12 +3,14 @@
 
   programs.git = {
     enable = true;
-    userEmail = "pepe@pepegar.com";
     #delta.enable = true;
 
-    extraConfig = {
+    settings = {
       github = {user = "pepegar";};
-      user.name = "Pepe Garcia";
+      user = {
+        name = "Pepe Garcia";
+        email = "pepe@pepegar.com";
+      };
 
       alias = {
         lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
@@ -32,6 +34,10 @@
         resetm = "!git diff --name-only --cached | fzf -0 -m --preview 'git diff --color=always {-1}' | xargs -r git reset";
         autocommit = "!bash ~/bin/autocommit.sh";
         ac = "autocommit";
+
+        cof = "!git branch | fzf | xargs git checkout";
+        af = "!git status -s | awk '{print $2}' | fzf -m | xargs git add";
+        afc = "!git af && git commit --verbose";
       };
 
       diff.external = "difft";

@@ -193,8 +193,8 @@ in {
                     description = "Notion";
                   };
                   a = mkToEvent {
-                    shell_command = "open -a 'ChatGPT'";
-                    description = "ChatGPT";
+                    shell_command = "open -a 'Claude'";
+                    description = "Claude";
                   };
                   w = mkToEvent {
                     shell_command = "open -a 'WhatsApp'";

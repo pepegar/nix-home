@@ -36,18 +36,26 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  news.display = "silent";
+
   manual.manpages.enable = false;
   programs.command-not-found.enable = true;
   home.stateVersion = "22.11";
   home.username = "pepe";
   home.homeDirectory = "/Users/pepe";
 
+  xdg.configFile."nix/nix.conf".text = ''
+    warn-dirty = false
+    accept-flake-config = true
+    substituters = https://cache.nixos.org https://devenv.cachix.org
+  '';
+
   nixpkgs.overlays = [
     inputs.nur.overlays.default
   ];
 
   home.packages = with pkgs; [
-    inputs.devenv.packages."${pkgs.system}".devenv
+    inputs.devenv.packages."${pkgs.stdenv.hostPlatform.system}".devenv
     alejandra
     aws-vault
     bat

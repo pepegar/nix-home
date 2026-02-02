@@ -1,6 +1,6 @@
-{...}: {
+{config, ...}: {
   programs.go = {
     enable = true;
-    goPath = "go";
+    env.GOPATH = "${config.home.homeDirectory}/go";
   };
 }

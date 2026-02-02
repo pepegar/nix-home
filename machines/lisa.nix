@@ -38,6 +38,8 @@ in rec {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  news.display = "silent";
+
   home.packages = with pkgs; [
     ag
     any-nix-shell
