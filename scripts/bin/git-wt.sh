@@ -3,6 +3,7 @@
 # Debug flag
 DEBUG=0
 CREATE_MODE=0
+RENAME_TAB=0
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -15,8 +16,12 @@ while [[ $# -gt 0 ]]; do
             CREATE_MODE=1
             shift
             ;;
+        --rename-tab)
+            RENAME_TAB=1
+            shift
+            ;;
         -h|--help)
-            echo "Usage: $0 [--debug] [--create]"
+            echo "Usage: $0 [--debug] [--create] [--rename-tab]"
             echo "Interactive git worktree switcher and creator with fzf"
             echo ""
             echo "Default mode (no --create):"
@@ -29,6 +34,9 @@ while [[ $# -gt 0 ]]; do
             echo "  Interactive branch selection to create new worktree"
             echo "  Location: .worktrees/<branch_name>"
             echo "  Shows all local and remote branches"
+            echo ""
+            echo "Optional flags:"
+            echo "  --rename-tab  Rename Zellij tab to issue ID on switch/create"
             echo ""
             echo "Output: Prints target directory path to stdout"
             echo ""
@@ -43,7 +51,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         *)
             echo "Unknown parameter: $1"
-            echo "Usage: $0 [--debug] [--create] [-h|--help]"
+            echo "Usage: $0 [--debug] [--create] [--rename-tab] [-h|--help]"
             exit 1
             ;;
     esac
@@ -255,7 +263,7 @@ if [[ $CREATE_MODE -eq 1 ]]; then
 
     create_worktree "$branch_name"
     local result=$?
-    if [[ $result -eq 0 ]]; then
+    if [[ $result -eq 0 && $RENAME_TAB -eq 1 ]]; then
         rename_zellij_tab "$branch_name"
     fi
     exit $result
@@ -565,7 +573,7 @@ fi
 debug_echo "Selected worktree: $target_path"
 
 # Rename Zellij tab to issue ID (only when switching to a different worktree)
-if [[ "$target_path" != "$current_worktree" ]]; then
+if [[ "$target_path" != "$current_worktree" && $RENAME_TAB -eq 1 ]]; then
     branch_name=$(get_branch_from_line "$selected")
     rename_zellij_tab "$branch_name"
 fi
