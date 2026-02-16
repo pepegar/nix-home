@@ -5,7 +5,7 @@
     enableBashIntegration = true;
 
     settings = {
-      format = "$directory$git_branch$git_commit$git_state$git_metrics$git_status$fill$nix_shell$aws$line_break$jobs$battery$time$status$os$container$shell$character";
+      format = "$directory$git_branch\${custom.git_branch_description}$git_commit$git_state$git_metrics$git_status$fill$nix_shell$aws$line_break$jobs$battery$time$status$os$container$shell$character";
       palette = "catppuccin_latte";
       fill = {
         symbol = " ";
@@ -36,6 +36,14 @@
       git_state = {
         format = "([$state( $progress_current/$progress_total)]($style) )";
         style = "bright-black";
+      };
+      custom.git_branch_description = {
+        command = "desc=$(git config branch.$(git rev-parse --abbrev-ref HEAD).description 2>/dev/null | head -1); [ \${#desc} -gt 50 ] && echo \"\${desc:0:47}...\" || echo \"$desc\"";
+        when = "git config branch.$(git rev-parse --abbrev-ref HEAD 2>/dev/null).description 2>/dev/null | grep -q .";
+        format = "( «$output»)";
+        style = "italic bright-black";
+        description = "Git branch description";
+        ignore_timeout = true;
       };
       cmd_duration = {
         format = "[$duration]($style) ";

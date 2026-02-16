@@ -1,10 +1,3 @@
----
-name: prune-worktrees
-description: Safely prune git worktrees by checking for open PRs, unmerged commits, and uncommitted files before deletion
-disable-model-invocation: true
-allowed-tools: Bash
----
-
 # Prune Git Worktrees
 
 Safely clean up git worktrees by checking for open PRs, unmerged commits, and uncommitted files before deletion.
@@ -187,13 +180,13 @@ Run `git worktree list` to see remaining worktrees.
 ## Example Usage
 
 ```
-/prune-worktrees
+/worktree prune
 # Interactive mode - asks for confirmation for each safe worktree
 
-/prune-worktrees --dry-run
+/worktree prune --dry-run
 # Shows what would be deleted without deleting anything
 
-/prune-worktrees --force
+/worktree prune --force
 # Deletes all safe worktrees without confirmation
 ```
 

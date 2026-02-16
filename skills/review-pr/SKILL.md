@@ -130,6 +130,7 @@ Read each changed file listed above and analyze them against these review patter
 - Prefer type-safe sealed class hierarchies instead of `Any?` in maps
 - Rename generic parameters to be descriptive (e.g., `context` → `caveatContext`)
 - Make required fields explicitly required rather than optional
+- Flag direct `.unsafeValue` access on `UserInput<T>` wrappers — use `assertActorCanAccessWorkspace()`, `resolveDocumentAndAuthorizeAction()`, or similar safe-extraction methods that validate and authorize in one step
 
 #### C. Naming & Readability
 - Method names should describe what they do
@@ -140,6 +141,7 @@ Read each changed file listed above and analyze them against these review patter
 
 #### D. Testing Practices
 - Use `registry.testClock` instead of `Instant.now()` for deterministic tests
+- Repositories and use cases that compute timestamps should accept `java.time.Clock` as a constructor parameter — this enables test control without mocking static methods
 - **DatabaseTestSuite is for recipes, not HTTP helpers** - it combines use-case-level scenarios, not arbitrary endpoint calls
 - Minimize DatabaseTestSuite parameters - too many leads to testing invalid combinations
 - Test real scenarios, not combinations clients never call
@@ -162,13 +164,17 @@ Read each changed file listed above and analyze them against these review patter
 - **Cache invariant data** - don't check FIFO queue status on every message
 - Avoid repeated API calls that add latency and cost
 - Database query efficiency (N+1 queries, missing indexes, full table scans)
+- **Composite primary key queries**: When a table has a composite PK like `(collocation_id, item_id)`, querying by `item_id` alone causes a full sequential scan — always include the leading column
 - Consider maximum database connections during pod scaling
 - SpiceDB query patterns (prefer batch operations over individual calls)
+- **Distributed lock scope minimization**: Only operations that require mutual exclusion (e.g., SpiceDB writes + ZedToken updates) should be inside workspace locks. Move CRDB reads/writes outside the lock when they don't need atomicity with the locked operations
 
 #### H. Architecture Decisions
 - For FIFO queues: userId vs documentId partition key tradeoffs
 - Use optional parameters with sensible defaults for per-callsite behavior
 - Default new parameters to preserve existing behavior
+- **UseCaseDsl pattern**: Use cases that resolve documents/folders and check authorization should extend `UseCaseDsl(authService, documentDatabaseService)` — this provides `resolveDocumentAndAuthorizeAction()`, `resolveDocumentAndAuthorizeRead()`, etc.
+- **assertActorCanAccessWorkspace**: Use `authorizationService.assertActorCanAccessWorkspace(actor.guid, userInputWorkspaceId)` to safely extract workspace IDs and validate access in one call — returns `Pair<WorkspaceId, Consistency?>`
 
 #### I. Code Cleanup
 - Delete unused classes/methods - don't leave commented-out code
@@ -182,12 +188,15 @@ This codebase uses:
 - **CockroachDB** as the main relational database
 - **SpiceDB** for permissions/authorization
 
+**Authoritative vs Metadata roles vary per endpoint.** For some endpoints, CockroachDB is the authoritative (data) store and SpiceDB holds derived metadata; for others, SpiceDB is authoritative and CockroachDB holds metadata. When reviewing, identify which storage is authoritative for the specific operation — this determines write ordering, retry semantics, and what happens during partial failures.
+
 **Critical Review Points:**
 
 1. **Retryability over Sagas**: Endpoints should be retryable without compensation. Verify:
    - Operations are idempotent where possible
    - Partial failures leave the system in a state that can be retried
    - No saga/compensation patterns are needed
+   - **Prefer upsert (`ON CONFLICT DO UPDATE`) over insert + idempotency guards** — simplifies multi-storage retry flows
 
 2. **Partial State Handling**: When an endpoint writes to multiple storages:
    - What happens if CockroachDB write succeeds but SpiceDB write fails?
@@ -195,9 +204,9 @@ This codebase uses:
    - Can the operation be safely retried from any failure point?
 
 3. **Write Ordering**: Consider the order of writes:
-   - Generally prefer writing to CockroachDB first (source of truth)
-   - SpiceDB should reflect permissions based on CockroachDB state
-   - If SpiceDB is written first, a retry after CockroachDB failure could leave orphaned permissions
+   - Write to the **authoritative** storage first, then the metadata storage
+   - The authoritative storage depends on the endpoint: for some operations CockroachDB is authoritative, for others SpiceDB is
+   - If the metadata write fails after the authoritative write succeeds, a retry should be safe
 
 4. **Transaction Boundaries**:
    - CockroachDB operations within a transaction are atomic
@@ -206,6 +215,11 @@ This codebase uses:
 5. **ZedToken Consistency**: When using SpiceDB:
    - Are ZedTokens stored appropriately for read-after-write consistency?
    - Is the correct consistency level used for permission checks?
+
+6. **Lock Scope**: When using distributed locks (e.g., workspace locks):
+   - Only SpiceDB permission writes + ZedToken updates should be inside the lock
+   - CockroachDB reads/writes can often happen outside the lock when they don't require atomicity with SpiceDB operations
+   - Minimizing lock scope reduces contention and latency
 
 ### Step 4: Format the Review
 

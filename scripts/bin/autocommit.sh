@@ -11,13 +11,19 @@ set -euo pipefail
 RECENT_COMMITS=$(git log -3 --pretty=format:'%s' 2>/dev/null || echo "")
 
 # Build the prompt with recent commits for style reference
+DIFF_EXPLANATION="IMPORTANT: In the git diff format, lines starting with '-' (minus) are REMOVED/DELETED lines, and lines starting with '+' (plus) are ADDED/NEW lines. Pay careful attention to this when describing what changed."
+
 if [[ -n "$RECENT_COMMITS" ]]; then
     PROMPT="Here are the last 3 commit messages from this branch for style reference:
 $RECENT_COMMITS
 
-Now analyze the following git diff and provide a concise commit message (50 chars or less) following conventional commit format (type: description). Use similar language, style, and tone as the recent commits above. Use types like feat, fix, chore, docs, refactor, style, test, perf. Be specific about what changed."
+$DIFF_EXPLANATION
+
+Now analyze the following git diff and provide a concise commit message (50 chars or less) following conventional commit format (type: description). Use similar language, style, and tone as the recent commits above. Use types like feat, fix, chore, docs, refactor, style, test, perf. Be specific about what changed - if code was removed, say it was removed; if code was added, say it was added."
 else
-    PROMPT="Analyze the following git diff and provide a concise commit message (50 chars or less) following conventional commit format (type: description). Use types like feat, fix, chore, docs, refactor, style, test, perf. Be specific about what changed."
+    PROMPT="$DIFF_EXPLANATION
+
+Analyze the following git diff and provide a concise commit message (50 chars or less) following conventional commit format (type: description). Use types like feat, fix, chore, docs, refactor, style, test, perf. Be specific about what changed - if code was removed, say it was removed; if code was added, say it was added."
 fi
 
 # Parse arguments

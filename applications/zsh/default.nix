@@ -28,10 +28,11 @@
       eval "$(acli completion zsh)"
 
       export BUN_INSTALL="$HOME/.bun"
+      export NPM_CONFIG_PREFIX=$HOME/.npm-global
 
-      # Added by LM Studio CLI tool (lms)
       export PATH=$HOME/.cache/lm-studio/bin:$PATH
       export PATH=$HOME/.opencode/bin:$PATH
+      export PATH=$HOME/.npm-global/bin:$PATH
       export PATH=$HOME/.nix-profile/bin:$PATH
       export PATH=$HOME/Library/Python/3.7/bin:$PATH
       export PATH=$HOME/bin:$PATH
@@ -80,7 +81,7 @@
       ping = "prettyping";
       k = "kubectl";
       vf = "fd --type f | fzf --preview 'bat --style=numbers --color=always {}' | xargs -r vi";
-      gwt = "wt=$(git-wt) && zellij action new-tab --cwd $wt";
+      gwt = "wt=$(git-wt) && zellij action new-tab --name $(basename $wt) --cwd $wt";
       jj = "zz";
     };
 

@@ -1,18 +1,18 @@
 ---
 name: spawn-agent
-description: Create a git worktree and spawn a Claude Code agent in a new Zellij tab with a prompt
+description: Create a git worktree and spawn a coding agent in a new Zellij tab with a prompt
 allowed-tools: Bash, Skill
 ---
 
 # Spawn Agent Skill
 
-Create a git worktree and spawn a new Claude Code agent in a separate Zellij tab. This combines the `/worktree` and `/zellij` skills into a single workflow.
+Create a git worktree and spawn a new coding agent in a separate Zellij tab. This combines the `/worktree` and `/zellij` skills into a single workflow.
 
 ## Arguments
 
 - `$ARGUMENTS` should contain:
   - **branch-name** (required): Name for the new branch and worktree
-  - **prompt** (required): The prompt to pass to Claude Code (should be quoted if it contains spaces)
+  - **prompt** (required): The prompt to pass to the coding agent (should be quoted if it contains spaces)
 
 ## Steps
 
@@ -28,14 +28,16 @@ Create a git worktree and spawn a new Claude Code agent in a separate Zellij tab
    ```
    This will create a worktree at `.worktrees/<branch-name>` based on the current branch.
 
-4. **Create a Zellij tab** using the `/zellij` skill patterns:
+4. know which codign agent are you.  Are you claude? are you codex? are you pi?  Set to $codingAgent
+
+5. **Create a Zellij tab** using the `/zellij` skill patterns:
    - Create a tab named `<branch-name>`
    - Set the working directory to the worktree path
-   - Run `echo '<prompt>' | claude --dangerously-skip-permissions` in the tab
+   - Run `echo '<prompt>' | $codingAgent` in the tab
 
    Refer to the `/zellij` skill for the KDL layout syntax and how to create tabs with commands.
 
-5. **Report success**:
+6. **Report success**:
    - Worktree path
    - Branch name
    - Tab name

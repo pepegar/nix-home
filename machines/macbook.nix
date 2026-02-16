@@ -55,8 +55,16 @@
     inputs.nur.overlays.default
   ];
 
+  home.sessionVariables = let
+    secrets = import ../secrets.nix;
+  in {
+    DD_API_KEY = secrets.DATADOG_API_KEY;
+    DD_APP_KEY = secrets.DATADOG_APP_KEY;
+    CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
+  };
   home.packages = with pkgs; [
     inputs.devenv.packages."${pkgs.stdenv.hostPlatform.system}".devenv
+    inputs.tmux-zellij.packages."${pkgs.stdenv.hostPlatform.system}".tmux-zellij
     alejandra
     aws-vault
     bat
