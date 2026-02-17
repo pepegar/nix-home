@@ -2,6 +2,14 @@
 with inputs.karabinix.lib; let
   debug = true;
 
+  # Toggle app: if frontmost, hide it; otherwise activate it
+  # processName is the name as shown in "System Events" (usually same as app name)
+  mkToggleApp = appName: processName:
+    mkToEvent {
+      shell_command = ''osascript -e 'tell application "System Events" to set frontApp to name of first application process whose frontmost is true' -e 'if frontApp is "${processName}" then' -e 'tell application "System Events" to set visible of process "${processName}" to false' -e 'else' -e 'tell application "${appName}" to activate' -e 'end if' '';
+      description = appName;
+    };
+
   mkLatex = latex: description:
     mkToEvent {
       shell_command = "printf '%s' '${latex}' | pbcopy && osascript -e 'tell application \"System Events\" to keystroke \"v\" using command down'";
@@ -153,6 +161,18 @@ with inputs.karabinix.lib; let
             modifiers = [keyCodes.left_command];
           };
         };
+        "com.google.Chrome" = {
+          h = mkToEvent {
+            key_code = keyCodes.open_bracket;
+            modifiers = [keyCodes.left_command];
+            description = "↩️";
+          };
+          l = mkToEvent {
+            key_code = keyCodes.close_bracket;
+            modifiers = [keyCodes.left_command];
+            description = "↪️";
+          };
+        };
       };
     };
 in {
@@ -184,54 +204,18 @@ in {
                 alone_key = keyCodes.escape;
                 variable_name = "apps_layer";
                 mappings = {
-                  o = mkToEvent {
-                    shell_command = "open -a 'Obsidian'";
-                    description = "Obsidian";
-                  };
-                  n = mkToEvent {
-                    shell_command = "open -a 'Notion'";
-                    description = "Notion";
-                  };
-                  a = mkToEvent {
-                    shell_command = "open -a 'Claude'";
-                    description = "Claude";
-                  };
-                  w = mkToEvent {
-                    shell_command = "open -a 'WhatsApp'";
-                    description = "Whatsapp";
-                  };
-                  t = mkToEvent {
-                    shell_command = "open -a 'kitty'";
-                    description = "Kitty";
-                  };
-                  b = mkToEvent {
-                    shell_command = "open -a 'Google Chrome'";
-                    description = "Chrome";
-                  };
-                  i = mkToEvent {
-                    shell_command = "open -a 'IntelliJ IDEA'";
-                    description = "Idea";
-                  };
-                  s = mkToEvent {
-                    shell_command = "open -a 'Slack'";
-                    description = "Slack";
-                  };
-                  c = mkToEvent {
-                    shell_command = "open -a 'Calendar'";
-                    description = "Calendar";
-                  };
-                  m = mkToEvent {
-                    shell_command = "open -a 'Mail'";
-                    description = "Mail";
-                  };
-                  p = mkToEvent {
-                    shell_command = "open -a 'Perplexity'";
-                    description = "perplexity";
-                  };
-                  "1" = mkToEvent {
-                    shell_command = "open -a '1Password'";
-                    description = "1Password";
-                  };
+                  o = mkToggleApp "Obsidian" "Obsidian";
+                  n = mkToggleApp "Notion" "Notion";
+                  a = mkToggleApp "Claude" "Claude";
+                  w = mkToggleApp "WhatsApp" "WhatsApp";
+                  t = mkToggleApp "kitty" "kitty";
+                  b = mkToggleApp "Google Chrome" "Google Chrome";
+                  i = mkToggleApp "IntelliJ IDEA" "IntelliJ IDEA";
+                  s = mkToggleApp "Slack" "Slack";
+                  c = mkToggleApp "Calendar" "Calendar";
+                  m = mkToggleApp "Mail" "Mail";
+                  p = mkToggleApp "Perplexity" "Perplexity";
+                  "1" = mkToggleApp "1Password" "1Password";
                 };
               })
 
