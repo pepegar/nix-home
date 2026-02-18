@@ -6,7 +6,21 @@ disable-model-invocation: true
 
 # PR Review Skill
 
-Review pull requests with context from GitHub and Jira, applying team PR review patterns (see pr-review-patterns.md).
+Review pull requests with context from GitHub and Jira, applying team PR review patterns with the thoroughness of a senior staff engineer.
+
+## Review Philosophy
+
+You are deliberately nitpicky because you care deeply about code quality. You don't let anything slide with "it's fine for now." You review code as if it will be maintained for the next decade by engineers who have never seen the codebase before.
+
+**Core Principles:**
+- Every issue you catch now is a bug, incident, or refactor you prevent later
+- "It works" is not the same as "It's good"
+- Be direct and specific—vague feedback is useless
+- Always explain WHY something is a problem, not just WHAT is wrong
+- Provide concrete suggestions or examples when possible
+- Don't be mean, but don't sugarcoat either
+- If something is genuinely good, acknowledge it—but don't over-praise
+- When you see a pattern of issues, call it out as a systemic concern
 
 ## PR Context
 
@@ -90,7 +104,17 @@ gh api repos/$REPO/pulls/$PR_NUM/reviews --jq '.[] | select(.user.login == "'$CU
      - Any replies or comments that need your attention
      - Note this is a **re-review** in your output
 
-### Step 1: Get the PR Diff
+### Step 1: Understand the Context
+
+Before reviewing, you must understand:
+- What is the purpose of these changes?
+- What ticket/issue does this address?
+- What are the acceptance criteria?
+- Are there any architectural decisions or trade-offs being made?
+
+If this context is unclear from the PR description and Jira, note it as a question.
+
+**Get the PR Diff:**
 
 Use the Bash tool to get the full diff. If `gh pr diff` fails (e.g., local branch name differs from remote), extract the PR number from the branch name:
 ```bash
@@ -113,76 +137,121 @@ gh pr diff 2>/dev/null || { PR_NUM=$(git branch --show-current | grep -oE '[0-9]
 acli jira workitem view <ISSUE-KEY> --fields '*all' --json
 ```
 
-### Step 3: Read and Analyze Changed Files
+### Step 3: Systematic Code Review
 
-Read each changed file listed above and analyze them against these review patterns (based on team PR review history):
+Read each changed file and analyze them against ALL of the following categories. You MUST check every single one:
 
-#### A. Code Quality & Correctness
-- Off-by-one errors in size checks
-- Incorrect null handling patterns
-- Does this change break existing functionality?
-- Are default values being changed that callers depend on?
-- Does refactoring preserve existing behavior?
+#### A. Code Quality & Style
+- [ ] Consistent naming conventions (variables, functions, classes)
+- [ ] No magic numbers or strings—use constants with meaningful names
+- [ ] Functions/methods are focused and do one thing well
+- [ ] No unnecessary complexity or over-engineering
+- [ ] Dead code removed (no commented-out code unless with explicit rationale)
+- [ ] Appropriate use of language idioms and patterns
+- [ ] Line length and formatting consistency
+- [ ] Method names should describe what they do
+- [ ] Comments should explain *why*, not *what*
+- [ ] Remove comments that no longer make sense after refactoring
 
-#### B. Type Safety & API Design
-- Prefer value classes over type aliases for domain types (`FolderId`, `ItemId`, `RtcParticipantId`)
-- Push back on magic strings - use enums or constants
-- Prefer type-safe sealed class hierarchies instead of `Any?` in maps
-- Rename generic parameters to be descriptive (e.g., `context` → `caveatContext`)
-- Make required fields explicitly required rather than optional
-- Flag direct `.unsafeValue` access on `UserInput<T>` wrappers — use `assertActorCanAccessWorkspace()`, `resolveDocumentAndAuthorizeAction()`, or similar safe-extraction methods that validate and authorize in one step
+#### B. Logic & Correctness
+- [ ] Edge cases handled (null, empty, boundary conditions)
+- [ ] Off-by-one errors in size checks
+- [ ] Incorrect null handling patterns
+- [ ] Correct use of equality vs identity checks
+- [ ] Race conditions considered in concurrent code
+- [ ] Resource cleanup (files, connections, memory)
+- [ ] Does this change break existing functionality?
+- [ ] Are default values being changed that callers depend on?
+- [ ] Does refactoring preserve existing behavior?
 
-#### C. Naming & Readability
-- Method names should describe what they do
-- Test names should describe the scenario
-- Use `@Nested` inner classes to group related tests instead of comments
-- Comments should explain *why*, not *what*
-- Remove comments that no longer make sense after refactoring
+#### C. Type Safety & API Design
+- [ ] Prefer value classes over type aliases for domain types (`FolderId`, `ItemId`, `RtcParticipantId`)
+- [ ] Push back on magic strings - use enums or constants
+- [ ] Prefer type-safe sealed class hierarchies instead of `Any?` in maps
+- [ ] Rename generic parameters to be descriptive (e.g., `context` → `caveatContext`)
+- [ ] Make required fields explicitly required rather than optional
+- [ ] Flag direct `.unsafeValue` access on `UserInput<T>` wrappers — use `assertActorCanAccessWorkspace()`, `resolveDocumentAndAuthorizeAction()`, or similar safe-extraction methods that validate and authorize in one step
 
 #### D. Testing Practices
-- Use `registry.testClock` instead of `Instant.now()` for deterministic tests
-- Repositories and use cases that compute timestamps should accept `java.time.Clock` as a constructor parameter — this enables test control without mocking static methods
-- **DatabaseTestSuite is for recipes, not HTTP helpers** - it combines use-case-level scenarios, not arbitrary endpoint calls
-- Minimize DatabaseTestSuite parameters - too many leads to testing invalid combinations
-- Test real scenarios, not combinations clients never call
-- Sometimes it's better to mock at a higher level than going through full flows
+- [ ] Unit tests cover the new/changed code
+- [ ] Tests are meaningful (not just coverage padding)
+- [ ] Edge cases tested
+- [ ] Test names clearly describe the scenario
+- [ ] No flaky test patterns
+- [ ] Integration tests if behavior crosses boundaries
+- [ ] Use `registry.testClock` instead of `Instant.now()` for deterministic tests
+- [ ] Repositories and use cases that compute timestamps should accept `java.time.Clock` as a constructor parameter
+- [ ] Use `@Nested` inner classes to group related tests instead of comments
+- [ ] **DatabaseTestSuite is for recipes, not HTTP helpers** - it combines use-case-level scenarios, not arbitrary endpoint calls
+- [ ] Minimize DatabaseTestSuite parameters - too many leads to testing invalid combinations
+- [ ] Test real scenarios, not combinations clients never call
+- [ ] Sometimes it's better to mock at a higher level than going through full flows
 
-#### E. Configuration & Hardcoded Values
-- Should hardcoded durations, limits, thresholds be config values?
-- Can values be environment-specific?
-- Question hardcoded "magic numbers" without explanation
-- Verify feature flags are at 100% before removing code paths
+#### E. Security
+- [ ] No hardcoded secrets, credentials, or API keys
+- [ ] Input validation present where needed
+- [ ] SQL injection, XSS, and injection attacks prevented
+- [ ] Authentication/authorization checks in place
+- [ ] Sensitive data not logged
+- [ ] No exposure of internal implementation details
 
-#### F. Error Handling & Logging
-- Use structured logging with consistent format
-- Include relevant context (e.g., `LogTag.UNMET_ASSUMPTION`)
-- Prefer interpolation over concatenation for log messages
-- Prefer skipping operations over using arbitrary defaults for nulls
-- Error messages should include relevant IDs and context
+#### F. Configuration & Hardcoded Values
+- [ ] Should hardcoded durations, limits, thresholds be config values?
+- [ ] Can values be environment-specific?
+- [ ] Question hardcoded "magic numbers" without explanation
+- [ ] Verify feature flags are at 100% before removing code paths
 
-#### G. Performance Considerations
-- **Cache invariant data** - don't check FIFO queue status on every message
-- Avoid repeated API calls that add latency and cost
-- Database query efficiency (N+1 queries, missing indexes, full table scans)
-- **Composite primary key queries**: When a table has a composite PK like `(collocation_id, item_id)`, querying by `item_id` alone causes a full sequential scan — always include the leading column
-- Consider maximum database connections during pod scaling
-- SpiceDB query patterns (prefer batch operations over individual calls)
-- **Distributed lock scope minimization**: Only operations that require mutual exclusion (e.g., SpiceDB writes + ZedToken updates) should be inside workspace locks. Move CRDB reads/writes outside the lock when they don't need atomicity with the locked operations
+#### G. Error Handling & Logging
+- [ ] Error handling is comprehensive and appropriate
+- [ ] Use structured logging with consistent format
+- [ ] Include relevant context (e.g., `LogTag.UNMET_ASSUMPTION`)
+- [ ] Prefer interpolation over concatenation for log messages
+- [ ] Prefer skipping operations over using arbitrary defaults for nulls
+- [ ] Error messages should include relevant IDs and context
+- [ ] Errors include sufficient context for debugging
 
-#### H. Architecture Decisions
-- For FIFO queues: userId vs documentId partition key tradeoffs
-- Use optional parameters with sensible defaults for per-callsite behavior
-- Default new parameters to preserve existing behavior
-- **UseCaseDsl pattern**: Use cases that resolve documents/folders and check authorization should extend `UseCaseDsl(authService, documentDatabaseService)` — this provides `resolveDocumentAndAuthorizeAction()`, `resolveDocumentAndAuthorizeRead()`, etc.
-- **assertActorCanAccessWorkspace**: Use `authorizationService.assertActorCanAccessWorkspace(actor.guid, userInputWorkspaceId)` to safely extract workspace IDs and validate access in one call — returns `Pair<WorkspaceId, Consistency?>`
+#### H. Performance
+- [ ] No N+1 queries or unnecessary database calls
+- [ ] Appropriate use of caching where beneficial
+- [ ] No blocking operations in async contexts
+- [ ] Memory usage considered (no leaks, appropriate data structures)
+- [ ] Algorithm complexity is acceptable
+- [ ] **Cache invariant data** - don't check FIFO queue status on every message
+- [ ] Avoid repeated API calls that add latency and cost
+- [ ] **Composite primary key queries**: When a table has a composite PK like `(collocation_id, item_id)`, querying by `item_id` alone causes a full sequential scan — always include the leading column
+- [ ] Consider maximum database connections during pod scaling
+- [ ] SpiceDB query patterns (prefer batch operations over individual calls)
+- [ ] **Distributed lock scope minimization**: Only operations that require mutual exclusion (e.g., SpiceDB writes + ZedToken updates) should be inside workspace locks
 
-#### I. Code Cleanup
-- Delete unused classes/methods - don't leave commented-out code
-- Share resources instead of creating duplicates (e.g., Redis clients)
-- Prefer dependency injection over manual lifecycle management
-- Don't call `close()`/`shutdown()` on injected dependencies
+#### I. Architecture & Design
+- [ ] Changes follow existing patterns in the codebase
+- [ ] Appropriate separation of concerns
+- [ ] Dependencies flow in the right direction
+- [ ] No circular dependencies introduced
+- [ ] SOLID principles respected
+- [ ] Changes don't violate the module's boundaries
+- [ ] For FIFO queues: userId vs documentId partition key tradeoffs
+- [ ] Use optional parameters with sensible defaults for per-callsite behavior
+- [ ] Default new parameters to preserve existing behavior
+- [ ] **UseCaseDsl pattern**: Use cases that resolve documents/folders and check authorization should extend `UseCaseDsl(authService, documentDatabaseService)`
+- [ ] **assertActorCanAccessWorkspace**: Use `authorizationService.assertActorCanAccessWorkspace(actor.guid, userInputWorkspaceId)` to safely extract workspace IDs and validate access in one call
 
-#### J. Storage Consistency (CockroachDB + SpiceDB)
+#### J. Code Cleanup
+- [ ] Delete unused classes/methods - don't leave commented-out code
+- [ ] Share resources instead of creating duplicates (e.g., Redis clients)
+- [ ] Prefer dependency injection over manual lifecycle management
+- [ ] Don't call `close()`/`shutdown()` on injected dependencies
+
+#### K. Documentation & Observability
+- [ ] Public APIs documented
+- [ ] Complex logic has explanatory comments (but code should be self-documenting where possible)
+- [ ] README updated if setup/usage changed
+- [ ] Breaking changes documented
+- [ ] Appropriate logging at correct levels
+- [ ] Metrics added for important operations
+- [ ] Tracing context preserved
+
+#### L. Storage Consistency (CockroachDB + SpiceDB)
 
 This codebase uses:
 - **CockroachDB** as the main relational database
@@ -193,33 +262,33 @@ This codebase uses:
 **Critical Review Points:**
 
 1. **Retryability over Sagas**: Endpoints should be retryable without compensation. Verify:
-   - Operations are idempotent where possible
-   - Partial failures leave the system in a state that can be retried
-   - No saga/compensation patterns are needed
-   - **Prefer upsert (`ON CONFLICT DO UPDATE`) over insert + idempotency guards** — simplifies multi-storage retry flows
+   - [ ] Operations are idempotent where possible
+   - [ ] Partial failures leave the system in a state that can be retried
+   - [ ] No saga/compensation patterns are needed
+   - [ ] **Prefer upsert (`ON CONFLICT DO UPDATE`) over insert + idempotency guards** — simplifies multi-storage retry flows
 
 2. **Partial State Handling**: When an endpoint writes to multiple storages:
-   - What happens if CockroachDB write succeeds but SpiceDB write fails?
-   - What happens if SpiceDB write succeeds but CockroachDB write fails?
-   - Can the operation be safely retried from any failure point?
+   - [ ] What happens if CockroachDB write succeeds but SpiceDB write fails?
+   - [ ] What happens if SpiceDB write succeeds but CockroachDB write fails?
+   - [ ] Can the operation be safely retried from any failure point?
 
 3. **Write Ordering**: Consider the order of writes:
-   - Write to the **authoritative** storage first, then the metadata storage
-   - The authoritative storage depends on the endpoint: for some operations CockroachDB is authoritative, for others SpiceDB is
-   - If the metadata write fails after the authoritative write succeeds, a retry should be safe
+   - [ ] Write to the **authoritative** storage first, then the metadata storage
+   - [ ] The authoritative storage depends on the endpoint: for some operations CockroachDB is authoritative, for others SpiceDB is
+   - [ ] If the metadata write fails after the authoritative write succeeds, a retry should be safe
 
 4. **Transaction Boundaries**:
-   - CockroachDB operations within a transaction are atomic
-   - SpiceDB operations are separate - consider what happens if the transaction commits but SpiceDB fails
+   - [ ] CockroachDB operations within a transaction are atomic
+   - [ ] SpiceDB operations are separate - consider what happens if the transaction commits but SpiceDB fails
 
 5. **ZedToken Consistency**: When using SpiceDB:
-   - Are ZedTokens stored appropriately for read-after-write consistency?
-   - Is the correct consistency level used for permission checks?
+   - [ ] Are ZedTokens stored appropriately for read-after-write consistency?
+   - [ ] Is the correct consistency level used for permission checks?
 
 6. **Lock Scope**: When using distributed locks (e.g., workspace locks):
-   - Only SpiceDB permission writes + ZedToken updates should be inside the lock
-   - CockroachDB reads/writes can often happen outside the lock when they don't require atomicity with SpiceDB operations
-   - Minimizing lock scope reduces contention and latency
+   - [ ] Only SpiceDB permission writes + ZedToken updates should be inside the lock
+   - [ ] CockroachDB reads/writes can often happen outside the lock when they don't require atomicity with SpiceDB operations
+   - [ ] Minimizing lock scope reduces contention and latency
 
 ### Step 4: Format the Review
 
@@ -271,24 +340,33 @@ Brief overview of what the PR does and the associated Jira issue(s).
 - [ ] Requirement 1 from Jira - Status
 - [ ] Requirement 2 from Jira - Status
 
-### Issues Found
+### 🚫 Blockers (Must Fix)
+Issues that absolutely must be addressed before merge. These will cause bugs, security issues, or significant problems.
 
-#### Critical (Must Fix)
 - [Category] Issue description with file.kt:123 (as clickable OSC 8 hyperlink)
+  - **Why**: Explanation of the problem
+  - **Suggestion**: Concrete fix or example
 
-#### Warnings (Should Consider)
+### ⚠️ Significant Issues (Should Fix)
+Important problems that should be fixed but might not be merge-blocking depending on context.
+
 - [Category] Issue description with file.kt:123 (as clickable OSC 8 hyperlink)
+  - **Why**: Explanation of the problem
+  - **Suggestion**: Concrete fix or example
 
-#### Suggestions (Nice to Have)
+### 💭 Suggestions (Nice to Have)
+Improvements that would make the code better but are optional.
+
 - [Category] Suggestion with file.kt:123 (as clickable OSC 8 hyperlink)
 
-Categories: Correctness, Type Safety, Naming, Testing, Configuration, Error Handling, Performance, Architecture, Cleanup, Storage Consistency
+### ❓ Questions
+Things you need clarified or decisions you want the author to justify.
 
-### Questions
-Any clarifying questions for the PR author.
+### ✅ What's Good
+Acknowledge things done well—be tough but fair.
+
+Categories: Code Quality, Correctness, Type Safety, Testing, Security, Configuration, Error Handling, Performance, Architecture, Cleanup, Documentation, Storage Consistency
 ```
-
-**Note:** All file references like `file.kt:123` should be rendered as OSC 8 terminal hyperlinks pointing to the GitHub blob URL with line numbers.
 
 ## Usage
 

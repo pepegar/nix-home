@@ -7,6 +7,8 @@ description: Interact with Jira using the Atlassian CLI (acli). Use when the use
 
 Interact with Jira Cloud using `acli jira <command> [subcommand] [flags]`.
 
+> **IMPORTANT**: Jira Cloud uses **ADF (Atlassian Document Format)** for descriptions, NOT Markdown or wiki markup. When creating or editing issue descriptions, always use ADF JSON format. See `references/adf.md` for the full specification and examples.
+
 ## Quick Reference
 
 | Task | Command |
