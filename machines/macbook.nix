@@ -119,7 +119,10 @@
         user = "pepe";
         identityFile = ["~/.ssh/local"];
       };
-      "*".extraOptions = {AddKeysToAgent = "yes";};
+      "*".extraOptions = {
+        AddKeysToAgent = "yes";
+        UseKeychain = "yes";
+      };
       "*.github.com".extraOptions = {IdentityFile = "~/.ssh/id_ed25519";};
     };
   };
