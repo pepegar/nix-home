@@ -6,7 +6,7 @@
       env = {
         TMUX = "1";
       };
-      support_kitty_keyboard_protocol = false;
+      support_kitty_keyboard_protocol = true;
       theme = "custom";
       themes.custom = {
         fg = [171 178 191]; # light gray text
