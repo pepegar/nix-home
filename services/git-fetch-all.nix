@@ -37,6 +37,13 @@
           ${pkgs.git}/bin/git -C "$dir" fetch --all --quiet 2>&1 && \
             echo "  [$repo] OK" || \
             echo "  [$repo] FAILED"
+
+          # Update submodules if any exist
+          if [ -f "$dir/.gitmodules" ]; then
+            ${pkgs.git}/bin/git -C "$dir" submodule update --init --recursive --quiet 2>&1 && \
+              echo "  [$repo] submodules OK" || \
+              echo "  [$repo] submodules FAILED"
+          fi
         }
 
         for repo in $(${pkgs.ghq}/bin/ghq list); do
