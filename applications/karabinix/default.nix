@@ -40,72 +40,86 @@ with inputs.karabinix.lib; let
           w = mkToEvent {
             key_code = keyCodes.up_arrow;
             modifiers = [keyCodes.left_option keyCodes.left_shift];
-            description = "⬆️―";
+            description = "move line up";
           };
           # move line down
           s = mkToEvent {
             key_code = keyCodes.down_arrow;
             modifiers = [keyCodes.left_option keyCodes.left_shift];
-            description = "⬇️―";
+            description = "move line down";
           };
           # all commands
           a = mkToEvent {
             key_code = keyCodes.a;
             modifiers = [keyCodes.left_command keyCodes.left_shift];
-            description = "all";
+            description = "all commands";
           };
           # go to interface
           u = mkToEvent {
             key_code = keyCodes.u;
             modifiers = [keyCodes.left_command];
-            description = "⤴️";
+            description = "go to interface";
           };
           # go to implementations
           i = mkToEvent {
             key_code = keyCodes.b;
             modifiers = [keyCodes.left_command keyCodes.left_option];
-            description = "⤵️";
+            description = "go to impl";
           };
           h = mkToEvent {
             key_code = keyCodes.left_arrow;
             modifiers = [keyCodes.left_command keyCodes.left_option];
-            description = "↩️";
+            description = "navigate back";
           };
           j = mkToEvent {
             key_code = keyCodes.down_arrow;
             modifiers = [keyCodes.left_option];
+            description = "next occurrence";
           };
           k = mkToEvent {
             key_code = keyCodes.up_arrow;
             modifiers = [keyCodes.left_option];
+            description = "prev occurrence";
           };
           l = mkToEvent {
             key_code = keyCodes.right_arrow;
             modifiers = [keyCodes.left_command keyCodes.left_option];
-            description = "↪️";
+            description = "navigate forward";
           };
           m = mkToEvent {
             key_code = keyCodes.down_arrow;
             modifiers = [keyCodes.left_control keyCodes.left_shift];
-            description = "⬇️method";
+            description = "next method";
           };
 
           "shift+m" = mkToEvent {
             key_code = keyCodes.up_arrow;
             modifiers = [keyCodes.left_control keyCodes.left_shift];
-            description = "⬆️method";
+            description = "prev method";
+          };
+
+          g = mkToEvent {
+            key_code = keyCodes.down_arrow;
+            modifiers = [keyCodes.left_control keyCodes.left_option keyCodes.left_shift];
+            description = "next git change";
+          };
+
+          "shift+g" = mkToEvent {
+            key_code = keyCodes.up_arrow;
+            modifiers = [keyCodes.left_control keyCodes.left_option keyCodes.left_shift];
+            description = "prev git change";
           };
 
           n = mkToEvent {
             key_code = keyCodes.f2;
             modifiers = [keyCodes.fn];
-            description = "⬇️💥";
+            description = "next error";
           };
 
           "shift+n" = mkToEvent {
             key_code = keyCodes.f2;
             modifiers = [keyCodes.fn keyCodes.left_shift];
-            description = "⬆️💥";
+            description = "prev error";
           };
 
           # Debugging shortcuts with mnemonics
@@ -113,7 +127,7 @@ with inputs.karabinix.lib; let
             # Toggle Breakpoint
             key_code = keyCodes.f8;
             modifiers = [keyCodes.fn keyCodes.left_command];
-            description = "🐞🔴";
+            description = "toggle breakpoint";
           };
           e = mkToEvent {
             # file structure
@@ -124,65 +138,66 @@ with inputs.karabinix.lib; let
           p = mkToEvent {
             key_code = keyCodes.r;
             modifiers = [keyCodes.left_command keyCodes.left_option];
-            description = "🐞▶️";
+            description = "debug run";
           };
         };
         "org.nixos.firefox" = {
           h = mkToEvent {
             key_code = keyCodes.left_arrow;
             modifiers = [keyCodes.left_command];
-            description = "↩️";
+            description = "navigate back";
           };
           l = mkToEvent {
             key_code = keyCodes.right_arrow;
             modifiers = [keyCodes.left_command];
-            description = "↪️";
+            description = "navigate forward";
           };
           i = mkToEvent {
             # dev tools
             key_code = keyCodes.i;
             modifiers = [keyCodes.left_command keyCodes.left_option];
-            description = "🔍";
+            description = "dev tools";
           };
           t = mkToEvent {
-            # dev tools
             key_code = keyCodes.f1;
             modifiers = [keyCodes.fn];
+            description = "sidebar";
           };
         };
         "com.tinyspeck.slackmacgap" = {
-          # home
           h = mkToEvent {
             key_code = keyCodes."1";
             modifiers = [keyCodes.left_control];
+            description = "home";
           };
-          # dms
           d = mkToEvent {
             key_code = keyCodes."2";
             modifiers = [keyCodes.left_control];
+            description = "dms";
           };
-          # activity
           a = mkToEvent {
             key_code = keyCodes."3";
             modifiers = [keyCodes.left_control];
+            description = "activity";
           };
         };
         "net.whatsapp.WhatsApp" = {
           k = mkToEvent {
             key_code = keyCodes.f;
             modifiers = [keyCodes.left_command];
+            description = "search";
           };
         };
         "com.google.Chrome" = {
           h = mkToEvent {
             key_code = keyCodes.open_bracket;
             modifiers = [keyCodes.left_command];
-            description = "↩️";
+            description = "navigate back";
           };
           l = mkToEvent {
             key_code = keyCodes.close_bracket;
             modifiers = [keyCodes.left_command];
-            description = "↪️";
+            description = "navigate forward";
           };
         };
       };
@@ -220,7 +235,7 @@ in {
                   n = mkToggleApp "Notion" "Notion";
                   a = mkToggleApp "Claude" "Claude";
                   w = mkToggleApp "WhatsApp" "WhatsApp";
-                  t = mkToggleApp "kitty" "kitty";
+                  t = mkToggleApp "Ghostty" "Ghostty";
                   b = mkToggleApp "Google Chrome" "Google Chrome";
                   i = mkToggleApp "IntelliJ IDEA" "IntelliJ IDEA";
                   s = mkToggleApp "Slack" "Slack";
@@ -378,57 +393,57 @@ in {
                 alone_key = keyCodes.backslash;
                 mappings = {
                   a = mkToEvent {
-                    description = "⬅️";
+                    description = "mouse left";
                     mouse_key = {
                       x = -1400;
                       speed_multiplier = 1.0;
                     };
                   };
                   s = mkToEvent {
-                    description = "⬇️";
+                    description = "mouse down";
                     mouse_key = {
                       y = 1300;
                       speed_multiplier = 1.0;
                     };
                   };
                   w = mkToEvent {
-                    description = "⬆️";
+                    description = "mouse up";
                     mouse_key = {
                       y = -1300;
                       speed_multiplier = 1.0;
                     };
                   };
                   d = mkToEvent {
-                    description = "➡️";
+                    description = "mouse right";
                     mouse_key = {
                       x = 1300;
                       speed_multiplier = 1.0;
                     };
                   };
                   q = mkToEvent {
-                    description = "⬅️🖱️";
+                    description = "left click";
                     pointing_button = "button1";
                   };
                   e = mkToEvent {
-                    description = "➡️🖱️";
+                    description = "right click";
                     pointing_button = "button2";
                   };
                   r = mkToEvent {
-                    description = "⬇️⚙️";
+                    description = "scroll down";
                     mouse_key = {
                       vertical_wheel = -32;
                       speed_multiplier = 1.0;
                     };
                   };
                   f = mkToEvent {
-                    description = "⬆️⚙️";
+                    description = "scroll up";
                     mouse_key = {
                       vertical_wheel = 32;
                       speed_multiplier = 1.0;
                     };
                   };
                   c = mkToEvent {
-                    description = "center→";
+                    description = "center mouse";
                     shell_command = "~/bin/mouse-center.sh";
                   };
                 };

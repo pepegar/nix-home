@@ -8,7 +8,7 @@
       serviceConfig = {
         KeepAlive = false;
         RunAtLoad = false;
-        StartInterval = 86400; # Run once per day
+        StartInterval = 3600; # Run once per hour
         StandardOutPath = "/tmp/git-fetch-all.out.log";
         StandardErrorPath = "/tmp/git-fetch-all.err.log";
       };

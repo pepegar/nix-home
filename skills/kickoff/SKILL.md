@@ -63,7 +63,23 @@ git config "branch.$BRANCH_NAME.description" "<description>"
 
 The worktree path is always `<repo-root>/.worktrees/<branch-name>`.
 
-### 4. Create a Zellij tab
+### 4. Update the Jira issue (if applicable)
+
+If the task has a Jira issue (Flow A, or Flow B with a newly created issue):
+
+1. **Assign the issue to yourself:**
+   ```bash
+   acli jira workitem assign --key "KEY-123" --assignee "@me"
+   ```
+
+2. **Transition the issue to "In Progress" / "In Development":**
+   Transition through intermediate statuses as needed (some projects require sequential transitions — see the jira skill's `references/workflows.md`).
+   ```bash
+   acli jira workitem transition --key "KEY-123" --status "In Development"
+   ```
+   If the transition fails, step through intermediate statuses (e.g. Backlog → Ready for Development → In Development).
+
+### 5. Create a Zellij tab
 
 Derive a short **tab name** from the branch name (e.g. `TEAM-123` stays as-is, `fix-oauth-timeout` stays as-is).
 
@@ -90,7 +106,7 @@ EOF
 zellij action new-tab -l /tmp/kickoff-tab.kdl
 ```
 
-### 5. Report
+### 6. Report
 
 Display a summary:
 - **Branch:** the new branch name
