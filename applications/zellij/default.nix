@@ -22,7 +22,7 @@
         orange = [209 154 102];
       };
       keybinds = {
-        unbind = ["Alt Left" "Alt Right"];
+        unbind = ["Alt Left" "Alt Right" "Ctrl q"];
         shared = {
           "bind \"Ctrl l\"" = {NextSwapLayout = {};};
           "bind \"Ctrl h\"" = {PreviousSwapLayout = {};};
@@ -242,6 +242,9 @@
             pane
           }
           tab name="Goodnotes" cwd="~/projects/github.com/GoodNotes/GoodNotes-5" {
+            pane
+          }
+          tab name="Gent" cwd="~/projects/github.com/pepegar/gent" {
             pane
           }
         }
