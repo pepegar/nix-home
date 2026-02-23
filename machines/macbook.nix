@@ -31,6 +31,7 @@
     ../cfg/sbt
     ../cfg/gradle
     ../cfg/yarn
+    ../cfg/agents.nix
     ../cfg/scripts.nix
   ];
 
@@ -66,6 +67,7 @@
     inputs.devenv.packages."${pkgs.stdenv.hostPlatform.system}".devenv
     inputs.tmux-zellij.packages."${pkgs.stdenv.hostPlatform.system}".tmux-zellij
     alejandra
+    asciinema
     aws-vault
     bat
     bazelisk
@@ -92,8 +94,8 @@
     ruby
     silver-searcher
     sops
-    tree-sitter
     tree
+    tree-sitter
     uv
     yq
     zig
