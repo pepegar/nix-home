@@ -12,6 +12,8 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     karabinix.url = "github:pepegar/karabinix";
     tmux-zellij.url = "github:pepegar/tmux-zellij";
+    gent.url = "github:pepegar/gent";
+    tui-wright.url = "github:pepegar/tui-wright";
   };
 
   outputs = inputs @ {

@@ -6,7 +6,7 @@
   imports = [
     #../applications/firefox
     ../applications/chrome
-    ../applications/claude
+
     ../applications/codex
     ../applications/opencode
     ../applications/pi
@@ -65,7 +65,9 @@
   };
   home.packages = with pkgs; [
     inputs.devenv.packages."${pkgs.stdenv.hostPlatform.system}".devenv
+    inputs.gent.packages."${pkgs.stdenv.hostPlatform.system}".gent
     inputs.tmux-zellij.packages."${pkgs.stdenv.hostPlatform.system}".tmux-zellij
+    inputs.tui-wright.packages."${pkgs.stdenv.hostPlatform.system}".default
     alejandra
     asciinema
     aws-vault
