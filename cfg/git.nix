@@ -49,6 +49,10 @@
       rerere.enabled = true;
       rebase.updateRefsa = true;
       push.autoSetupRemote = true;
+
+      # Performance optimizations for large repos
+      core.untrackedCache = true;
+      core.fsmonitor = true;
     };
 
     signing = {
