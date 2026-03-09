@@ -203,13 +203,13 @@ get_branch_list() {
         has_worktree = (system(cmd) == 0)
         
         if (has_worktree) {
-            printf "⏭️  " GRAY "%-30s" RESET " " GRAY "%s" RESET " " GRAY "(worktree exists)" RESET "|%s\n", display_branch, date, branch
+            printf "⏭️  " GRAY "%-30s" RESET " " GRAY "%s" RESET " " GRAY "(worktree exists)" RESET "\t%s\n", display_branch, date, branch
         } else if (index(branch, "origin/") == 1) {
             # Remote branch
-            printf "🌐 " BOLD BLUE "%-30s" RESET " " GRAY "%s" RESET "|%s\n", display_branch, date, branch
+            printf "🌐 " BOLD BLUE "%-30s" RESET " " GRAY "%s" RESET "\t%s\n", display_branch, date, branch
         } else {
             # Local branch  
-            printf "🌿 " BOLD GREEN "%-30s" RESET " " GRAY "%s" RESET "|%s\n", display_branch, date, branch
+            printf "🌿 " BOLD GREEN "%-30s" RESET " " GRAY "%s" RESET "\t%s\n", display_branch, date, branch
         }
     }'
 }
@@ -217,7 +217,7 @@ get_branch_list() {
 # Function to extract branch name from formatted line
 get_branch_from_formatted_line() {
     local line="$1"
-    echo "$line" | sed 's/.*|//'
+    echo "$line" | awk -F'\t' '{print $NF}'
 }
 
 # Check if we're in a git repository
@@ -241,6 +241,8 @@ if [[ $CREATE_MODE -eq 1 ]]; then
     # Use fzf to select branch
     selected_branch_line=$(echo "$branch_list" | fzf \
         --ansi \
+        --delimiter=$'\t' \
+        --with-nth=1 \
         --height=40% \
         --layout=reverse \
         --border=rounded \
@@ -262,7 +264,7 @@ if [[ $CREATE_MODE -eq 1 ]]; then
     fi
 
     create_worktree "$branch_name"
-    local result=$?
+    result=$?
     if [[ $result -eq 0 && $RENAME_TAB -eq 1 ]]; then
         rename_zellij_tab "$branch_name"
     fi
@@ -285,7 +287,6 @@ get_worktree_list() {
     BEGIN { 
         worktree = ""
         branch = ""
-        current = ""
         # ANSI color codes
         GREEN = "\033[32m"
         BLUE = "\033[34m"
@@ -310,18 +311,27 @@ get_worktree_list() {
     }
     /^$/ { 
         if (worktree != "") {
-            # Compress home directory for display only
-            display_path = worktree
-            gsub(/^\/Users\/[^\/]+/, "~", display_path)
-            
+            # Look up branch description
+            desc = ""
+            cmd = "git config branch." branch ".description 2>/dev/null"
+            if ((cmd | getline desc) > 0) { close(cmd) } else { close(cmd); desc = "" }
+
             # Check if this is the current worktree
             is_current = (worktree == "'"$current_worktree"'")
             
             # Format the line with colors, but store original path in a hidden way
             if (is_current) {
-                printf "📍 " BOLD YELLOW "%-30s" RESET " " GRAY "%s" RESET " " YELLOW "(current)" RESET "|%s\n", branch, display_path, worktree
+                if (desc != "") {
+                    printf "📍 " BOLD YELLOW "%-30s" RESET " " GRAY "%s" RESET " " YELLOW "(current)" RESET "\t%s\n", branch, desc, worktree
+                } else {
+                    printf "📍 " BOLD YELLOW "%-30s" RESET " " YELLOW "(current)" RESET "\t%s\n", branch, worktree
+                }
             } else {
-                printf "🌿 " BOLD GREEN "%-30s" RESET " " BLUE "%s" RESET "|%s\n", branch, display_path, worktree
+                if (desc != "") {
+                    printf "🌿 " BOLD GREEN "%-30s" RESET " " GRAY "%s" RESET "\t%s\n", branch, desc, worktree
+                } else {
+                    printf "🌿 " BOLD GREEN "%-30s" RESET "\t%s\n", branch, worktree
+                }
             }
         }
         worktree = ""
@@ -330,13 +340,23 @@ get_worktree_list() {
     END {
         # Handle last entry if file doesn'\''t end with blank line
         if (worktree != "") {
-            display_path = worktree
-            gsub(/^\/Users\/[^\/]+/, "~", display_path)
+            desc = ""
+            cmd = "git config branch." branch ".description 2>/dev/null"
+            if ((cmd | getline desc) > 0) { close(cmd) } else { close(cmd); desc = "" }
+
             is_current = (worktree == "'"$current_worktree"'")
             if (is_current) {
-                printf "📍 " BOLD YELLOW "%-30s" RESET " " GRAY "%s" RESET " " YELLOW "(current)" RESET "|%s\n", branch, display_path, worktree
+                if (desc != "") {
+                    printf "📍 " BOLD YELLOW "%-30s" RESET " " GRAY "%s" RESET " " YELLOW "(current)" RESET "\t%s\n", branch, desc, worktree
+                } else {
+                    printf "📍 " BOLD YELLOW "%-30s" RESET " " YELLOW "(current)" RESET "\t%s\n", branch, worktree
+                }
             } else {
-                printf "🌿 " BOLD GREEN "%-30s" RESET " " BLUE "%s" RESET "|%s\n", branch, display_path, worktree
+                if (desc != "") {
+                    printf "🌿 " BOLD GREEN "%-30s" RESET " " GRAY "%s" RESET "\t%s\n", branch, desc, worktree
+                } else {
+                    printf "🌿 " BOLD GREEN "%-30s" RESET "\t%s\n", branch, worktree
+                }
             }
         }
     }'
@@ -347,8 +367,8 @@ get_worktree_path_from_line() {
     local line="$1"
     debug_echo "Extracting path from: $line"
     
-    # Extract the original path stored after the | delimiter
-    local path=$(echo "$line" | sed 's/.*|//')
+    # Extract the original path stored after the tab delimiter
+    local path=$(printf '%s' "$line" | awk -F'\t' '{print $NF}')
     debug_echo "Extracted original path: $path"
     
     echo "$path"
@@ -420,8 +440,8 @@ current_worktree="$current_worktree"
 # Function to get full worktree path from formatted line
 get_worktree_path_from_line() {
     local line="\$1"
-    # Extract the original path stored after the | delimiter
-    local path=\$(echo "\$line" | sed 's/.*|//')
+    # Extract the original path stored after the tab delimiter
+    local path=\$(printf '%s' "\$line" | awk -F'\t' '{print \$NF}')
     echo "\$path"
 }
 
@@ -498,6 +518,8 @@ trap cleanup EXIT
 # Use fzf to select worktree with delete functionality
 selected=$(echo "$worktree_list" | fzf \
     --ansi \
+    --delimiter=$'\t' \
+    --with-nth=1 \
     --height=40% \
     --layout=reverse \
     --border=rounded \
@@ -506,8 +528,6 @@ selected=$(echo "$worktree_list" | fzf \
     BEGIN { 
         worktree = \"\"
         branch = \"\"
-        current = \"\"
-        # ANSI color codes
         GREEN = \"\\033[32m\"
         BLUE = \"\\033[34m\"
         YELLOW = \"\\033[33m\"
@@ -530,13 +550,22 @@ selected=$(echo "$worktree_list" | fzf \
     }
     /^\$/ { 
         if (worktree != \"\") {
-            display_path = worktree
-            gsub(/^\/Users\/[^\/]+/, \"~\", display_path)
+            desc = \"\"
+            cmd = \"git config branch.\" branch \".description 2>/dev/null\"
+            if ((cmd | getline desc) > 0) { close(cmd) } else { close(cmd); desc = \"\" }
             is_current = (worktree == \"'$current_worktree'\")
             if (is_current) {
-                printf \"📍 \" BOLD YELLOW \"%-30s\" RESET \" \" GRAY \"%s\" RESET \" \" YELLOW \"(current)\" RESET \"|%s\\n\", branch, display_path, worktree
+                if (desc != \"\") {
+                    printf \"📍 \" BOLD YELLOW \"%-30s\" RESET \" \" GRAY \"%s\" RESET \" \" YELLOW \"(current)\" RESET \"\\t%s\\n\", branch, desc, worktree
+                } else {
+                    printf \"📍 \" BOLD YELLOW \"%-30s\" RESET \" \" YELLOW \"(current)\" RESET \"\\t%s\\n\", branch, worktree
+                }
             } else {
-                printf \"🌿 \" BOLD GREEN \"%-30s\" RESET \" \" BLUE \"%s\" RESET \"|%s\\n\", branch, display_path, worktree
+                if (desc != \"\") {
+                    printf \"🌿 \" BOLD GREEN \"%-30s\" RESET \" \" GRAY \"%s\" RESET \"\\t%s\\n\", branch, desc, worktree
+                } else {
+                    printf \"🌿 \" BOLD GREEN \"%-30s\" RESET \"\\t%s\\n\", branch, worktree
+                }
             }
         }
         worktree = \"\"
@@ -544,13 +573,22 @@ selected=$(echo "$worktree_list" | fzf \
     }
     END {
         if (worktree != \"\") {
-            display_path = worktree
-            gsub(/^\/Users\/[^\/]+/, \"~\", display_path)
+            desc = \"\"
+            cmd = \"git config branch.\" branch \".description 2>/dev/null\"
+            if ((cmd | getline desc) > 0) { close(cmd) } else { close(cmd); desc = \"\" }
             is_current = (worktree == \"'$current_worktree'\")
             if (is_current) {
-                printf \"📍 \" BOLD YELLOW \"%-30s\" RESET \" \" GRAY \"%s\" RESET \" \" YELLOW \"(current)\" RESET \"|%s\\n\", branch, display_path, worktree
+                if (desc != \"\") {
+                    printf \"📍 \" BOLD YELLOW \"%-30s\" RESET \" \" GRAY \"%s\" RESET \" \" YELLOW \"(current)\" RESET \"\\t%s\\n\", branch, desc, worktree
+                } else {
+                    printf \"📍 \" BOLD YELLOW \"%-30s\" RESET \" \" YELLOW \"(current)\" RESET \"\\t%s\\n\", branch, worktree
+                }
             } else {
-                printf \"🌿 \" BOLD GREEN \"%-30s\" RESET \" \" BLUE \"%s\" RESET \"|%s\\n\", branch, display_path, worktree
+                if (desc != \"\") {
+                    printf \"🌿 \" BOLD GREEN \"%-30s\" RESET \" \" GRAY \"%s\" RESET \"\\t%s\\n\", branch, desc, worktree
+                } else {
+                    printf \"🌿 \" BOLD GREEN \"%-30s\" RESET \"\\t%s\\n\", branch, worktree
+                }
             }
         }
     }')")
