@@ -24,6 +24,10 @@ return {
 					end
 				end, { desc = "Jump to next git [c]hange" })
 
+				map("n", "<C-n>", function()
+					gitsigns.nav_hunk("next")
+				end, { desc = "Jump to next git hunk" })
+
 				map("n", "[c", function()
 					if vim.wo.diff then
 						vim.cmd.normal({ "[c", bang = true })
