@@ -56,4 +56,9 @@
     source = ../scripts/bin/mouse-center.sh;
     executable = true;
   };
+
+  home.file."bin/ghqj" = {
+    source = ../scripts/bin/ghqj.sh;
+    executable = true;
+  };
 }
