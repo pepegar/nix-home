@@ -1,4 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  system,
+  ...
+}: let
+  zellij-cmd-k = inputs.zellij-cmd-k.packages.${system}.zellij-cmd-k;
+in {
+  home.file.".config/zellij/plugins/zellij-cmd-k.wasm".source = "${zellij-cmd-k}/zellij-cmd-k.wasm";
+
   programs.zellij = {
     enable = true;
 
@@ -26,6 +35,13 @@
         shared = {
           "bind \"Ctrl l\"" = {NextSwapLayout = {};};
           "bind \"Ctrl h\"" = {PreviousSwapLayout = {};};
+        };
+        "shared_except \"locked\"" = {
+          "bind \"Super k\"" = {
+            "LaunchOrFocusPlugin \"file:~/.config/zellij/plugins/zellij-cmd-k.wasm\"" = {
+              floating = true;
+            };
+          };
         };
         normal = {
           unbind = ["Ctrl g"];

@@ -252,6 +252,24 @@
         "type": "github"
       }
     },
+    "flake-utils_5": {
+      "inputs": {
+        "systems": "systems_5"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "gent": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -260,11 +278,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1772197591,
-        "narHash": "sha256-7Wz3N4AcGJn/drYNxCqqeQP4tdOEqTFZ8GpxRP3wXkg=",
+        "lastModified": 1772914684,
+        "narHash": "sha256-uHeVL/vYD06AIG9482y6bQpeqBMARVAl4g0DFA+9+vo=",
         "owner": "pepegar",
         "repo": "gent",
-        "rev": "b6bb48ae39ecafee18ca38d346a2963ddd28c5eb",
+        "rev": "abbb640af65a9bfd0a6fc1f6676f02be5def7ba8",
         "type": "github"
       },
       "original": {
@@ -507,6 +525,22 @@
         "url": "https://flakehub.com/f/NixOS/nixpkgs/0"
       }
     },
+    "nixpkgs_11": {
+      "locked": {
+        "lastModified": 1772585379,
+        "narHash": "sha256-zomLtA51H/qXAcjczveQFXPi/GuJUkPdpDeyu5bGI4M=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0fd2db475afdde93c9e4b1625aafb8eb41b99807",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1771369470,
@@ -727,7 +761,8 @@
         "nur": "nur",
         "pre-commit-hooks": "pre-commit-hooks_2",
         "tmux-zellij": "tmux-zellij",
-        "tui-wright": "tui-wright"
+        "tui-wright": "tui-wright",
+        "zellij-cmd-k": "zellij-cmd-k"
       }
     },
     "rust-overlay": {
@@ -743,6 +778,27 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "rev": "085bdbf5dde5477538e4c87d1684b6c6df56c0ad",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
+      "inputs": {
+        "nixpkgs": [
+          "zellij-cmd-k",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772593411,
+        "narHash": "sha256-47WOnCSyOL6AghZiMIJaTLWM359DHe3be9R1cNCdGUE=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "a741b36b77440f5db15fcf2ab6d7d592d2f9ee8f",
         "type": "github"
       },
       "original": {
@@ -811,6 +867,21 @@
         "type": "github"
       }
     },
+    "systems_5": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "tmux-zellij": {
       "inputs": {
         "crane": "crane",
@@ -836,16 +907,36 @@
         "nixpkgs": "nixpkgs_10"
       },
       "locked": {
-        "lastModified": 1771980055,
-        "narHash": "sha256-a24gEYT0Sv2ImnOvGrMxcq4ZUhQtrICOh4Di4gOb2LQ=",
+        "lastModified": 1772813272,
+        "narHash": "sha256-/yoQWEHIZgb80OZKQv7K17ux8LsMDbvKhly/tAeubYc=",
         "owner": "pepegar",
         "repo": "tui-wright",
-        "rev": "724ec9773770263ba058ca527230cad3c2a63458",
+        "rev": "f565303f0af6115a403f9b600a97f50cc59ef3dd",
         "type": "github"
       },
       "original": {
         "owner": "pepegar",
         "repo": "tui-wright",
+        "type": "github"
+      }
+    },
+    "zellij-cmd-k": {
+      "inputs": {
+        "flake-utils": "flake-utils_5",
+        "nixpkgs": "nixpkgs_11",
+        "rust-overlay": "rust-overlay_2"
+      },
+      "locked": {
+        "lastModified": 1772624981,
+        "narHash": "sha256-hMClKfYLCZ16PaPlNtreCTn86/DNb/dXdqctzRRUq6o=",
+        "owner": "pepegar",
+        "repo": "zellij-cmd-k",
+        "rev": "6d8c4cb036b06c6477ab9b8c14be34a6eaad6c9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pepegar",
+        "repo": "zellij-cmd-k",
         "type": "github"
       }
     }

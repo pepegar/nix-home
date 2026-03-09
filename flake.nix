@@ -14,6 +14,7 @@
     tmux-zellij.url = "github:pepegar/tmux-zellij";
     gent.url = "github:pepegar/gent";
     tui-wright.url = "github:pepegar/tui-wright";
+    zellij-cmd-k.url = "github:pepegar/zellij-cmd-k";
   };
 
   outputs = inputs @ {
