@@ -2,3 +2,6 @@ macos-option-as-alt = true
 macos-titlebar-style = hidden
 copy-on-select = clipboard
 theme = dark:"Adwaita Dark",light:"Adwaita"
+keybind = alt+arrow_left=unbind
+keybind = alt+arrow_right=unbind
+keybind = cmd+k=unbind
