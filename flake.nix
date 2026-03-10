@@ -15,6 +15,8 @@
     gent.url = "github:pepegar/gent";
     tui-wright.url = "github:pepegar/tui-wright";
     zellij-cmd-k.url = "github:pepegar/zellij-cmd-k";
+    playwright-cli.url = "github:microsoft/playwright-cli";
+    playwright-cli.flake = false;
   };
 
   outputs = inputs @ {

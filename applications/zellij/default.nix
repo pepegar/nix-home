@@ -12,6 +12,7 @@ in {
     enable = true;
 
     settings = {
+      pane_frames = false;
       env = {
         TMUX = "1";
       };

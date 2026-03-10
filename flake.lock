@@ -278,11 +278,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1772914684,
-        "narHash": "sha256-uHeVL/vYD06AIG9482y6bQpeqBMARVAl4g0DFA+9+vo=",
+        "lastModified": 1773078879,
+        "narHash": "sha256-fyzMcL9691GOjM4KoR3vmNaWaA2YNfLqe54z11+mM0M=",
         "owner": "pepegar",
         "repo": "gent",
-        "rev": "abbb640af65a9bfd0a6fc1f6676f02be5def7ba8",
+        "rev": "97bfdd98cc6ccd7cd4a6d0375e56e66f3208c4f1",
         "type": "github"
       },
       "original": {
@@ -709,6 +709,22 @@
         "type": "github"
       }
     },
+    "playwright-cli": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772814611,
+        "narHash": "sha256-8AGWOvti6jjayzLgvrn4ZOO+4OFNObrpq+/lBWSPbb8=",
+        "owner": "microsoft",
+        "repo": "playwright-cli",
+        "rev": "e63e9b74deac2290f1f3b9800374fa3070efdec4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "microsoft",
+        "repo": "playwright-cli",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -759,6 +775,7 @@
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs_6",
         "nur": "nur",
+        "playwright-cli": "playwright-cli",
         "pre-commit-hooks": "pre-commit-hooks_2",
         "tmux-zellij": "tmux-zellij",
         "tui-wright": "tui-wright",

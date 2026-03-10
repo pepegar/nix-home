@@ -54,6 +54,12 @@
       bindkey "\e[3~" delete-char
       bindkey "^[[3;3~" delete-word
 
+      fgj () {
+        local job
+        job=$(jobs -l | fzf --ansi --height 40% --reverse --border=rounded --header="⏸️  Suspended Jobs | Enter: fg, Esc: cancel" | sed 's/\[//' | awk '{print $1}' | tr -d ']')
+        [ -n "$job" ] && fg %"$job"
+      }
+
       zz () {
         local dir
         if [ $# -gt 0 ]; then
