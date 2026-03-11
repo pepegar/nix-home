@@ -2,3 +2,4 @@
 .pre-commit-config.yaml
 result
 .playwright-cli
+skills/datadog/__pycache__/
