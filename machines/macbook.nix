@@ -13,6 +13,7 @@
     ../applications/direnv
     ../applications/emacs
     ../applications/fzf
+    ../applications/gent
     ../applications/ghostty
     ../applications/kitty
     ../applications/go
