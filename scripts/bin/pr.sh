@@ -298,15 +298,15 @@ else
     fi
 
     debug_echo "Creating new worktree from $base_branch"
-    log_command "git worktree add \"$worktree_path\" -b \"pr-$pr_number\" \"$base_branch\""
-    if git worktree add "$worktree_path" -b "pr-${selected_user}-${pr_number}-${sanitized_branch}" "$base_branch"; then
-        echo "Created worktree: $worktree_path (branch: pr-${selected_user}-${pr_number}-${sanitized_branch}, based on $base_branch)"
-        
+    log_command "git worktree add \"$worktree_path\" -b \"$pr_branch\" \"$base_branch\""
+    if git worktree add "$worktree_path" -b "$pr_branch" "$base_branch"; then
+        echo "Created worktree: $worktree_path (branch: $pr_branch, based on $base_branch)"
+
         # Change to the new worktree directory
         cd "$worktree_path"
-        
+
         # Set branch description with PR info
-        git config "branch.pr-${selected_user}-${pr_number}-${sanitized_branch}.description" "PR #$pr_number: $pr_title"
+        git config "branch.${pr_branch}.description" "PR #$pr_number: $pr_title"
         echo "Set branch description from PR information."
         echo "Changed to worktree directory: $worktree_path"
     else
