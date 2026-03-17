@@ -13,90 +13,65 @@
 (import core/commands :as commands)
 
 # ── RPC Client ───────────────────────────────────────────────
-# net/connect returns a Janet :core/stream. We use :write/:read/:close
-# on the stream directly, with a line buffer for reading JSON-RPC
-# responses (one JSON object per line).
+# net/connect returns a numeric conn-id (not a Janet stream).
+# We use net/write, net/read-line, net/close with that ID.
+# net/write appends a newline and flushes automatically.
+# net/read-line does non-blocking buffered line reads, returning
+# string (without newline), nil (no data yet), or :closed.
 
-(defn- stream-write
-  "Write a line (with trailing newline) to a stream."
-  [stream data]
-  (try
-    (do (:write stream (string data "\n")) true)
-    ([_] false)))
+(defn- conn-write
+  "Write a line to a connection. net/write appends newline."
+  [conn data]
+  (net/write conn data))
 
-(defn- stream-close
-  "Close a stream."
-  [stream]
-  (try (:close stream) ([_] nil)))
-
-# Per-stream read buffer for line reassembly
-(def- read-bufs @{})
-
-(defn- stream-read-line
-  "Read a complete line from a stream. Buffers partial reads.
-   Returns string (without newline), nil (no data yet), or :closed."
-  [stream &opt timeout-s]
-  (default timeout-s 0.05)
-  # Get or create the buffer for this stream
-  (def buf (or (get read-bufs stream) @""))
-  (put read-bufs stream buf)
-  # Check if we already have a complete line buffered
-  (def nl (string/find "\n" buf))
-  (when nl
-    (def line (string/slice buf 0 nl))
-    (def rest (buffer/slice buf (+ nl 1)))
-    (put read-bufs stream rest)
-    (break (string/trimr line)))
-  # Try to read more data from the stream
-  (try
-    (do
-      (def chunk (:read stream 4096 timeout-s))
-      (if (or (nil? chunk) (= 0 (length chunk)))
-        nil
-        (do
-          (buffer/push buf chunk)
-          # Check again for a complete line
-          (def nl2 (string/find "\n" buf))
-          (when nl2
-            (def line (string/slice buf 0 nl2))
-            (def rest (buffer/slice buf (+ nl2 1)))
-            (put read-bufs stream rest)
-            (break (string/trimr line)))
-          nil)))
-    ([_] :closed)))
+(defn- conn-close
+  "Close a connection."
+  [conn]
+  (try (net/close conn) ([_] nil)))
 
 (defn rpc-call
   "Send a JSON-RPC request and wait for the response.
-   Skips notifications (no id). Returns parsed response or nil on timeout."
+   Skips notifications (no id). Returns parsed response or nil on timeout.
+   Uses sleep-then-read: sleeps to let the server process, then reads lines."
   [conn method params &opt timeout-ms]
   (default timeout-ms 5000)
   (when (nil? conn) (break nil))
   (def id (math/floor (* (math/random) 1000000)))
   (def req (json/encode @{:jsonrpc "2.0" :id id :method method :params (or params @{})}))
-  (unless (stream-write conn req) (break nil))
+  (unless (conn-write conn req) (break nil))
   (def deadline (+ (os/clock) (/ timeout-ms 1000)))
-  (while (< (os/clock) deadline)
-    (def remaining (- deadline (os/clock)))
-    (def line (stream-read-line conn (min 0.1 remaining)))
-    (when (= :closed line) (break nil))
-    (when (and (string? line) (not= "" line))
-      (def parsed (try (json/decode line) ([_] nil)))
-      (when (and parsed (= (get parsed :id) id))
-        (break parsed)))
-    (os/sleep 0.01))
-  nil)
+  (var result nil)
+  (var closed false)
+  (while (and (< (os/clock) deadline) (nil? result) (not closed))
+    (os/sleep 0.15)
+    (var line (net/read-line conn))
+    (while (and (not (nil? line)) (nil? result) (not closed))
+      (cond
+        (= :closed line)
+        (set closed true)
+
+        (string? line)
+        (do
+          (def parsed (try (json/decode line) ([_] nil)))
+          (when (and parsed (= (get parsed :id) id))
+            (set result parsed))))
+      (when (and (not closed) (nil? result))
+        (set line (net/read-line conn)))))
+  result)
 
 (defn rpc-drain-notifications
   "Read and return pending notifications without blocking."
   [conn]
   (def notes @[])
   (when (nil? conn) (break notes))
-  (var line (stream-read-line conn 0.01))
-  (while (and (string? line) (not= "" line))
-    (def parsed (try (json/decode line) ([_] nil)))
-    (when (and parsed (nil? (get parsed :id)))
-      (array/push notes parsed))
-    (set line (stream-read-line conn 0.01)))
+  (os/sleep 0.05)
+  (var line (net/read-line conn))
+  (while (and (not (nil? line)) (not= :closed line))
+    (when (string? line)
+      (def parsed (try (json/decode line) ([_] nil)))
+      (when (and parsed (nil? (get parsed :id)))
+        (array/push notes parsed)))
+    (set line (net/read-line conn)))
   notes)
 
 # ── Worker Registry ──────────────────────────────────────────
@@ -150,7 +125,7 @@
   (def path (w :path))
   # Clean up any stale connection from a previous run
   (when (w :conn-id)
-    (stream-close (w :conn-id))
+    (conn-close (w :conn-id))
     (put w :conn-id nil))
   # Spawn gent --headless in background, fully detached.
   # Uses nohup + fd closing to prevent the child from inheriting
@@ -186,7 +161,7 @@
     (when status (break :ok))
     # Connection dead — close the stale stream and reset fully
     (when (w :conn-id)
-      (stream-close (w :conn-id)))
+      (conn-close (w :conn-id)))
     (put w :status :stopped)
     (put w :conn-id nil))
   (spawn-worker name))
@@ -198,7 +173,7 @@
   (when (nil? w) (break nil))
   (when (w :conn-id)
     (try (rpc-call (w :conn-id) "shutdown" @{} 2000) ([_] nil))
-    (stream-close (w :conn-id)))
+    (conn-close (w :conn-id)))
   (put w :conn-id nil)
   (put w :status :stopped)
   :ok)
@@ -373,3 +348,5 @@
    :function (fn [_]
                (stop-all-workers)
                "All workers stopped.")})
+
+
