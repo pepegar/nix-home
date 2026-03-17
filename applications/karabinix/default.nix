@@ -220,9 +220,159 @@ in {
               "mouse_motion_to_scroll.speed" = 100;
             };
             rules = [
-              (vimNavigation {
+              (layerKey {
                 enable_debug = debug;
-                layer_key = keyCodes.tab;
+                key = keyCodes.tab;
+                alone_key = keyCodes.tab;
+                variable_name = "vim_mode";
+                mappings = {
+                  # Basic vim navigation
+                  h = keyCodes.left_arrow;
+                  j = keyCodes.down_arrow;
+                  k = keyCodes.up_arrow;
+                  l = keyCodes.right_arrow;
+                  w = mkToEvent {
+                    key_code = keyCodes.right_arrow;
+                    modifiers = [keyCodes.left_option];
+                    description = "word forward";
+                  };
+                  b = mkToEvent {
+                    key_code = keyCodes.left_arrow;
+                    modifiers = [keyCodes.left_option];
+                    description = "word back";
+                  };
+                  "0" = keyCodes.home;
+                  "4" = keyCodes.end;
+                  u = keyCodes.page_up;
+                  d = keyCodes.page_down;
+                  g = keyCodes.home;
+                  "shift+g" = mkToEvent {
+                    key_code = keyCodes.end;
+                    description = "end of doc";
+                  };
+
+                  # Option + arrows (S held = Alt via home row mod key code)
+                  "left_option+h" = mkToEvent {
+                    key_code = keyCodes.left_arrow;
+                    modifiers = [keyCodes.left_option];
+                    description = "opt+left";
+                  };
+                  "left_option+j" = mkToEvent {
+                    key_code = keyCodes.down_arrow;
+                    modifiers = [keyCodes.left_option];
+                    description = "opt+down";
+                  };
+                  "left_option+k" = mkToEvent {
+                    key_code = keyCodes.up_arrow;
+                    modifiers = [keyCodes.left_option];
+                    description = "opt+up";
+                  };
+                  "left_option+l" = mkToEvent {
+                    key_code = keyCodes.right_arrow;
+                    modifiers = [keyCodes.left_option];
+                    description = "opt+right";
+                  };
+
+                  # Control + arrows (D held = Ctrl)
+                  "left_control+h" = mkToEvent {
+                    key_code = keyCodes.left_arrow;
+                    modifiers = [keyCodes.left_control];
+                    description = "ctrl+left";
+                  };
+                  "left_control+j" = mkToEvent {
+                    key_code = keyCodes.down_arrow;
+                    modifiers = [keyCodes.left_control];
+                    description = "ctrl+down";
+                  };
+                  "left_control+k" = mkToEvent {
+                    key_code = keyCodes.up_arrow;
+                    modifiers = [keyCodes.left_control];
+                    description = "ctrl+up";
+                  };
+                  "left_control+l" = mkToEvent {
+                    key_code = keyCodes.right_arrow;
+                    modifiers = [keyCodes.left_control];
+                    description = "ctrl+right";
+                  };
+
+                  # Command + arrows (F held = Cmd)
+                  "left_command+h" = mkToEvent {
+                    key_code = keyCodes.left_arrow;
+                    modifiers = [keyCodes.left_command];
+                    description = "cmd+left";
+                  };
+                  "left_command+j" = mkToEvent {
+                    key_code = keyCodes.down_arrow;
+                    modifiers = [keyCodes.left_command];
+                    description = "cmd+down";
+                  };
+                  "left_command+k" = mkToEvent {
+                    key_code = keyCodes.up_arrow;
+                    modifiers = [keyCodes.left_command];
+                    description = "cmd+up";
+                  };
+                  "left_command+l" = mkToEvent {
+                    key_code = keyCodes.right_arrow;
+                    modifiers = [keyCodes.left_command];
+                    description = "cmd+right";
+                  };
+
+                  # Shift + arrows (for selection)
+                  "shift+h" = mkToEvent {
+                    key_code = keyCodes.left_arrow;
+                    modifiers = [keyCodes.left_shift];
+                    description = "shift+left";
+                  };
+                  "shift+j" = mkToEvent {
+                    key_code = keyCodes.down_arrow;
+                    modifiers = [keyCodes.left_shift];
+                    description = "shift+down";
+                  };
+                  "shift+k" = mkToEvent {
+                    key_code = keyCodes.up_arrow;
+                    modifiers = [keyCodes.left_shift];
+                    description = "shift+up";
+                  };
+                  "shift+l" = mkToEvent {
+                    key_code = keyCodes.right_arrow;
+                    modifiers = [keyCodes.left_shift];
+                    description = "shift+right";
+                  };
+
+                  # Cmd+Shift + arrows (select to start/end of line)
+                  "left_command+shift+h" = mkToEvent {
+                    key_code = keyCodes.left_arrow;
+                    modifiers = [keyCodes.left_command keyCodes.left_shift];
+                    description = "cmd+shift+left";
+                  };
+                  "left_command+shift+l" = mkToEvent {
+                    key_code = keyCodes.right_arrow;
+                    modifiers = [keyCodes.left_command keyCodes.left_shift];
+                    description = "cmd+shift+right";
+                  };
+
+                  # Option+Shift + arrows (select word)
+                  "left_option+shift+h" = mkToEvent {
+                    key_code = keyCodes.left_arrow;
+                    modifiers = [keyCodes.left_option keyCodes.left_shift];
+                    description = "opt+shift+left";
+                  };
+                  "left_option+shift+j" = mkToEvent {
+                    key_code = keyCodes.down_arrow;
+                    modifiers = [keyCodes.left_option keyCodes.left_shift];
+                    description = "opt+shift+down";
+                  };
+                  "left_option+shift+k" = mkToEvent {
+                    key_code = keyCodes.up_arrow;
+                    modifiers = [keyCodes.left_option keyCodes.left_shift];
+                    description = "opt+shift+up";
+                  };
+                  "left_option+shift+l" = mkToEvent {
+                    key_code = keyCodes.right_arrow;
+                    modifiers = [keyCodes.left_option keyCodes.left_shift];
+                    description = "opt+shift+right";
+                  };
+                };
               })
 
               (layerKey {
