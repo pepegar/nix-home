@@ -40,8 +40,6 @@
         afc = "!git af && git commit --verbose";
       };
 
-      diff.external = "difft";
-
       ghq.root = "~/projects";
 
       init.defaultBranch = "main";
