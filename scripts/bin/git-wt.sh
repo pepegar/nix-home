@@ -413,14 +413,13 @@ delete_worktree() {
     
     if [[ "$response" =~ ^[Yy]$ ]]; then
         debug_echo "User confirmed deletion"
-        log_command "git worktree remove \"$path\""
+        log_command "git worktree remove --force \"$path\""
         
-        if git worktree remove "$path" 2>/dev/null; then
+        if git worktree remove --force "$path" 2>/dev/null; then
             echo "✅ Deleted worktree: $branch" >&2
             return 0
         else
-            echo "❌ Failed to delete worktree. You may need to force removal." >&2
-            echo "   Try: git worktree remove --force \"$path\"" >&2
+            echo "❌ Failed to force delete worktree: $path" >&2
             return 1
         fi
     else
@@ -480,11 +479,10 @@ echo -n "   Are you sure? [y/N] "
 read -r response
 
 if [[ "\$response" =~ ^[Yy]\$ ]]; then
-    if git worktree remove "\$path" 2>/dev/null; then
+    if git worktree remove --force "\$path" 2>/dev/null; then
         echo "✅ Deleted worktree: \$branch"
     else
-        echo "❌ Failed to delete worktree. You may need to force removal."
-        echo "   Try: git worktree remove --force \"\$path\""
+        echo "❌ Failed to force delete worktree: \$path"
     fi
 else
     echo "❌ Deletion cancelled"
