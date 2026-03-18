@@ -40,6 +40,7 @@ EXAMPLES:
 
 BEHAVIOR:
   - If a worktree already exists for the PR, switches to it
+  - If the PR branch already exists locally, reuses it transparently
   - Creates worktrees in <repo>/.worktrees/pr-<user>-<pr_number>
   - Sets branch description with PR title for reference
 
@@ -225,6 +226,14 @@ check_origin_branch() {
     fi
 }
 
+# Function to check if a branch exists locally
+check_local_branch() {
+    local branch_name=$1
+    debug_echo "Checking if branch exists locally: $branch_name"
+    log_command "git show-ref --verify --quiet refs/heads/$branch_name"
+    git show-ref --verify --quiet "refs/heads/$branch_name"
+}
+
 # Function to get the current branch name
 get_current_branch() {
     debug_echo "Getting current branch name"
@@ -232,75 +241,114 @@ get_current_branch() {
     git rev-parse --abbrev-ref HEAD
 }
 
-# Check if worktree already exists
+# Function to get an existing worktree path for a branch
+get_worktree_for_branch() {
+    local branch_name=$1
+    debug_echo "Looking for existing worktree for branch: $branch_name"
+    log_command "git worktree list --porcelain"
+
+    git worktree list --porcelain | awk -v branch="refs/heads/$branch_name" '
+        /^worktree / { worktree = substr($0, 10) }
+        /^branch / {
+            if ($2 == branch) {
+                print worktree
+                exit
+            }
+        }
+    '
+}
+
+# Check if worktree already exists at the expected path
 if [ -d "$worktree_path" ]; then
     # Worktree exists, switch to it
-    debug_echo "Worktree exists, switching to it"
+    debug_echo "Worktree exists at expected path, switching to it"
     echo "Switching to existing worktree: $worktree_path"
     cd "$worktree_path"
 else
-    # Worktree doesn't exist, determine base branch
-    current_branch=$(get_current_branch)
+    existing_branch_worktree=$(get_worktree_for_branch "$pr_branch")
 
-    if [[ -n "$ARG_BASE_BRANCH" ]]; then
-        # Use CLI argument for base branch
-        case "$ARG_BASE_BRANCH" in
-            current)
-                base_branch="$current_branch"
-                debug_echo "Using current branch as base: $base_branch"
-                ;;
-            develop)
-                base_branch="origin/develop"
-                debug_echo "Using develop as base: $base_branch"
-                ;;
-            pr)
-                if check_origin_branch "$pr_branch"; then
-                    base_branch="origin/$pr_branch"
-                    debug_echo "Using PR branch as base: $base_branch"
-                else
-                    echo "Error: PR branch '$pr_branch' does not exist in origin"
-                    exit 1
-                fi
-                ;;
-            *)
-                echo "Error: Invalid base branch option '$ARG_BASE_BRANCH'"
-                echo "Valid options: current, develop, pr"
-                exit 1
-                ;;
-        esac
+    if [[ -n "$existing_branch_worktree" ]]; then
+        debug_echo "Branch already checked out in another worktree: $existing_branch_worktree"
+        echo "Switching to existing worktree for branch '$pr_branch': $existing_branch_worktree"
+        cd "$existing_branch_worktree"
     else
-        # Interactive base branch selection
-        echo "Choose base branch:"
-
-        # Check if PR branch already exists in origin
-        branch_options="Current branch ($current_branch)\\nDevelop branch (origin/develop)"
-        if check_origin_branch "$pr_branch"; then
-            debug_echo "Branch $pr_branch exists in origin, adding to options"
-            branch_options="Existing PR branch (origin/$pr_branch)\\n$branch_options"
-        fi
-
-        base_branch=$(echo -e "$branch_options" |
-                      fzf --height 15% --reverse --header="Choose base branch:") || true
-
-        if [[ -z "$base_branch" ]]; then
-            debug_echo "No base branch selected. Exiting."
-            echo "No base branch selected. Exiting."
-            exit 0
-        fi
-
-        if [[ "$base_branch" == *"Existing PR branch"* ]]; then
-            base_branch="origin/$pr_branch"
-        elif [[ "$base_branch" == *"Current"* ]]; then
-            base_branch="$current_branch"
+        if check_local_branch "$pr_branch"; then
+            debug_echo "Local branch already exists, reusing it for new worktree"
+            log_command "git worktree add \"$worktree_path\" \"$pr_branch\""
+            if git worktree add "$worktree_path" "$pr_branch"; then
+                echo "Created worktree: $worktree_path (branch: $pr_branch, reusing existing local branch)"
+            else
+                echo "Failed to create worktree from existing branch '$pr_branch'. Please check your Git repository state."
+                exit 1
+            fi
         else
-            base_branch="origin/develop"
-        fi
-    fi
+            # Worktree doesn't exist and branch doesn't exist locally, determine base branch
+            current_branch=$(get_current_branch)
 
-    debug_echo "Creating new worktree from $base_branch"
-    log_command "git worktree add \"$worktree_path\" -b \"$pr_branch\" \"$base_branch\""
-    if git worktree add "$worktree_path" -b "$pr_branch" "$base_branch"; then
-        echo "Created worktree: $worktree_path (branch: $pr_branch, based on $base_branch)"
+            if [[ -n "$ARG_BASE_BRANCH" ]]; then
+                # Use CLI argument for base branch
+                case "$ARG_BASE_BRANCH" in
+                    current)
+                        base_branch="$current_branch"
+                        debug_echo "Using current branch as base: $base_branch"
+                        ;;
+                    develop)
+                        base_branch="origin/develop"
+                        debug_echo "Using develop as base: $base_branch"
+                        ;;
+                    pr)
+                        if check_origin_branch "$pr_branch"; then
+                            base_branch="origin/$pr_branch"
+                            debug_echo "Using PR branch as base: $base_branch"
+                        else
+                            echo "Error: PR branch '$pr_branch' does not exist in origin"
+                            exit 1
+                        fi
+                        ;;
+                    *)
+                        echo "Error: Invalid base branch option '$ARG_BASE_BRANCH'"
+                        echo "Valid options: current, develop, pr"
+                        exit 1
+                        ;;
+                esac
+            else
+                # Interactive base branch selection
+                echo "Choose base branch:"
+
+                # Check if PR branch already exists in origin
+                branch_options="Current branch ($current_branch)\\nDevelop branch (origin/develop)"
+                if check_origin_branch "$pr_branch"; then
+                    debug_echo "Branch $pr_branch exists in origin, adding to options"
+                    branch_options="Existing PR branch (origin/$pr_branch)\\n$branch_options"
+                fi
+
+                base_branch=$(echo -e "$branch_options" |
+                              fzf --height 15% --reverse --header="Choose base branch:") || true
+
+                if [[ -z "$base_branch" ]]; then
+                    debug_echo "No base branch selected. Exiting."
+                    echo "No base branch selected. Exiting."
+                    exit 0
+                fi
+
+                if [[ "$base_branch" == *"Existing PR branch"* ]]; then
+                    base_branch="origin/$pr_branch"
+                elif [[ "$base_branch" == *"Current"* ]]; then
+                    base_branch="$current_branch"
+                else
+                    base_branch="origin/develop"
+                fi
+            fi
+
+            debug_echo "Creating new worktree from $base_branch"
+            log_command "git worktree add \"$worktree_path\" -b \"$pr_branch\" \"$base_branch\""
+            if git worktree add "$worktree_path" -b "$pr_branch" "$base_branch"; then
+                echo "Created worktree: $worktree_path (branch: $pr_branch, based on $base_branch)"
+            else
+                echo "Failed to create worktree. Please check your Git repository state."
+                exit 1
+            fi
+        fi
 
         # Change to the new worktree directory
         cd "$worktree_path"
@@ -309,9 +357,6 @@ else
         git config "branch.${pr_branch}.description" "PR #$pr_number: $pr_title"
         echo "Set branch description from PR information."
         echo "Changed to worktree directory: $worktree_path"
-    else
-        echo "Failed to create worktree. Please check your Git repository state."
-        exit 1
     fi
 fi
 
