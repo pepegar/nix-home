@@ -1,8 +1,4 @@
-# Set claude-opus-4-6 as the default model
 (import core/api :as api)
-(api/set-model "claude-opus-4-6")
-
-# Custom dark theme with darker edit_file styling
 (import widgets/chat :as chat)
 (import widgets/editor :as editor)
 (import widgets/filepicker :as fp)
@@ -51,26 +47,5 @@
   @[{:constraint :fill
      :children [{:widget :chat :constraint :fill}]}
     {:constraint |(editor/get-height)
-     :children [{:widget :editor :constraint 0.6}
-                {:widget :git-status :constraint 0.4}]}])
-
-# ── Orchestrator ──────────────────────────────────────────────
-
-(import orchestrator)
-
-(def- home (os/getenv "HOME"))
-
-(orchestrator/register-worker :home-manager
-  {:path (string home "/.config/home-manager") :port 7001})
-
-(orchestrator/register-worker :math-vault
-  {:path (string home "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Math") :port 7002})
-
-(orchestrator/register-worker :goodnotes-vault
-  {:path (string home "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Goodnotes") :port 7003})
-
-(orchestrator/register-worker :goodnotes
-  {:path (string home "/projects/github.com/GoodNotes/GoodNotes-5") :port 7004})
-
-(orchestrator/register-worker :gent
-  {:path (string home "/projects/github.com/pepegar/gent") :port 7005})
+     :children [{:widget :editor :constraint 0.65}
+                {:widget :git-status :constraint 0.35}]}])
