@@ -434,11 +434,11 @@
     "goodnotes-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1773659754,
-        "narHash": "sha256-LqnzHtiUqBGl0Abo3zSyuAKpzanMwIZzcvn/NUPHrik=",
+        "lastModified": 1773820689,
+        "narHash": "sha256-+W1eUqd0EberwuZv/8RX5Sj7bj8PIxRnShjK9sx8xOE=",
         "ref": "refs/heads/main",
-        "rev": "88f77d567b2a3f07ab36cdf09afd228b08ca1ac2",
-        "revCount": 114,
+        "rev": "e6e837970cdabe6f610a6122c8246366de9ec45a",
+        "revCount": 148,
         "type": "git",
         "url": "ssh://git@github.com/Goodnotes/skills.git"
       },
