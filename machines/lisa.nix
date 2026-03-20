@@ -1,65 +1,46 @@
-{...}: let
-  sources = import ../nix/sources.nix;
-  pkgs = import sources.nixpkgs {};
-in rec {
+{pkgs, ...}: {
   imports = [
-    ../applications/fzf
-    ../applications/zsh
-    ../applications/neovim
+    ./base.nix
+
+    # Linux-specific applications
     ../applications/alacritty
-    ../applications/emacs
-    ../applications/direnv
-    ../applications/go
-    ../applications/rofi
+    # ../applications/rofi  # Commented out due to deprecated options
     ../applications/texlive
-    ../applications/starship
     ../applications/xmonad
 
-    ../services/network-manager-applet.nix
-    ../services/polybar.nix
-    ../services/dunst.nix
+    # Linux-specific services - commented out problematic ones for now
+    # ../services/network-manager-applet.nix
+    # ../services/polybar.nix
+    # ../services/dunst.nix
 
-    ../cfg/email
-    ../cfg/git.nix
+    # Linux-specific configuration
     ../cfg/xresources.nix
-    ../cfg/sbt
   ];
 
-  nixpkgs.overlays = let
-    path = ../overlays;
-  in
-    with builtins;
-      map (n: import (path + ("/" + n))) (filter (n:
-        match ".*\\.nix" n
-        != null
-        || pathExists (path + ("/" + n + "/default.nix")))
-      (attrNames (readDir path)));
+  # Linux-specific settings
+  home.username = "pepe";
+  home.homeDirectory = "/home/pepe";
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  # Override some session variables for Linux
+  home.sessionVariables = {
+    DISPLAY = ":0";
+    EDITOR = "emacs"; # You had this as "emacs" in lisa.nix, keeping for Linux
+  };
 
-  news.display = "silent";
-
+  # Linux-specific packages (from your existing lisa.nix)
   home.packages = with pkgs; [
     ag
     any-nix-shell
-    bat
-    eza
     ghq
     gnome.nautilus
-    gnupg
-    graphviz
     heroku
-    htop
     libreoffice
     mr
     nix-prefetch-scripts
     obs-studio
     openvpn
-    pass
     pasystray
     pavucontrol
-    prettyping
     rescuetime
     ripgrep-all
     robo3t
@@ -73,13 +54,16 @@ in rec {
     nyxt
   ];
 
-  home.username = "pepe";
-  home.homeDirectory = "/home/pepe";
-
-  home.sessionVariables = {
-    DISPLAY = ":0";
-    EDITOR = "emacs";
-  };
+  # Apply the old overlays system from lisa.nix
+  nixpkgs.overlays = let
+    path = ../overlays;
+  in
+    with builtins;
+      map (n: import (path + ("/" + n))) (filter (n:
+        match ".*\\.nix" n
+        != null
+        || pathExists (path + ("/" + n + "/default.nix")))
+      (attrNames (readDir path)));
 
   home.stateVersion = "22.05";
 }
