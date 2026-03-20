@@ -26,18 +26,18 @@
   time.timeZone = "Atlantic/Canary";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.utf8";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "es_ES.utf8";
-    LC_IDENTIFICATION = "es_ES.utf8";
-    LC_MEASUREMENT = "es_ES.utf8";
-    LC_MONETARY = "es_ES.utf8";
-    LC_NAME = "es_ES.utf8";
-    LC_NUMERIC = "es_ES.utf8";
-    LC_PAPER = "es_ES.utf8";
-    LC_TELEPHONE = "es_ES.utf8";
-    LC_TIME = "es_ES.utf8";
+    LC_ADDRESS = "es_ES.UTF-8";
+    LC_IDENTIFICATION = "es_ES.UTF-8";
+    LC_MEASUREMENT = "es_ES.UTF-8";
+    LC_MONETARY = "es_ES.UTF-8";
+    LC_NAME = "es_ES.UTF-8";
+    LC_NUMERIC = "es_ES.UTF-8";
+    LC_PAPER = "es_ES.UTF-8";
+    LC_TELEPHONE = "es_ES.UTF-8";
+    LC_TIME = "es_ES.UTF-8";
   };
 
   systemd.targets.sleep.enable = false;
@@ -59,7 +59,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
