@@ -136,13 +136,14 @@ Show the full stack with branch info, PR status, and sync state.
 
 3. For each branch, gather:
    - **PR info**: `gh pr list --head "$branch" --state all --json number,state,url,reviewDecision --jq '.[0]'`
-   - **Needs rebase?** Compare merge-base with parent tip:
+   - **Needs rebase?** Compare merge-base with **immediate parent** tip only (not transitive):
      ```bash
      parent=$(git config --local "branch.$branch.stack-parent")
      merge_base=$(git merge-base "$branch" "$parent" 2>/dev/null)
      parent_tip=$(git rev-parse "$parent" 2>/dev/null)
      # needs rebase if merge_base != parent_tip
      ```
+     Note: a branch can show `up-to-date` while being transitively stale — its parent hasn't moved yet, but a grandparent has. The rebase cascade surfaces this naturally: once branch N is rebased, branch N+1's parent tip changes and it will then show `needs-rebase`.
    - **Has worktree?** `git worktree list | grep "\[$branch\]"`
    - **Current?** Compare with `git branch --show-current`
 
@@ -151,9 +152,9 @@ Show the full stack with branch info, PR status, and sync state.
    Stack: feature-auth (base: develop)
 
    #  Branch              PR       Review          Rebase
-   1  auth-base           #123     Approved        up-to-date
+   1  auth-base           #123     Approved        needs-rebase
    2  auth-validation     #124     Changes Req.    needs-rebase    <-- you are here
-   3  auth-tests          --       --              up-to-date
+   3  auth-tests          --       --              up-to-date  (transitively stale; will need rebase after #2 is rebased)
    ```
 
 ---

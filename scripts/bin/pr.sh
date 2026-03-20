@@ -210,7 +210,7 @@ debug_echo "PR branch: $pr_branch"
 git_root=$(git rev-parse --show-toplevel)
 # Sanitize branch name for use in directory path (replace / and other special chars with -)
 sanitized_branch=$(echo "$pr_branch" | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/--*/-/g' | sed 's/^-//;s/-$//')
-worktree_path="$git_root/.worktrees/pr-${selected_user}-${pr_number}-${sanitized_branch}"
+worktree_path="$git_root/.worktrees/${sanitized_branch}"
 
 debug_echo "Worktree path: $worktree_path"
 
