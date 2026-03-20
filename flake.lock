@@ -327,11 +327,11 @@
         "tui-wright": "tui-wright"
       },
       "locked": {
-        "lastModified": 1774015271,
-        "narHash": "sha256-PGzkqpWDcg4DNHLxwQ0gDflLvwZpvD5BU4+jv/YzLTQ=",
+        "lastModified": 1774024979,
+        "narHash": "sha256-Da3AJzc/dZHX0yNJVHKe9uAhSy0CSOBolT46lVUOEFk=",
         "owner": "pepegar",
         "repo": "gent",
-        "rev": "f23759751e4135212f279337f23c0f97866197e9",
+        "rev": "5540e36ba7c2c2f4e8e7d7a6897124bc1ca54b0c",
         "type": "github"
       },
       "original": {
