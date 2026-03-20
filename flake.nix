@@ -105,7 +105,10 @@
               ./machines/marge/configuration.nix
               home-manager.nixosModules.home-manager
               {
-                home-manager.extraSpecialArgs = {inherit inputs;};
+                home-manager.extraSpecialArgs = {
+                  inherit inputs;
+                  system = "x86_64-linux";
+                };
                 home-manager.sharedModules = [
                   (nurNoPkgs "x86_64-linux").repos.rycee.hmModules.emacs-init
                   karabinix.homeManagerModules.karabinix
