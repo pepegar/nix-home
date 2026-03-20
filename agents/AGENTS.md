@@ -14,3 +14,6 @@ When creating PRs, leave the description empty.
 Never post comments, create issues, or perform any write action on external services
 (GitHub, Jira, Slack, etc.) without explicitly asking for my approval first.
 Always show me the exact content you plan to post and wait for confirmation.
+
+## Split large changes into smaller PRs
+use /stacked-prs skill whenever the change you're working on gets too big.
