@@ -85,45 +85,7 @@
     shell = "/home/pepe/.nix-profile/bin/zsh";
   };
 
-  home-manager.users.pepe = {pkgs, ...}: {
-    home.username = "pepe";
-    home.homeDirectory = "/home/pepe";
-    home.stateVersion = "22.05";
-    imports = [
-      ../../applications/go
-      ../../applications/direnv
-      ../../applications/fzf
-      ../../applications/neovim
-      ../../applications/starship
-      ../../applications/zsh
-      ../../cfg/email
-      ../../cfg/git.nix
-    ];
-
-    # Let Home Manager install and manage itself.
-    programs.home-manager.enable = true;
-
-    home.packages = with pkgs; [
-      git-crypt
-      bat
-      gnupg
-      prettyping
-      pass
-      htop
-      eza
-      silver-searcher
-      ghq
-      gh
-      jq
-      pinentry-curses
-    ];
-
-    programs.zsh.sessionVariables = {
-      NIX_PATH = "$HOME/.nix-defexpr/channels\${NIX_PATH:+:}$NIX_PATH";
-      LANG = "en_US.UTF-8";
-      LC_ALL = "en_US.UTF-8";
-    };
-  };
+  home-manager.users.pepe = import ../linux-server.nix;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
