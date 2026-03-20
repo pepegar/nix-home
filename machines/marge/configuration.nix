@@ -110,7 +110,7 @@
   services.openssh = {
     enable = true;
     settings = {
-      AcceptEnv = "TERM";
+      AcceptEnv = ["TERM"];
     };
   };
   programs.gnupg.agent = {
