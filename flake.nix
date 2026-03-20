@@ -111,7 +111,7 @@
         homeConfigurations = {
           "${user}@bart" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
           "${user}@lisa" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
-          "${user}@marge" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
+          "${user}@marge" = mkHomeConfig ./machines/linux-server.nix "x86_64-linux";
           "${user}" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
         };
 
