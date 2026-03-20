@@ -118,6 +118,7 @@
       "marge" = {
         hostname = "marge";
         user = "pepe";
+        sendEnv = ["TERM"];
       };
       "lisa" = {
         hostname = "lisa";
