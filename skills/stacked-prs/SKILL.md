@@ -206,7 +206,7 @@ After one or more PRs have been merged, clean up and rebase remaining branches.
 5. Renumber remaining branches to be contiguous from 1.
 6. Fetch updated base and run the rebase cascade on remaining branches.
 7. Force-push all updated branches with `--force-with-lease`.
-8. Run `update-descriptions` to refresh all PR stack tables.
+8. Run `update-descriptions` (via the Python script) to refresh all PR stack tables.
 9. Clean up worktrees and local branches for merged entries:
    ```bash
    git worktree remove "$MAIN_ROOT/.worktrees/$merged_branch" 2>/dev/null || true
@@ -245,7 +245,7 @@ Create or update GitHub PRs for all branches in the stack.
        gh pr edit "$pr_number" --base "$expected_base"
      fi
      ```
-4. After all PRs exist, run `update-descriptions` to insert/refresh stack tables.
+4. After all PRs exist, run `update-descriptions` (via the Python script) to insert/refresh stack tables.
 5. Report all PRs with numbers and URLs.
 
 ---
@@ -254,18 +254,26 @@ Create or update GitHub PRs for all branches in the stack.
 
 Update the stack navigation table in all PR descriptions. See [PR Descriptions](references/pr-descriptions.md) for the template format.
 
-1. Get stack branches in order.
-2. For each branch, get PR info:
-   ```bash
-   gh pr list --head "$branch" --state all --json number,url,state,reviewDecision --jq '.[0]'
-   ```
-3. Build the stack table markdown (using `<!-- stack:start -->` / `<!-- stack:end -->` markers).
-4. For each PR, update its body:
-   - Get current body: `gh pr view "$pr_number" --json body --jq '.body'`
-   - If body contains `<!-- stack:start -->`, replace everything between the markers
-   - If not, prepend the stack table
-   - Update: `gh pr edit "$pr_number" --body "$new_body"`
-5. Report which PRs were updated.
+**Use the bundled Python script** — it handles git config parsing, `gh` API calls, status mapping, multiline body escaping, and temp files reliably (bash struggles with multiline markdown in variables):
+
+```bash
+python3 "$(dirname "$SKILL_PATH")/scripts/update-stack-descriptions.py"
+```
+
+Or with an explicit stack name:
+```bash
+python3 "$(dirname "$SKILL_PATH")/scripts/update-stack-descriptions.py" --stack-name "my-stack"
+```
+
+The script (at `scripts/update-stack-descriptions.py` relative to this skill):
+1. Reads stack branches from `git config --local` metadata
+2. Fetches PR info (number, state, reviewDecision, url) via `gh pr list` for each branch
+3. Derives display status (Merged, Approved, Changes Requested, Review Pending, Open)
+4. Builds a personalized stack table per PR (current PR highlighted with bold + `<-- This PR`)
+5. For each PR: reads existing body, replaces `<!-- stack:start -->...<!-- stack:end -->` markers (or prepends if absent), writes to a temp file, and calls `gh pr edit --body-file`
+6. Reports progress and skips branches without PRs
+
+**When to resolve `SKILL_PATH`:** The `$SKILL_PATH` variable refers to the absolute path of this SKILL.md file. Resolve it from the skill location provided in the agent's available skills list. For example, if the skill is at `/Users/pepe/.agents/skills/stacked-prs/SKILL.md`, the script is at `/Users/pepe/.agents/skills/stacked-prs/scripts/update-stack-descriptions.py`.
 
 ---
 
