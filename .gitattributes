@@ -1,3 +1,4 @@
 secrets.nix filter=git-crypt diff=git-crypt -text
+services/tailscale/default.nix filter=git-crypt diff=git-crypt -text
 skills/db-test/skill.md filter=git-crypt diff=git-crypt -text
 skills/capture-idea/SKILL.md filter=git-crypt diff=git-crypt -text
