@@ -56,6 +56,22 @@
         "type": "github"
       }
     },
+    "chrome-devtools-mcp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774051754,
+        "narHash": "sha256-vGFHBAIP0BJ16lMsX3hraytCyUmtf2VsZ2MJaB23WIk=",
+        "owner": "ChromeDevTools",
+        "repo": "chrome-devtools-mcp",
+        "rev": "9a47b657d7b17b9bc64508530c93d55e8033e2a6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ChromeDevTools",
+        "repo": "chrome-devtools-mcp",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1770169865,
@@ -868,6 +884,7 @@
     },
     "root": {
       "inputs": {
+        "chrome-devtools-mcp": "chrome-devtools-mcp",
         "devenv": "devenv",
         "flake-parts": "flake-parts_2",
         "gent": "gent",
@@ -1117,11 +1134,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1772624981,
-        "narHash": "sha256-hMClKfYLCZ16PaPlNtreCTn86/DNb/dXdqctzRRUq6o=",
+        "lastModified": 1774279577,
+        "narHash": "sha256-QipoJDDHYAnVM9LPKLC8SrlsY/c4As1I//orouDV4E8=",
         "owner": "pepegar",
         "repo": "zellij-cmd-k",
-        "rev": "6d8c4cb036b06c6477ab9b8c14be34a6eaad6c9f",
+        "rev": "7f0a0da57210b3f2a7a275a93ab42b743818d183",
         "type": "github"
       },
       "original": {
