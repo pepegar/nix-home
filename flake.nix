@@ -30,6 +30,8 @@
     zellij-cmd-k.url = "github:pepegar/zellij-cmd-k";
     playwright-cli.url = "github:microsoft/playwright-cli";
     playwright-cli.flake = false;
+    chrome-devtools-mcp.url = "github:ChromeDevTools/chrome-devtools-mcp";
+    chrome-devtools-mcp.flake = false;
     goodnotes-skills.url = "git+ssh://git@github.com/Goodnotes/skills.git";
     goodnotes-skills.flake = false;
   };

@@ -48,6 +48,31 @@ in {
         recursive = true;
       };
 
+      ".agents/skills/a11y-debugging" = {
+        source = "${inputs.chrome-devtools-mcp}/skills/a11y-debugging";
+        recursive = true;
+      };
+
+      ".agents/skills/chrome-devtools" = {
+        source = "${inputs.chrome-devtools-mcp}/skills/chrome-devtools";
+        recursive = true;
+      };
+
+      ".agents/skills/chrome-devtools-cli" = {
+        source = "${inputs.chrome-devtools-mcp}/skills/chrome-devtools-cli";
+        recursive = true;
+      };
+
+      ".agents/skills/debug-optimize-lcp" = {
+        source = "${inputs.chrome-devtools-mcp}/skills/debug-optimize-lcp";
+        recursive = true;
+      };
+
+      ".agents/skills/troubleshooting" = {
+        source = "${inputs.chrome-devtools-mcp}/skills/troubleshooting";
+        recursive = true;
+      };
+
       ".agents/AGENTS.md" = {
         source = ../agents/AGENTS.md;
       };
@@ -64,6 +89,31 @@ in {
 
       ".claude/skills/playwright-cli" = {
         source = "${inputs.playwright-cli}/skills/playwright-cli";
+        recursive = true;
+      };
+
+      ".claude/skills/a11y-debugging" = {
+        source = "${inputs.chrome-devtools-mcp}/skills/a11y-debugging";
+        recursive = true;
+      };
+
+      ".claude/skills/chrome-devtools" = {
+        source = "${inputs.chrome-devtools-mcp}/skills/chrome-devtools";
+        recursive = true;
+      };
+
+      ".claude/skills/chrome-devtools-cli" = {
+        source = "${inputs.chrome-devtools-mcp}/skills/chrome-devtools-cli";
+        recursive = true;
+      };
+
+      ".claude/skills/debug-optimize-lcp" = {
+        source = "${inputs.chrome-devtools-mcp}/skills/debug-optimize-lcp";
+        recursive = true;
+      };
+
+      ".claude/skills/troubleshooting" = {
+        source = "${inputs.chrome-devtools-mcp}/skills/troubleshooting";
         recursive = true;
       };
 
