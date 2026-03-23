@@ -21,7 +21,7 @@
       goodnotes-skill-names);
 in {
   home.activation.installPlaywrightCli = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    if ! command -v playwright-cli &>/dev/null; then
+    if ! command -v playwright-cli &>/dev/null && command -v npm &>/dev/null; then
       run --quiet /bin/sh -c 'export PATH="/opt/homebrew/bin:$PATH" && npm install -g @playwright/cli'
     fi
   '';
