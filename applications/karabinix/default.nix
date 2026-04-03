@@ -385,7 +385,7 @@ in {
                   n = mkToggleApp "Notion" "Notion";
                   a = mkToggleApp "Claude" "Claude";
                   w = mkToggleApp "WhatsApp" "WhatsApp";
-                  t = mkToggleApp "Ghostty" "Ghostty";
+                  t = mkToggleApp "Supacode" "Supacode";
                   b = mkToggleApp "Google Chrome" "Google Chrome";
                   i = mkToggleApp "IntelliJ IDEA" "IntelliJ IDEA";
                   s = mkToggleApp "Slack" "Slack";
