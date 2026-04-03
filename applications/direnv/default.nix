@@ -5,7 +5,7 @@
     nix-direnv.enable = true;
     config = {
       whitelist = {
-        prefix = ["~/projects/github.com"];
+        prefix = ["~/projects/github.com" "~/.supacode"];
       };
     };
   };
