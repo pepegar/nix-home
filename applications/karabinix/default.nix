@@ -545,29 +545,29 @@ in {
                   a = mkToEvent {
                     description = "mouse left";
                     mouse_key = {
-                      x = -1400;
-                      speed_multiplier = 1.0;
+                      x = -2000;
+                      speed_multiplier = 1.5;
                     };
                   };
                   s = mkToEvent {
                     description = "mouse down";
                     mouse_key = {
-                      y = 1300;
-                      speed_multiplier = 1.0;
+                      y = 2000;
+                      speed_multiplier = 1.5;
                     };
                   };
                   w = mkToEvent {
                     description = "mouse up";
                     mouse_key = {
-                      y = -1300;
-                      speed_multiplier = 1.0;
+                      y = -2000;
+                      speed_multiplier = 1.5;
                     };
                   };
                   d = mkToEvent {
                     description = "mouse right";
                     mouse_key = {
-                      x = 1300;
-                      speed_multiplier = 1.0;
+                      x = 2000;
+                      speed_multiplier = 1.5;
                     };
                   };
                   q = mkToEvent {
@@ -581,15 +581,15 @@ in {
                   r = mkToEvent {
                     description = "scroll down";
                     mouse_key = {
-                      vertical_wheel = -32;
-                      speed_multiplier = 1.0;
+                      vertical_wheel = -48;
+                      speed_multiplier = 1.5;
                     };
                   };
                   f = mkToEvent {
                     description = "scroll up";
                     mouse_key = {
-                      vertical_wheel = 32;
-                      speed_multiplier = 1.0;
+                      vertical_wheel = 48;
+                      speed_multiplier = 1.5;
                     };
                   };
                   c = mkToEvent {
