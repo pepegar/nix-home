@@ -49,6 +49,7 @@
       push.autoSetupRemote = true;
 
       # Performance optimizations for large repos
+      core.pager = "less -+FX";
       core.untrackedCache = true;
       core.fsmonitor = true;
     };
