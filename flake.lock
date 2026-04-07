@@ -447,22 +447,6 @@
         "type": "github"
       }
     },
-    "goodnotes-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1773820689,
-        "narHash": "sha256-+W1eUqd0EberwuZv/8RX5Sj7bj8PIxRnShjK9sx8xOE=",
-        "ref": "refs/heads/main",
-        "rev": "e6e837970cdabe6f610a6122c8246366de9ec45a",
-        "revCount": 148,
-        "type": "git",
-        "url": "ssh://git@github.com/Goodnotes/skills.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/Goodnotes/skills.git"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -888,7 +872,6 @@
         "devenv": "devenv",
         "flake-parts": "flake-parts_2",
         "gent": "gent",
-        "goodnotes-skills": "goodnotes-skills",
         "home-manager": "home-manager",
         "karabinix": "karabinix",
         "nix-darwin": "nix-darwin",
