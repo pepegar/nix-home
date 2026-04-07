@@ -570,6 +570,34 @@ in {
                       speed_multiplier = 1.5;
                     };
                   };
+                  "shift+a" = mkToEvent {
+                    description = "mouse left (precise)";
+                    mouse_key = {
+                      x = -2000;
+                      speed_multiplier = 0.5;
+                    };
+                  };
+                  "shift+s" = mkToEvent {
+                    description = "mouse down (precise)";
+                    mouse_key = {
+                      y = 2000;
+                      speed_multiplier = 0.5;
+                    };
+                  };
+                  "shift+w" = mkToEvent {
+                    description = "mouse up (precise)";
+                    mouse_key = {
+                      y = -2000;
+                      speed_multiplier = 0.5;
+                    };
+                  };
+                  "shift+d" = mkToEvent {
+                    description = "mouse right (precise)";
+                    mouse_key = {
+                      x = 2000;
+                      speed_multiplier = 0.5;
+                    };
+                  };
                   q = mkToEvent {
                     description = "left click";
                     pointing_button = "button1";
