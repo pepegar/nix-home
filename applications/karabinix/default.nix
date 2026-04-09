@@ -12,6 +12,85 @@ with inputs.karabinix.lib; let
 
   yabai = "/run/current-system/sw/bin/yabai";
 
+  yabaiMappings = {
+    h = mkToEvent {
+      shell_command = "${yabai} -m window --focus west";
+      description = "focus west";
+    };
+    j = mkToEvent {
+      shell_command = "${yabai} -m window --focus south";
+      description = "focus south";
+    };
+    k = mkToEvent {
+      shell_command = "${yabai} -m window --focus north";
+      description = "focus north";
+    };
+    l = mkToEvent {
+      shell_command = "${yabai} -m window --focus east";
+      description = "focus east";
+    };
+    "shift+h" = mkToEvent {
+      shell_command = "${yabai} -m window --swap west";
+      description = "swap west";
+    };
+    "shift+j" = mkToEvent {
+      shell_command = "${yabai} -m window --swap south";
+      description = "swap south";
+    };
+    "shift+k" = mkToEvent {
+      shell_command = "${yabai} -m window --swap north";
+      description = "swap north";
+    };
+    "shift+l" = mkToEvent {
+      shell_command = "${yabai} -m window --swap east";
+      description = "swap east";
+    };
+    r = mkToEvent {
+      shell_command = "${yabai} -m space --rotate 270";
+      description = "cycle windows forward";
+    };
+    "shift+r" = mkToEvent {
+      shell_command = "${yabai} -m space --rotate 90";
+      description = "cycle windows backward";
+    };
+    x = mkToEvent {
+      shell_command = "${yabai} -m space --mirror x-axis";
+      description = "mirror x-axis";
+    };
+    y = mkToEvent {
+      shell_command = "${yabai} -m space --mirror y-axis";
+      description = "mirror y-axis";
+    };
+    t = mkToEvent {
+      shell_command = "${yabai} -m window --toggle float";
+      description = "toggle float";
+    };
+    f = mkToEvent {
+      shell_command = "${yabai} -m window --toggle zoom-fullscreen";
+      description = "toggle fullscreen";
+    };
+    e = mkToEvent {
+      shell_command = "${yabai} -m space --balance";
+      description = "balance windows";
+    };
+    n = mkToEvent {
+      shell_command = "${yabai} -m window --focus next || ${yabai} -m window --focus first";
+      description = "focus next";
+    };
+    "shift+n" = mkToEvent {
+      shell_command = "${yabai} -m window --focus prev || ${yabai} -m window --focus last";
+      description = "focus prev";
+    };
+    "comma" = mkToEvent {
+      shell_command = "${yabai} -m window --ratio rel:-0.05";
+      description = "shrink split";
+    };
+    "period" = mkToEvent {
+      shell_command = "${yabai} -m window --ratio rel:0.05";
+      description = "grow split";
+    };
+  };
+
   mkMoveWindow = direction: let
     dx =
       if direction == "left"
@@ -456,6 +535,22 @@ in {
                     description = "next display";
                   };
                 };
+              })
+
+              (layerKey {
+                enable_debug = debug;
+                key = keyCodes."0";
+                alone_key = keyCodes."0";
+                variable_name = "yabai_layer_0";
+                mappings = yabaiMappings;
+              })
+
+              (layerKey {
+                enable_debug = debug;
+                key = keyCodes."1";
+                alone_key = keyCodes."1";
+                variable_name = "yabai_layer_1";
+                mappings = yabaiMappings;
               })
 
               (layerKey {
