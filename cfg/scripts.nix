@@ -61,4 +61,24 @@
     source = ../scripts/bin/ghqj.sh;
     executable = true;
   };
+
+  home.file."bin/yabai-snap-left" = {
+    source = ../scripts/bin/yabai-snap-left.sh;
+    executable = true;
+  };
+
+  home.file."bin/yabai-snap-right" = {
+    source = ../scripts/bin/yabai-snap-right.sh;
+    executable = true;
+  };
+
+  home.file."bin/yabai-snap-top" = {
+    source = ../scripts/bin/yabai-snap-top.sh;
+    executable = true;
+  };
+
+  home.file."bin/yabai-snap-bottom" = {
+    source = ../scripts/bin/yabai-snap-bottom.sh;
+    executable = true;
+  };
 }

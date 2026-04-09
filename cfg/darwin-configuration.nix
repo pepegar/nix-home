@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./homebrew.nix
+    ./yabai.nix
     ../services/git-fetch-all.nix
   ];
 

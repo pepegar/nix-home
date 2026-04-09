@@ -10,6 +10,27 @@ with inputs.karabinix.lib; let
       description = appName;
     };
 
+  yabai = "/run/current-system/sw/bin/yabai";
+
+  mkMoveWindow = direction: let
+    dx =
+      if direction == "left"
+      then "-100"
+      else if direction == "right"
+      then "100"
+      else "0";
+    dy =
+      if direction == "up"
+      then "-100"
+      else if direction == "down"
+      then "100"
+      else "0";
+  in
+    mkToEvent {
+      shell_command = "${yabai} -m window --move rel:${dx}:${dy}";
+      description = "move window ${direction}";
+    };
+
   mkLatex = latex: description:
     mkToEvent {
       shell_command = "printf '%s' '${latex}' | pbcopy && osascript -e 'tell application \"System Events\" to keystroke \"v\" using command down'";
@@ -402,13 +423,38 @@ in {
                 alone_key = keyCodes.quote;
                 variable_name = "window_management";
                 mappings = {
-                  f = raycastWindow "maximize";
-                  h = raycastWindow "left-half";
-                  l = raycastWindow "right-half";
-                  k = raycastWindow "top-half";
-                  j = raycastWindow "bottom-half";
-                  y = raycastWindow "previous-display";
-                  p = raycastWindow "next-display";
+                  f = mkToEvent {
+                    shell_command = "${yabai} -m window --grid 1:1:0:0:1:1";
+                    description = "maximize";
+                  };
+                  h = mkToEvent {
+                    shell_command = "~/bin/yabai-snap-left";
+                    description = "snap left (cycle)";
+                  };
+                  l = mkToEvent {
+                    shell_command = "~/bin/yabai-snap-right";
+                    description = "snap right (cycle)";
+                  };
+                  k = mkToEvent {
+                    shell_command = "~/bin/yabai-snap-top";
+                    description = "snap top (cycle)";
+                  };
+                  j = mkToEvent {
+                    shell_command = "~/bin/yabai-snap-bottom";
+                    description = "snap bottom (cycle)";
+                  };
+                  a = mkMoveWindow "left";
+                  s = mkMoveWindow "down";
+                  w = mkMoveWindow "up";
+                  d = mkMoveWindow "right";
+                  y = mkToEvent {
+                    shell_command = "${yabai} -m window --display prev";
+                    description = "previous display";
+                  };
+                  p = mkToEvent {
+                    shell_command = "${yabai} -m window --display next";
+                    description = "next display";
+                  };
                 };
               })
 
