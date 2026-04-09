@@ -1,16 +1,8 @@
 {
   inputs,
   system,
-  lib,
   ...
-}: let
-in {
-  home.activation.installPlaywrightCli = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    if ! command -v playwright-cli &>/dev/null && command -v npm &>/dev/null; then
-      run --quiet /bin/sh -c 'export PATH="/opt/homebrew/bin:$PATH" && npm install -g @playwright/cli'
-    fi
-  '';
-
+}: {
   home.file = {
     ".agents/skills" = {
       source = ../skills;
@@ -24,11 +16,6 @@ in {
 
     ".agents/skills/configuration" = {
       source = "${inputs.gent.packages.${system}.skill}";
-      recursive = true;
-    };
-
-    ".agents/skills/playwright-cli" = {
-      source = "${inputs.playwright-cli}/skills/playwright-cli";
       recursive = true;
     };
 
@@ -68,11 +55,6 @@ in {
 
     ".claude/skills/tui-wright" = {
       source = "${inputs.tui-wright.skills}/tui-wright";
-      recursive = true;
-    };
-
-    ".claude/skills/playwright-cli" = {
-      source = "${inputs.playwright-cli}/skills/playwright-cli";
       recursive = true;
     };
 
