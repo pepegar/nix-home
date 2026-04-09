@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   services.yabai = {
     enable = true;
-    enableScriptingAddition = true;
+    enableScriptingAddition = false;
     config = {
       layout = "bsp";
       mouse_follows_focus = "on";

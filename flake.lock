@@ -810,22 +810,6 @@
         "type": "github"
       }
     },
-    "playwright-cli": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1772814611,
-        "narHash": "sha256-8AGWOvti6jjayzLgvrn4ZOO+4OFNObrpq+/lBWSPbb8=",
-        "owner": "microsoft",
-        "repo": "playwright-cli",
-        "rev": "e63e9b74deac2290f1f3b9800374fa3070efdec4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "microsoft",
-        "repo": "playwright-cli",
-        "type": "github"
-      }
-    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -877,7 +861,6 @@
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs_7",
         "nur": "nur",
-        "playwright-cli": "playwright-cli",
         "pre-commit-hooks": "pre-commit-hooks_2",
         "tmux-zellij": "tmux-zellij",
         "tui-wright": "tui-wright_2",

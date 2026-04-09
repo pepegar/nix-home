@@ -89,6 +89,16 @@ with inputs.karabinix.lib; let
       shell_command = "${yabai} -m window --ratio rel:0.05";
       description = "grow split";
     };
+    q = mkToEvent {
+      key_code = keyCodes.left_arrow;
+      modifiers = [keyCodes.left_control];
+      description = "prev space";
+    };
+    w = mkToEvent {
+      key_code = keyCodes.right_arrow;
+      modifiers = [keyCodes.left_control];
+      description = "next space";
+    };
   };
 
   mkMoveWindow = direction: let

@@ -45,6 +45,7 @@
   system.defaults = {
     trackpad.Clicking = true;
     dock.autohide = true;
+    universalaccess.reduceMotion = true;
   };
 
   # You should generally set this to the total number of logical cores in your system.
