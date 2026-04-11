@@ -753,6 +753,10 @@ in {
                     description = "left click";
                     pointing_button = "button1";
                   };
+                  "shift+q" = mkToEvent {
+                    description = "left click";
+                    pointing_button = "button1";
+                  };
                   e = mkToEvent {
                     description = "right click";
                     pointing_button = "button2";
