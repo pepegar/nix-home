@@ -1,6 +1,6 @@
 {inputs, ...}:
 with inputs.karabinix.lib; let
-  debug = true;
+  debug = false;
 
   # Toggle app: if frontmost, hide it; otherwise activate it
   # processName is the name as shown in "System Events" (usually same as app name)
