@@ -26,6 +26,7 @@
       "ghostscript"
       "pinentry-mac"
       "xcodes"
+      "tailscale"
     ];
 
     casks = [
@@ -50,6 +51,7 @@
       "raycast"
       "rescuetime"
       "rstudio"
+      "session-manager-plugin"
       "slack"
       "spotify"
       "supacode"
