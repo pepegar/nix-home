@@ -99,6 +99,11 @@ with inputs.karabinix.lib; let
       modifiers = [keyCodes.left_control];
       description = "next space";
     };
+    m = mkToEvent {
+      key_code = keyCodes.up_arrow;
+      modifiers = [keyCodes.left_control];
+      description = "mission control";
+    };
   };
 
   mkMoveWindow = direction: let
