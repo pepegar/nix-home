@@ -77,7 +77,6 @@
       gc = "git commit";
       gst = "git status";
       gadp = "git add -p -- . $PROJECT_TO_IGNORE";
-      gs = "git status -- . $PROJECT_TO_IGNORE";
       gd = "git diff -- . $PROJECT_TO_IGNORE";
       ls = "exa";
       ll = "ls -a";

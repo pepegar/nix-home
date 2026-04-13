@@ -12,6 +12,8 @@
     taps = [
       "messense/macos-cross-toolchains"
       "atlassian/homebrew-acli"
+      "ossianhempel/tap"
+      "johannesnagl/tap"
     ];
 
     brews = [
@@ -27,6 +29,7 @@
       "pinentry-mac"
       "xcodes"
       "tailscale"
+      "things3-cli"
     ];
 
     casks = [
@@ -58,6 +61,7 @@
       "webex"
       "whatsapp"
       "zoom"
+      "showmd"
     ];
 
     # name = id
