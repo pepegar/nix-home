@@ -88,7 +88,6 @@
       vf = "fd --type f | fzf --preview 'bat --style=numbers --color=always {}' | xargs -r vi";
       gwt = "wt=$(git-wt) && zellij action new-tab --name $(basename $wt) --cwd $wt";
       ghqj = "ghqj";
-      jj = "zz";
     };
 
     plugins = [

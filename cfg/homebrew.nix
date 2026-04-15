@@ -30,6 +30,8 @@
       "xcodes"
       "tailscale"
       "things3-cli"
+      "rtk"
+      "ffmpeg"
     ];
 
     casks = [
