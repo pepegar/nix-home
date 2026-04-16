@@ -15,15 +15,15 @@ with inputs.karabinix.lib; let
   mkMoveWindow = direction: let
     dx =
       if direction == "left"
-      then "-100"
+      then "-30"
       else if direction == "right"
-      then "100"
+      then "30"
       else "0";
     dy =
       if direction == "up"
-      then "-100"
+      then "-30"
       else if direction == "down"
-      then "100"
+      then "30"
       else "0";
   in
     mkToEvent {

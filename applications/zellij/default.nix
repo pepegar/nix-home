@@ -261,9 +261,6 @@ in {
           tab name="Goodnotes" cwd="~/projects/github.com/GoodNotes/GoodNotes-5" {
             pane
           }
-          tab name="Gent" cwd="~/projects/github.com/pepegar/gent" {
-            pane
-          }
         }
       '';
     };

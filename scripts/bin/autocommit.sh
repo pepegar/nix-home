@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-# Auto-commit changes using LLM-generated commit message
+# Auto-commit changes using Claude CLI-generated commit message
 # Usage: autocommit.sh [--staged] [file]
 #   --staged: Only commit staged changes
 #   file: Only commit changes to specified file
@@ -19,11 +19,11 @@ $RECENT_COMMITS
 
 $DIFF_EXPLANATION
 
-Now analyze the following git diff and provide a concise commit message (50 chars or less) following conventional commit format (type: description). Use similar language, style, and tone as the recent commits above. Use types like feat, fix, chore, docs, refactor, style, test, perf. Be specific about what changed - if code was removed, say it was removed; if code was added, say it was added."
+Now analyze the following git diff and provide a concise commit message (50 chars or less) following conventional commit format (type: description). Use similar language, style, and tone as the recent commits above. Use types like feat, fix, chore, docs, refactor, style, test, perf. Be specific about what changed - if code was removed, say it was removed; if code was added, say it was added. Output ONLY the commit message, nothing else."
 else
     PROMPT="$DIFF_EXPLANATION
 
-Analyze the following git diff and provide a concise commit message (50 chars or less) following conventional commit format (type: description). Use types like feat, fix, chore, docs, refactor, style, test, perf. Be specific about what changed - if code was removed, say it was removed; if code was added, say it was added."
+Analyze the following git diff and provide a concise commit message (50 chars or less) following conventional commit format (type: description). Use types like feat, fix, chore, docs, refactor, style, test, perf. Be specific about what changed - if code was removed, say it was removed; if code was added, say it was added. Output ONLY the commit message, nothing else."
 fi
 
 # Parse arguments
@@ -51,8 +51,7 @@ if [[ "$STAGED" == true ]]; then
         exit 1
     fi
 
-    # Generate commit message and strip backticks
-    COMMIT_MSG=$(echo "$DIFF" | llm --model haiku -s "$PROMPT" | tr -d '`')
+    COMMIT_MSG=$(echo "$DIFF" | claude --print --model haiku --system-prompt "$PROMPT" | tr -d '`')
 
     # Commit staged changes
     if [[ -n "$FILE" ]]; then
@@ -72,8 +71,7 @@ else
         exit 1
     fi
 
-    # Generate commit message and strip backticks
-    COMMIT_MSG=$(echo "$DIFF" | llm --model haiku -s "$PROMPT" | tr -d '`')
+    COMMIT_MSG=$(echo "$DIFF" | claude --print --model haiku --system-prompt "$PROMPT" | tr -d '`')
 
     # Add and commit changes
     if [[ -n "$FILE" ]]; then
