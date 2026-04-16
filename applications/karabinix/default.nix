@@ -447,14 +447,8 @@ in {
                   s = mkMoveWindow "down";
                   w = mkMoveWindow "up";
                   d = mkMoveWindow "right";
-                  y = mkToEvent {
-                    shell_command = "${yabai} -m window --display prev";
-                    description = "previous display";
-                  };
-                  p = mkToEvent {
-                    shell_command = "${yabai} -m window --display next";
-                    description = "next display";
-                  };
+                  y = raycastWindow "previous-display";
+                  p = raycastWindow "next-display";
                 };
               })
 
