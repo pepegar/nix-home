@@ -5,17 +5,19 @@
   ...
 }: let
   zellij-cmd-k = inputs.zellij-cmd-k.packages.${system}.zellij-cmd-k;
+  zellaude = pkgs.fetchurl {
+    url = "https://github.com/ishefi/zellaude/releases/download/v0.5.0/zellaude.wasm";
+    sha256 = "1d6b4792550a2d0833a6bf2777184ecf9bab416c178b49c317b5e1b0cd842c24";
+  };
 in {
   home.file.".config/zellij/plugins/zellij-cmd-k.wasm".source = "${zellij-cmd-k}/zellij-cmd-k.wasm";
+  home.file.".config/zellij/plugins/zellaude.wasm".source = zellaude;
 
   programs.zellij = {
     enable = true;
 
     settings = {
       pane_frames = false;
-      env = {
-        TMUX = "1";
-      };
       support_kitty_keyboard_protocol = true;
       theme = "custom";
       themes.custom = {
@@ -61,14 +63,14 @@ in {
           default_tab_template {
               children
               pane size=1 borderless=true {
-                  plugin location="zellij:compact-bar"
+                  plugin location="file:~/.config/zellij/plugins/zellaude.wasm"
               }
           }
 
           tab_template name="ui" {
               children
               pane size=1 borderless=true {
-                  plugin location="zellij:compact-bar"
+                  plugin location="file:~/.config/zellij/plugins/zellaude.wasm"
               }
           }
 
@@ -247,19 +249,6 @@ in {
                   pane { x "35%"; y "2%"; width "30%"; height "90%"; }
                   pane { x "68%"; y "2%"; width "30%"; height "90%"; }
               }
-          }
-
-          tab name="Home Manager" cwd="~/.config/home-manager" {
-            pane
-          }
-          tab name="Math (vault)" cwd="~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Math" {
-            pane
-          }
-          tab name="Goodnotes (vault)" cwd="~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Goodnotes" {
-            pane
-          }
-          tab name="Goodnotes" cwd="~/projects/github.com/GoodNotes/GoodNotes-5" {
-            pane
           }
         }
       '';

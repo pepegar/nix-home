@@ -42,6 +42,11 @@
     executable = true;
   };
 
+  home.file."bin/wt" = {
+    source = ../scripts/bin/wt.sh;
+    executable = true;
+  };
+
   home.file."bin/ppg-pr" = {
     source = ../scripts/bin/pr.sh;
     executable = true;
