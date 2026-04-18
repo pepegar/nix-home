@@ -18,7 +18,6 @@
     nixpkgs.url = "github:nixos/nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
     devenv.url = "github:cachix/devenv/latest";
-    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/nur";
@@ -34,7 +33,6 @@
   outputs = inputs @ {
     nixpkgs,
     flake-parts,
-    pre-commit-hooks,
     home-manager,
     nur,
     nix-darwin,
@@ -49,28 +47,10 @@
         "x86_64-darwin"
       ];
 
-      perSystem = {
-        pkgs,
-        system,
-        ...
-      }: let
-        pre-commit-check = pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = {
-            alejandra.enable = true;
-            deadnix.enable = true;
-            stylua.enable = true;
-          };
-        };
-      in {
+      perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
 
-        checks = {
-          inherit pre-commit-check;
-        };
-
         devShells.default = pkgs.mkShell {
-          inherit (pre-commit-check) shellHook;
           nativeBuildInputs = with pkgs; [
             git
             alejandra
