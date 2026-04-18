@@ -1,89 +1,28 @@
-{...}: {
-  home.file."bin/gswitch" = {
-    source = ../scripts/bin/gswitch.sh;
-    executable = true;
-  };
-
-  home.file."bin/ppg-jira-create" = {
-    source = ../scripts/bin/jira-create.sh;
-    executable = true;
-  };
-
-  home.file."bin/ppg-jira-branch" = {
-    source = ../scripts/bin/jira-branch.sh;
-    executable = true;
-  };
-
-  home.file."bin/gh_create_pr" = {
-    source = ../scripts/bin/gh_create_pr.sh;
-    executable = true;
-  };
-
-  home.file."bin/gh_merge_pr" = {
-    source = ../scripts/bin/gh_merge_pr.sh;
-    executable = true;
-  };
-
-  home.file."bin/ppg" = {
-    source = ../scripts/bin/ppg.sh;
-    executable = true;
-  };
-
-  home.file."bin/kotlin-ls" = {
-    text = ''
-      #!/bin/sh
-      exec /Users/pepe/kotlin-lsp/kotlin-lsp.sh "$@"
-    '';
-    executable = true;
-  };
-
-  home.file."bin/git-wt" = {
-    source = ../scripts/bin/git-wt.sh;
-    executable = true;
-  };
-
-  home.file."bin/wt" = {
-    source = ../scripts/bin/wt.sh;
-    executable = true;
-  };
-
-  home.file."bin/ppg-pr" = {
-    source = ../scripts/bin/pr.sh;
-    executable = true;
-  };
-
-  home.file."bin/autocommit.sh" = {
-    source = ../scripts/bin/autocommit.sh;
-    executable = true;
-  };
-
-  home.file."bin/mouse-center.sh" = {
-    source = ../scripts/bin/mouse-center.sh;
-    executable = true;
-  };
-
-  home.file."bin/ghqj" = {
-    source = ../scripts/bin/ghqj.sh;
-    executable = true;
-  };
-
-  home.file."bin/yabai-snap-left" = {
-    source = ../scripts/bin/yabai-snap-left.sh;
-    executable = true;
-  };
-
-  home.file."bin/yabai-snap-right" = {
-    source = ../scripts/bin/yabai-snap-right.sh;
-    executable = true;
-  };
-
-  home.file."bin/yabai-snap-top" = {
-    source = ../scripts/bin/yabai-snap-top.sh;
-    executable = true;
-  };
-
-  home.file."bin/yabai-snap-bottom" = {
-    source = ../scripts/bin/yabai-snap-bottom.sh;
-    executable = true;
-  };
+{pkgs, ...}: let
+  userBin = pkgs.runCommand "user-bin" {} ''
+    mkdir -p $out/bin
+    install -m755 ${../scripts/bin/gswitch.sh}        $out/bin/gswitch
+    install -m755 ${../scripts/bin/jira-create.sh}    $out/bin/ppg-jira-create
+    install -m755 ${../scripts/bin/jira-branch.sh}    $out/bin/ppg-jira-branch
+    install -m755 ${../scripts/bin/gh_create_pr.sh}   $out/bin/gh_create_pr
+    install -m755 ${../scripts/bin/gh_merge_pr.sh}    $out/bin/gh_merge_pr
+    install -m755 ${../scripts/bin/ppg.sh}            $out/bin/ppg
+    install -m755 ${../scripts/bin/git-wt.sh}         $out/bin/git-wt
+    install -m755 ${../scripts/bin/wt.sh}             $out/bin/wt
+    install -m755 ${../scripts/bin/pr.sh}             $out/bin/ppg-pr
+    install -m755 ${../scripts/bin/autocommit.sh}     $out/bin/autocommit.sh
+    install -m755 ${../scripts/bin/mouse-center.sh}   $out/bin/mouse-center.sh
+    install -m755 ${../scripts/bin/ghqj.sh}           $out/bin/ghqj
+    install -m755 ${../scripts/bin/yabai-snap-left.sh}   $out/bin/yabai-snap-left
+    install -m755 ${../scripts/bin/yabai-snap-right.sh}  $out/bin/yabai-snap-right
+    install -m755 ${../scripts/bin/yabai-snap-top.sh}    $out/bin/yabai-snap-top
+    install -m755 ${../scripts/bin/yabai-snap-bottom.sh} $out/bin/yabai-snap-bottom
+    cat > $out/bin/kotlin-ls <<'EOF'
+    #!/bin/sh
+    exec /Users/pepe/kotlin-lsp/kotlin-lsp.sh "$@"
+    EOF
+    chmod 755 $out/bin/kotlin-ls
+  '';
+in {
+  home.file."bin".source = "${userBin}/bin";
 }
