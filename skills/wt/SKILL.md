@@ -80,6 +80,21 @@ cd "$(wt path feature-auth)"
 
 Thin wrapper around `git worktree list`.
 
+### `wt remove <branch> [--delete-branch]`
+
+Force-remove the worktree at `<git-root>/.worktrees/<branch>`. Designed to never leave the repo half-broken, even when `git worktree remove` alone would fail.
+
+- Fallback chain: `git worktree remove --force` → `git worktree remove --force --force` (for locked worktrees / submodules) → `rm -rf` + `git worktree prune` (for stale git metadata or dangling dirs).
+- Refuses to operate on `main`/`master`/`develop`, on the current worktree, or on any path outside `.worktrees/`.
+- Clears the cached pane id stash so a future `wt zellij <branch>` starts clean.
+- Pass `--delete-branch` (`-b`) to also drop the branch ref with `git branch -D`.
+- Aliased as `wt rm`.
+
+```bash
+wt remove feature-auth                  # keep the branch, just drop the worktree
+wt rm feature-auth --delete-branch      # nuke worktree and branch together
+```
+
 ## Typical Flows
 
 ### Kick off a new feature in a background tab
@@ -123,6 +138,5 @@ done
 
 ## Related skills
 
-- `/worktree prune` — safely clean up old worktrees.
 - `/kickoff` — richer interactive kickoff including Jira integration.
 - `/zellij` — low-level Zellij pane/tab primitives when `wt` is too coarse.

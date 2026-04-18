@@ -7,6 +7,7 @@
 #   wt send   <branch> <text>... [--no-enter]
 #   wt path   <branch>
 #   wt list
+#   wt remove <branch> [--delete-branch]
 #   wt help
 #
 # Conventions:
@@ -285,6 +286,75 @@ cmd_list() {
   git worktree list
 }
 
+cmd_remove() {
+  local branch="" delete_branch=0
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --delete-branch|-b) delete_branch=1; shift ;;
+      -h|--help)
+        cat <<'EOF'
+Usage: wt remove <branch> [--delete-branch]
+
+Force-remove the worktree at <git-root>/.worktrees/<branch>. Tries
+`git worktree remove --force`, then `--force --force`, and finally falls
+back to `rm -rf` + `git worktree prune` so it never leaves the repo in a
+broken state. Also clears the cached pane id for the worktree.
+Pass --delete-branch (-b) to also delete the branch ref.
+EOF
+        return 0 ;;
+      --) shift ;;
+      -*) die "unknown flag for 'remove': $1" ;;
+      *)
+        [[ -z "$branch" ]] || die "unexpected argument: $1"
+        branch="$1"; shift ;;
+    esac
+  done
+  [[ -n "$branch" ]] || die "missing branch name (wt remove <branch>)"
+  require_git
+
+  case "$branch" in
+    main|master|develop) die "refusing to remove protected branch: $branch" ;;
+  esac
+
+  local root worktree current
+  root="$(repo_root)"
+  worktree="$(worktree_path_for "$branch")"
+  current="$(git rev-parse --show-toplevel)"
+
+  [[ "$worktree" != "$current" ]] \
+    || die "cannot remove the current worktree ($worktree)"
+
+  case "$worktree" in
+    "${root}/.worktrees/"?*) : ;;
+    *) die "refusing to rm path outside .worktrees: $worktree" ;;
+  esac
+
+  if git worktree remove --force "$worktree" 2>/dev/null; then
+    info "removed worktree: $worktree"
+  elif git worktree remove --force --force "$worktree" 2>/dev/null; then
+    info "removed worktree (double-force): $worktree"
+  else
+    info "git worktree remove failed; falling back to rm -rf + prune"
+    rm -rf -- "$worktree" || true
+    git worktree prune 2>/dev/null || true
+    info "forcibly removed worktree: $worktree"
+  fi
+
+  rm -f "$(pane_id_file_for "$worktree")"
+
+  if [[ $delete_branch -eq 1 ]]; then
+    if git show-ref --verify --quiet "refs/heads/$branch"; then
+      if git branch -D "$branch" >&2; then
+        info "deleted branch: $branch"
+      else
+        info "could not delete branch: $branch"
+      fi
+    else
+      info "branch already gone: $branch"
+    fi
+  fi
+}
+
 usage() {
   cat <<'EOF'
 wt — git worktree + Zellij workflow helper
@@ -302,6 +372,8 @@ Usage:
       Print the worktree path for a branch.
   wt list
       List all git worktrees.
+  wt remove <branch> [--delete-branch]
+      Force-remove the worktree; falls back to rm -rf + prune on failure.
   wt help
       Show this message.
 
@@ -318,6 +390,7 @@ main() {
     send|s)    cmd_send   "$@" ;;
     path|p)    cmd_path   "$@" ;;
     list|ls)   cmd_list   "$@" ;;
+    remove|rm) cmd_remove "$@" ;;
     help|-h|--help|"") usage ;;
     *) die "unknown subcommand: $sub (try 'wt help')" ;;
   esac
