@@ -5,13 +5,8 @@
   ...
 }: let
   zellij-cmd-k = inputs.zellij-cmd-k.packages.${system}.zellij-cmd-k;
-  zellaude = pkgs.fetchurl {
-    url = "https://github.com/ishefi/zellaude/releases/download/v0.5.0/zellaude.wasm";
-    sha256 = "1d6b4792550a2d0833a6bf2777184ecf9bab416c178b49c317b5e1b0cd842c24";
-  };
 in {
   home.file.".config/zellij/plugins/zellij-cmd-k.wasm".source = "${zellij-cmd-k}/zellij-cmd-k.wasm";
-  home.file.".config/zellij/plugins/zellaude.wasm".source = zellaude;
 
   programs.zellij = {
     enable = true;
@@ -66,14 +61,14 @@ in {
           default_tab_template {
               children
               pane size=1 borderless=true {
-                  plugin location="file:~/.config/zellij/plugins/zellaude.wasm"
+                  plugin location="zellij:compact-bar"
               }
           }
 
           tab_template name="ui" {
               children
               pane size=1 borderless=true {
-                  plugin location="file:~/.config/zellij/plugins/zellaude.wasm"
+                  plugin location="zellij:compact-bar"
               }
           }
 

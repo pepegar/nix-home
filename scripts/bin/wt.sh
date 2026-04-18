@@ -208,7 +208,7 @@ layout {
     default_tab_template {
         children
         pane size=1 borderless=true {
-            plugin location="file:~/.config/zellij/plugins/zellaude.wasm"
+            plugin location="zellij:compact-bar"
         }
     }
     tab name="${branch}" cwd="${worktree}" focus=true {
