@@ -86,16 +86,23 @@
         nurNoPkgs = system:
           import nur {nurpkgs = inputs.nixpkgs.legacyPackages.${system};};
 
-        mkHomeConfig = machineModule: system:
+        mkHomeConfig = {
+          machineModule,
+          system,
+          extraModules ? [],
+        }:
           home-manager.lib.homeManagerConfiguration {
             pkgs = import nixpkgs {inherit system;};
-            modules = [
-              (nurNoPkgs system).repos.rycee.hmModules.emacs-init
-              karabinix.homeManagerModules.karabinix
-              machineModule
-            ];
+            modules =
+              [
+                karabinix.homeManagerModules.karabinix
+                machineModule
+              ]
+              ++ extraModules;
             extraSpecialArgs = {inherit inputs system;};
           };
+
+        emacsInitModule = system: (nurNoPkgs system).repos.rycee.hmModules.emacs-init;
 
         mkDarwinConfig = extraModules:
           nix-darwin.lib.darwinSystem {
@@ -129,10 +136,24 @@
         };
 
         homeConfigurations = {
-          "${user}@bart" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
-          "${user}@lisa" = mkHomeConfig ./machines/lisa.nix "x86_64-linux";
-          "${user}@marge" = mkHomeConfig ./machines/linux-server.nix "x86_64-linux";
-          "${user}" = mkHomeConfig ./machines/macbook.nix "aarch64-darwin";
+          "${user}@bart" = mkHomeConfig {
+            machineModule = ./machines/macbook.nix;
+            system = "aarch64-darwin";
+          };
+          "${user}@lisa" = mkHomeConfig {
+            machineModule = ./machines/lisa.nix;
+            system = "x86_64-linux";
+            extraModules = [(emacsInitModule "x86_64-linux")];
+          };
+          "${user}@marge" = mkHomeConfig {
+            machineModule = ./machines/linux-server.nix;
+            system = "x86_64-linux";
+            extraModules = [(emacsInitModule "x86_64-linux")];
+          };
+          "${user}" = mkHomeConfig {
+            machineModule = ./machines/macbook.nix;
+            system = "aarch64-darwin";
+          };
         };
 
         darwinConfigurations = builtins.listToAttrs (

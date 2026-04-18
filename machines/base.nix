@@ -11,7 +11,6 @@
     ../applications/opencode
     ../applications/pi
     ../applications/direnv
-    ../applications/emacs
     ../applications/fzf
     ../applications/gent
     ../applications/go

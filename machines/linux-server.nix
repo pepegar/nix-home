@@ -1,6 +1,9 @@
 {pkgs, ...}: {
   imports = [
     ./base.nix
+
+    # Linux machines still use emacs
+    ../applications/emacs
   ];
 
   # Linux server settings

@@ -2,6 +2,9 @@
   imports = [
     ./base.nix
 
+    # Linux machines still use emacs
+    ../applications/emacs
+
     # Linux-specific applications
     ../applications/alacritty
     # ../applications/rofi  # Commented out due to deprecated options
