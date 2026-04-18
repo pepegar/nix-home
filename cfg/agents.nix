@@ -1,91 +1,24 @@
 {
   inputs,
   system,
+  pkgs,
   ...
-}: {
+}: let
+  skillsTree = pkgs.runCommand "agents-skills" {} ''
+    mkdir -p $out
+    for d in ${../skills}/*; do
+      ln -s "$d" "$out/$(basename "$d")"
+    done
+    ln -sfn ${inputs.tui-wright.skills}/tui-wright $out/tui-wright
+    ln -sfn ${inputs.gent.packages.${system}.skill} $out/configuration
+    for s in a11y-debugging chrome-devtools chrome-devtools-cli debug-optimize-lcp troubleshooting; do
+      ln -sfn ${inputs.chrome-devtools-mcp}/skills/$s $out/$s
+    done
+  '';
+in {
   home.file = {
-    ".agents/skills" = {
-      source = ../skills;
-      recursive = true;
-    };
-
-    ".agents/skills/tui-wright" = {
-      source = "${inputs.tui-wright.skills}/tui-wright";
-      recursive = true;
-    };
-
-    ".agents/skills/configuration" = {
-      source = "${inputs.gent.packages.${system}.skill}";
-      recursive = true;
-    };
-
-    ".agents/skills/a11y-debugging" = {
-      source = "${inputs.chrome-devtools-mcp}/skills/a11y-debugging";
-      recursive = true;
-    };
-
-    ".agents/skills/chrome-devtools" = {
-      source = "${inputs.chrome-devtools-mcp}/skills/chrome-devtools";
-      recursive = true;
-    };
-
-    ".agents/skills/chrome-devtools-cli" = {
-      source = "${inputs.chrome-devtools-mcp}/skills/chrome-devtools-cli";
-      recursive = true;
-    };
-
-    ".agents/skills/debug-optimize-lcp" = {
-      source = "${inputs.chrome-devtools-mcp}/skills/debug-optimize-lcp";
-      recursive = true;
-    };
-
-    ".agents/skills/troubleshooting" = {
-      source = "${inputs.chrome-devtools-mcp}/skills/troubleshooting";
-      recursive = true;
-    };
-
-    ".agents/AGENTS.md" = {
-      source = ../agents/AGENTS.md;
-    };
-
-    ".claude/skills" = {
-      source = ../skills;
-      recursive = true;
-    };
-
-    ".claude/skills/tui-wright" = {
-      source = "${inputs.tui-wright.skills}/tui-wright";
-      recursive = true;
-    };
-
-    ".claude/skills/a11y-debugging" = {
-      source = "${inputs.chrome-devtools-mcp}/skills/a11y-debugging";
-      recursive = true;
-    };
-
-    ".claude/skills/chrome-devtools" = {
-      source = "${inputs.chrome-devtools-mcp}/skills/chrome-devtools";
-      recursive = true;
-    };
-
-    ".claude/skills/chrome-devtools-cli" = {
-      source = "${inputs.chrome-devtools-mcp}/skills/chrome-devtools-cli";
-      recursive = true;
-    };
-
-    ".claude/skills/debug-optimize-lcp" = {
-      source = "${inputs.chrome-devtools-mcp}/skills/debug-optimize-lcp";
-      recursive = true;
-    };
-
-    ".claude/skills/troubleshooting" = {
-      source = "${inputs.chrome-devtools-mcp}/skills/troubleshooting";
-      recursive = true;
-    };
-
-    ".claude/skills/configuration" = {
-      source = "${inputs.gent.packages.${system}.skill}";
-      recursive = true;
-    };
+    ".agents/skills".source = skillsTree;
+    ".agents/AGENTS.md".source = ../agents/AGENTS.md;
+    ".claude/skills".source = skillsTree;
   };
 }
