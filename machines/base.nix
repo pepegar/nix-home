@@ -110,6 +110,7 @@
   xdg.configFile."nix/nix.conf".text = ''
     warn-dirty = false
     accept-flake-config = true
+    eval-cores = 0
     substituters = https://cache.nixos.org https://devenv.cachix.org
   '';
 }
