@@ -19,6 +19,9 @@ in {
     settings = {
       pane_frames = false;
       support_kitty_keyboard_protocol = true;
+      session_serialization = true;
+      serialize_pane_viewport = true;
+      scrollback_lines_to_serialize = 10000;
       theme = "custom";
       themes.custom = {
         fg = [171 178 191]; # light gray text
