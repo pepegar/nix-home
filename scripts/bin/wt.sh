@@ -7,7 +7,7 @@
 #   wt send   <branch> <text>... [--no-enter]
 #   wt path   <branch>
 #   wt list
-#   wt remove <branch> [--delete-branch]
+#   wt remove <branch> [--keep-branch] [--keep-tab]
 #   wt help
 #
 # Conventions:
@@ -287,19 +287,22 @@ cmd_list() {
 }
 
 cmd_remove() {
-  local branch="" delete_branch=0
+  local branch="" keep_branch=0 keep_tab=0
   while [[ $# -gt 0 ]]; do
     case "$1" in
-      --delete-branch|-b) delete_branch=1; shift ;;
+      --keep-branch) keep_branch=1; shift ;;
+      --keep-tab)    keep_tab=1; shift ;;
       -h|--help)
         cat <<'EOF'
-Usage: wt remove <branch> [--delete-branch]
+Usage: wt remove <branch> [--keep-branch] [--keep-tab]
 
-Force-remove the worktree at <git-root>/.worktrees/<branch>. Tries
+Force-remove the worktree at <git-root>/.worktrees/<branch>, delete the
+branch ref, and close the matching Zellij tab. Tries
 `git worktree remove --force`, then `--force --force`, and finally falls
 back to `rm -rf` + `git worktree prune` so it never leaves the repo in a
 broken state. Also clears the cached pane id for the worktree.
-Pass --delete-branch (-b) to also delete the branch ref.
+Pass --keep-branch to leave the branch ref in place.
+Pass --keep-tab to leave the Zellij tab open.
 EOF
         return 0 ;;
       --) shift ;;
@@ -342,7 +345,7 @@ EOF
 
   rm -f "$(pane_id_file_for "$worktree")"
 
-  if [[ $delete_branch -eq 1 ]]; then
+  if [[ $keep_branch -eq 0 ]]; then
     if git show-ref --verify --quiet "refs/heads/$branch"; then
       if git branch -D "$branch" >&2; then
         info "deleted branch: $branch"
@@ -351,6 +354,16 @@ EOF
       fi
     else
       info "branch already gone: $branch"
+    fi
+  fi
+
+  if [[ $keep_tab -eq 0 && -n "${ZELLIJ:-}" ]]; then
+    if zellij action go-to-tab-name "$branch" >/dev/null 2>&1; then
+      if zellij action close-tab >/dev/null 2>&1; then
+        info "closed zellij tab: $branch"
+      else
+        info "could not close zellij tab: $branch"
+      fi
     fi
   fi
 }
@@ -372,8 +385,10 @@ Usage:
       Print the worktree path for a branch.
   wt list
       List all git worktrees.
-  wt remove <branch> [--delete-branch]
-      Force-remove the worktree; falls back to rm -rf + prune on failure.
+  wt remove <branch> [--keep-branch] [--keep-tab]
+      Force-remove the worktree, delete the branch, and close the Zellij
+      tab. Falls back to rm -rf + prune on failure. Pass --keep-branch or
+      --keep-tab to opt out of either default.
   wt help
       Show this message.
 

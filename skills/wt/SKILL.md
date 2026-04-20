@@ -80,19 +80,21 @@ cd "$(wt path feature-auth)"
 
 Thin wrapper around `git worktree list`.
 
-### `wt remove <branch> [--delete-branch]`
+### `wt remove <branch> [--keep-branch] [--keep-tab]`
 
-Force-remove the worktree at `<git-root>/.worktrees/<branch>`. Designed to never leave the repo half-broken, even when `git worktree remove` alone would fail.
+Force-remove the worktree at `<git-root>/.worktrees/<branch>`, delete the branch ref, and close the matching Zellij tab. Designed to never leave the repo half-broken, even when `git worktree remove` alone would fail.
 
 - Fallback chain: `git worktree remove --force` → `git worktree remove --force --force` (for locked worktrees / submodules) → `rm -rf` + `git worktree prune` (for stale git metadata or dangling dirs).
 - Refuses to operate on `main`/`master`/`develop`, on the current worktree, or on any path outside `.worktrees/`.
 - Clears the cached pane id stash so a future `wt zellij <branch>` starts clean.
-- Pass `--delete-branch` (`-b`) to also drop the branch ref with `git branch -D`.
+- Deletes the branch with `git branch -D` by default; pass `--keep-branch` to leave the ref in place.
+- Closes the Zellij tab named `<branch>` (via `go-to-tab-name` + `close-tab`) when `$ZELLIJ` is set; pass `--keep-tab` to leave it open.
 - Aliased as `wt rm`.
 
 ```bash
-wt remove feature-auth                  # keep the branch, just drop the worktree
-wt rm feature-auth --delete-branch      # nuke worktree and branch together
+wt rm feature-auth                  # nuke worktree + branch + tab
+wt rm feature-auth --keep-branch    # keep the branch ref around
+wt rm feature-auth --keep-tab       # leave the Zellij tab open
 ```
 
 ## Typical Flows
