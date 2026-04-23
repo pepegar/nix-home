@@ -36,8 +36,6 @@ in {
         shared = {
           "bind \"Ctrl l\"" = {NextSwapLayout = {};};
           "bind \"Ctrl h\"" = {PreviousSwapLayout = {};};
-        };
-        "shared_except \"locked\"" = {
           "bind \"Super k\"" = {
             "LaunchOrFocusPlugin \"file:~/.config/zellij/plugins/zellij-cmd-k.wasm\"" = {
               floating = true;
