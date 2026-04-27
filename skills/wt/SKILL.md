@@ -21,7 +21,65 @@ This skill lets agents drive that workflow. Prefer `wt` over the older `/worktre
 - Must be run from inside a git repository.
 - `wt zellij` and `wt send` also require an active Zellij session (`$ZELLIJ` is set).
 
+## Global flags
+
+- `--debug` (or `WT_DEBUG=1`) — traces every shell command to stderr via `set -x`, prefixed with `file:line:function`. Useful when a subcommand hangs or misbehaves. Must appear before the subcommand: `wt --debug agent foo "bar"`.
+
 ## Subcommands
+
+`wt` splits into two layers:
+
+- **Porcelain** — opinionated one-shot flows (`start`, `agent`, `switch`, `done`). Prefer these by default; they collapse the common cases into a single command.
+- **Plumbing** — composable primitives (`new`, `zellij`, `send`, `path`, `list`, `remove`). Drop down to these when porcelain is too coarse or when scripting.
+
+## Porcelain
+
+### `wt start <branch> [--from <ref>] [--desc <description>]`
+
+`wt new` + `wt zellij` in one shot: creates the branch + worktree and opens a Zellij tab focused on it. The default entry point for "I want to start working on a feature."
+
+```bash
+wt start feature-auth --desc "OAuth2 login"
+wt start hotfix-123 --from origin/main
+```
+
+### `wt agent <branch> <prompt>... [--from <ref>] [--wait-for <text>] [--wait-timeout <secs>] [--no-wait]`
+
+Ensure the branch + worktree + Zellij tab exist (creating whichever pieces are missing), then dispatch `claude --dangerously-skip-permissions "<prompt>"` into the tab **without stealing focus**. Use this to fan out parallel coding agents across branches.
+
+Before sending, polls the tab's pane buffer (via `zellij action dump-screen --pane-id`) until the wait pattern appears, so the prompt isn't fired into a shell that's still loading direnv / devenv / nix-shell. Defaults: pattern `❯ ` (trailing space, to match an idle starship-style prompt rather than any stray `❯` in output), timeout 15s. Override with `--wait-for`. On timeout, sends anyway and warns — safer than hanging.
+
+```bash
+wt agent feature-auth "Implement the OAuth2 flow end-to-end"
+wt agent hotfix-123 --from origin/main "Fix the login timeout bug in auth/session.ts"
+wt agent slow-repo --wait-for '$ ' --wait-timeout 60 "Run the full test suite"
+wt agent feature-x --no-wait "echo hi"
+```
+
+Idempotent: re-running with an existing branch/tab just sends another prompt.
+
+### `wt switch <branch>`
+
+Focus the Zellij tab for `<branch>`, opening it via `wt zellij` if it doesn't exist yet. Requires the worktree to already exist.
+
+```bash
+wt switch feature-auth
+```
+
+### `wt done <branch>`
+
+Safely retire a feature. Refuses to proceed unless:
+
+1. The worktree has a clean working tree (no uncommitted changes).
+2. The branch has **0 unmerged commits** vs its upstream (or vs `main`/`master` when no upstream is set).
+
+On pass, delegates to `wt remove`. For force-removal without safety gates, use `wt remove` directly.
+
+```bash
+wt done feature-auth
+```
+
+## Plumbing
 
 ### `wt new <branch> [--from <ref>] [--desc <description>] [--no-copy-ignored]`
 
@@ -99,28 +157,34 @@ wt rm feature-auth --keep-tab       # leave the Zellij tab open
 
 ## Typical Flows
 
-### Kick off a new feature in a background tab
+### Kick off a new feature
 
 ```bash
-wt new feature-auth --desc "OAuth2 login"
-wt zellij feature-auth
-# …tab is open, cwd is the worktree, shell is ready
+wt start feature-auth --desc "OAuth2 login"
 ```
 
-### Dispatch an agent into an existing tab
+### Fan out parallel agents
 
 ```bash
-wt send feature-auth "claude --dangerously-skip-permissions <<< 'Implement the OAuth2 flow'"
+wt agent feature-auth   "Implement the OAuth2 flow"
+wt agent feature-billing "Add Stripe webhook handling"
+wt agent hotfix-123     "Fix the login timeout in auth/session.ts"
 ```
 
-Because `wt send` does not steal focus, multiple tabs can each be running their own agent while you work in the original tab.
+Each agent runs in its own tab; `wt agent` never steals focus, so you stay in your original tab while they work.
 
-### Run a quick check across tabs
+### Run a quick check across tabs (plumbing)
 
 ```bash
 for b in feature-auth feature-billing hotfix-123; do
   wt send "$b" "npm test"
 done
+```
+
+### Finish up cleanly
+
+```bash
+wt done feature-auth   # refuses if dirty or unmerged
 ```
 
 ## Naming and location conventions
