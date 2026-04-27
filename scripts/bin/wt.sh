@@ -168,12 +168,14 @@ EOF
   [[ -n "$base" ]] || die "cannot determine base branch (are you in a detached HEAD?)"
 
   [[ ! -e "$worktree" ]] || die "worktree already exists: $worktree"
-  if git show-ref --verify --quiet "refs/heads/$branch"; then
-    die "branch already exists: $branch (delete it or use a different name)"
-  fi
 
   mkdir -p "${root}/.worktrees"
-  git worktree add -b "$branch" "$worktree" "$base" >&2
+  if git show-ref --verify --quiet "refs/heads/$branch"; then
+    info "branch '$branch' already exists; attaching worktree to it"
+    git worktree add "$worktree" "$branch" >&2
+  else
+    git worktree add -b "$branch" "$worktree" "$base" >&2
+  fi
   if [[ -n "$desc" ]]; then
     git config "branch.${branch}.description" "$desc"
   fi
