@@ -323,46 +323,7 @@ require("lazy").setup({
 			--  Check out: https://github.com/echasnovski/mini.nvim
 		end,
 	},
-	{ -- Highlight, edit, and navigate code
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		main = "nvim-treesitter.configs", -- Sets main module to use for opts
-		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-		opts = {
-			ensure_installed = {
-				"bash",
-				"c",
-				"diff",
-				"html",
-				"lua",
-				"luadoc",
-				"markdown",
-				"markdown_inline",
-				"query",
-				"vim",
-				"vimdoc",
-			},
-			-- Autoinstall languages that are not installed
-			auto_install = true,
-			highlight = {
-				enable = true,
-				-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-				--  If you are experiencing weird indenting issues, add the language to
-				--  the list of additional_vim_regex_highlighting and disabled languages for indent.
-				additional_vim_regex_highlighting = { "ruby" },
-			},
-			indent = { enable = true, disable = { "ruby" } },
-		},
-		config = function(_, opts)
-			require("nvim-treesitter.configs").setup(opts)
-
-			vim.filetype.add({
-				extension = {
-					["md.in"] = "markdown",
-				},
-			})
-		end,
-	},
+	-- nvim-treesitter removed: Neovim 0.12+ has built-in treesitter highlighting
 
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -435,7 +396,6 @@ require("lazy").setup({
 	{
 		"davidmh/mdx.nvim",
 		config = true,
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
 	},
 	{
 		"chenxin-yan/footnote.nvim",
@@ -472,6 +432,12 @@ require("lazy").setup({
 			task = "📌",
 			lazy = "💤 ",
 		},
+	},
+})
+
+vim.filetype.add({
+	extension = {
+		["md.in"] = "markdown",
 	},
 })
 
